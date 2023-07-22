@@ -1,0 +1,197 @@
+import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+
+import CardComponent from "../components/Card/CardComponent";
+import useQueryParams from "../hooks/useQueryParams";
+import ROUTES from "../routes/ROUTES";
+import { Progress } from "flowbite-react";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+const HomePage = () => {
+  // const [originalCardsArr, setOriginalCardsArr] = useState(null);
+  // const [cardsArr, setCardsArr] = useState(null);
+  // const navigate = useNavigate();
+  // let qparams = useQueryParams();
+  // const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+  // let userID = "";
+
+  // if (localStorage.getItem("token")) {
+  //   userID = jwt_decode(localStorage.getItem("token"))._id;
+  // }
+
+  // //first useEffect when page load
+  // useEffect(() => {
+  //   axios
+  //     .get("/cards/cards")
+  //     .then(({ data }) => {
+  //       filterFunc(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("err from axios", err);
+  //       toast.error("Oops");
+  //     });
+  // }, []);
+
+  // //second useEffect evry time we make change on search
+  // useEffect(() => {
+  //   filterFunc();
+  // }, [qparams.filter]);
+
+  // const filterFunc = (data) => {
+  //   if (!originalCardsArr && !data) {
+  //     return;
+  //   }
+
+  //   let filter = "";
+  //   if (qparams.filter) {
+  //     filter = qparams.filter;
+  //   }
+
+  //   if (!originalCardsArr && data) {
+  //     /*
+  //       when component loaded and states not loaded
+  //     */
+  //     setOriginalCardsArr(data);
+  //     setCardsArr(
+  //       data.filter(
+  //         (card) => card.title.startsWith(filter) || card._id.startsWith(filter)
+  //       )
+  //     );
+  //     return;
+  //   }
+  //   if (originalCardsArr) {
+  //     /*
+  //       when all loaded and states loaded
+  //     */
+  //     let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCardsArr));
+  //     setCardsArr(
+  //       newOriginalCardsArr.filter(
+  //         (card) => card.title.startsWith(filter) || card._id.startsWith(filter)
+  //       )
+  //     );
+  //   }
+  // };
+
+  // const handleDeleteFromInitialCardsArr = async (id) => {
+  //   try {
+  //     await axios.delete("/cards/" + id);
+  //     setCardsArr((newCardsArr) =>
+  //       newCardsArr.filter((item) => item._id != id)
+  //     );
+  //   } catch (err) {
+  //     console.log("error when deleting", err.response.data);
+  //   }
+  // };
+
+  // const handleEditFromInitialCardsArr = (id) => {
+  //   navigate(`${ROUTES.CARDEDIT}/?cardId=${id}`);
+  // };
+
+  // const handleLikesFromInitialCardsArr = async (id) => {
+  //   try {
+  //     await axios.patch("/cards/card-like/" + id); // /cards/:id
+  //     window.location.reload();
+  //   } catch (err) {
+  //     console.log("error when liking card", err.response.data);
+  //   }
+  // };
+  // const handleOnClick = (id) => {
+  //   navigate(`${ROUTES.CARDSPECIFICATION}/?cardId=${id}`);
+  // };
+
+  // if (!cardsArr) {
+  //   return <CircularProgress />;
+  // }
+
+  return (
+    <Box mt={3}>
+      <Typography mb={3} variant="h3" color="blue">
+        Collection of all cards
+      </Typography>
+      <Brightness7Icon />
+      <Brightness4Icon />
+      <Typography mb={3} variant="h5" color="blue">
+        Here you can find bussiness cards from all categories
+      </Typography>
+      <Typography mb={3} variant="h5" color="blue">
+        Collections represents our products organized based on theme. Here
+        you’ll find different Webflow gear grouped by collections such as
+        Generation No-Code, Essentials, Pride, and Accessibility. Categories —
+        on the other hand — represents type of merchandise and is sorted by
+        Accessories, Artwork, Clothing, and Collaboration. When designing the
+        merch store, we prioritized creating the easiest way for site visitors
+        to discover products — and our site design reflects that. Often,
+        ecommerce stores are just unmoving grids of items. To liven our store up
+        and to add more dimension, we added a hover effect that changes the
+        background from light to gray, and gently animates each product.
+      </Typography>
+      <Typography mb={3} variant="h5" color="blue">
+        Collections represents our products organized based on theme. Here
+        you’ll find different Webflow gear grouped by collections such as
+        Generation No-Code, Essentials, Pride, and Accessibility. Categories —
+        on the other hand — represents type of merchandise and is sorted by
+        Accessories, Artwork, Clothing, and Collaboration. When designing the
+        merch store, we prioritized creating the easiest way for site visitors
+        to discover products — and our site design reflects that. Often,
+        ecommerce stores are just unmoving grids of items. To liven our store up
+        and to add more dimension, we added a hover effect that changes the
+        background from light to gray, and gently animates each product.
+      </Typography>
+      <Typography mb={3} variant="h5" color="blue">
+        Collections represents our products organized based on theme. Here
+        you’ll find different Webflow gear grouped by collections such as
+        Generation No-Code, Essentials, Pride, and Accessibility. Categories —
+        on the other hand — represents type of merchandise and is sorted by
+        Accessories, Artwork, Clothing, and Collaboration. When designing the
+        merch store, we prioritized creating the easiest way for site visitors
+        to discover products — and our site design reflects that. Often,
+        ecommerce stores are just unmoving grids of items. To liven our store up
+        and to add more dimension, we added a hover effect that changes the
+        background from light to gray, and gently animates each product.
+      </Typography>
+      {/* <Grid container spacing={2}>
+        {cardsArr.map((item) => (
+          <Grid item xs={4} key={item._id + Date.now()}>
+            <CardComponent
+              img={item.image ? item.image.url : ""}
+              title={item.title}
+              subTitle={item.subTitle}
+              phone={item.phone}
+              address={
+                item.country +
+                ", " +
+                item.city +
+                ", " +
+                item.street +
+                ", " +
+                item.houseNumber
+              }
+              id={item._id}
+              clickOnCard={handleOnClick}
+              bizNumber={item.bizNumber}
+              userId={item.user_id}
+              onDelete={handleDeleteFromInitialCardsArr}
+              candelete={
+                (payload && payload.isAdmin) ||
+                (item.user_id === userID && payload && payload.biz)
+              }
+              onEdit={handleEditFromInitialCardsArr}
+              canEdit={item.user_id === userID && payload && payload.biz}
+              onLike={handleLikesFromInitialCardsArr}
+              disLike={
+                item.likes.includes(payload && payload._id) ? false : true
+              }
+            />
+          </Grid>
+        ))}
+      </Grid> */}
+    </Box>
+  );
+};
+
+export default HomePage;

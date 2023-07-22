@@ -1,0 +1,20 @@
+/* bottom navigation footer */
+.the-bottomNavBarBox {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #0f0d35;
+
+}
+
+.the-bottomNavBar {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #3e3c61;
+    border: 1px solid #f2cc0f;
+}
