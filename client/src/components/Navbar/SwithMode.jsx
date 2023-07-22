@@ -5,6 +5,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { useDispatch, useSelector } from "react-redux";
 import { darkThemeActions } from "../../redux/darkTheme";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,

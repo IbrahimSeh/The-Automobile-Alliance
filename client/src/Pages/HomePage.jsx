@@ -10,8 +10,7 @@ import CardComponent from "../components/Card/CardComponent";
 import useQueryParams from "../hooks/useQueryParams";
 import ROUTES from "../routes/ROUTES";
 import { Progress } from "flowbite-react";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+
 const HomePage = () => {
   // const [originalCardsArr, setOriginalCardsArr] = useState(null);
   // const [cardsArr, setCardsArr] = useState(null);
@@ -113,8 +112,7 @@ const HomePage = () => {
       <Typography mb={3} variant="h3" color="blue">
         Collection of all cards
       </Typography>
-      <Brightness7Icon />
-      <Brightness4Icon />
+
       <Typography mb={3} variant="h5" color="blue">
         Here you can find bussiness cards from all categories
       </Typography>

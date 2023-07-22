@@ -169,8 +169,8 @@ const Navbar = () => {
           </Box>
           <SearchNavBar />
           <Box sx={{ my: 2, p: 1 }}>
-            <SwithMode />
-            {/* <ToggleColorMode /> */}
+            {/* <SwithMode /> */}
+            <ToggleColorMode />
           </Box>
 
           {/* signin/notSignin navbar */}
