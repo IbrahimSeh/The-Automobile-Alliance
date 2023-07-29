@@ -1,46 +1,30 @@
 import * as React from "react";
 import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
-import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useDispatch, useSelector } from "react-redux";
 import { darkThemeActions } from "../../redux/darkTheme";
+import { Fragment } from "react";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function MyApp() {
   const dispatch = useDispatch();
-  const isDarkTheme = useSelector(
-    (bigPie) => bigPie.darkThemeSlice.isDarkTheme
+  const flagIsDarkTheme = useSelector(
+    (bigPie) => bigPie.darkThemeSlice.flagIsDarkTheme
   );
   const changeTheme = () => {
     dispatch(darkThemeActions.changeTheme());
   };
-  const theme = useTheme();
-  const colorMode = React.useContext(ColorModeContext);
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        bgcolor: "background.default",
-        color: "text.primary",
-        borderRadius: 1,
-        p: 3,
-      }}
-    >
-      {theme.palette.mode} mode
+    <Fragment>
+      {flagIsDarkTheme} mode
       <IconButton sx={{ ml: 1 }} onClick={changeTheme} color="inherit">
-        {theme.palette.mode === "dark" ? (
-          <Brightness7Icon />
-        ) : (
-          <Brightness4Icon />
-        )}
+        {flagIsDarkTheme === "dark" ? <Brightness4Icon /> : <Brightness7Icon />}
       </IconButton>
-    </Box>
+    </Fragment>
   );
 }
 
@@ -54,7 +38,6 @@ function ToggleColorMode() {
     }),
     []
   );
-
   const theme = React.useMemo(
     () =>
       createTheme({

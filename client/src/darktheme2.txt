@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isDarkTheme: false,
-    flagIsDarkTheme: "dark",
+    isDarkTheme: "light",
+    flagIsDarkTheme: false,
 };
 
 const darkThemeSlice = createSlice({
@@ -10,12 +10,14 @@ const darkThemeSlice = createSlice({
     initialState,
     reducers: {
         changeTheme(state) {
-            if (state.isDarkTheme === true) {
-                state.flagIsDarkTheme = "dark"
+            if (state.flagIsDarkTheme) {
+                state.isDarkTheme = "dark"
+                console.log('in dark');
             } else {
-                state.flagIsDarkTheme = "light"
+                state.isDarkTheme = "light"
+                console.log('in light');
             }
-            state.isDarkTheme = !state.isDarkTheme;
+            state.flagIsDarkTheme = !state.flagIsDarkTheme;
         },
         setToDarkTheme(state) {
             state.isDarkTheme = true;
