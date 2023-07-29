@@ -1,7 +1,15 @@
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppBar, Box, Toolbar, Container, Avatar } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Container,
+  Avatar,
+  Button,
+  Typography,
+} from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -15,6 +23,7 @@ import SwithMode from "./SwithMode";
 import ToggleColorMode from "./ToggleColorMode";
 import SearchNavBar from "./SearchNavBar";
 import logo from "../../assets/images/car-showroom.png";
+import DropDownNavLink from "./DropDownNavLink";
 
 // access to all
 const pages = [
@@ -166,10 +175,23 @@ const Navbar = () => {
                   <NavLinkComponent key={page.url} {...page} />
                 ))
               : ""}
+            <DropDownNavLink />
+            {/* <Button>
+              <Typography
+                sx={{
+                  my: 2,
+                  display: "block",
+                  p: 2,
+                }}
+                variant="h5"
+                color={"#9453a6"}
+              >
+                services
+              </Typography>
+            </Button> */}
           </Box>
           <SearchNavBar />
           <Box sx={{ my: 2, p: 1 }}>
-            {/* <SwithMode /> */}
             <ToggleColorMode />
           </Box>
 

@@ -53,5 +53,6 @@
   "browser": {
     "crypto": false,
     "stream": false
-  }
+  },
+  "proxy": "http://localhost:8183"
 }
