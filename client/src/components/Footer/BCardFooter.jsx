@@ -14,7 +14,7 @@ const BCardFooter = () => {
     <div className="the-footer">
       <BottomNavBar />
       <Typography align="center" style={styles.TypographyStyle} variant="h4">
-        R E A C T - M A T E R I A L U-I
+        T H E - A U T O M O B I L E - A L L I A N C E
       </Typography>
 
       <div>

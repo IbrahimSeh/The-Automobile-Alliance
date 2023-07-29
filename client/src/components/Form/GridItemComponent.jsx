@@ -121,7 +121,7 @@ const GridItemComponent = ({
         name={inputKey}
         required={checkIfRequired(inputKey)}
         fullWidth
-        autoFocus={inputKey === "firstName" ? true : false}
+        //autoFocus={inputKey === "firstName" ? true : false}
         helperText=""
         type={getType(inputKey)}
         id={inputKey}

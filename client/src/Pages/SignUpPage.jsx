@@ -54,7 +54,7 @@ const SignUpPage = () => {
         street: inputstate.street,
         houseNumber: inputstate.houseNumber,
         zipCode: +inputstate.zipCode,
-        biz: checkBoxState,
+        //biz: checkBoxState,
       });
       toast.success("A new user has been created");
       navigate(ROUTES.LOGIN);
@@ -100,7 +100,9 @@ const SignUpPage = () => {
         <Typography component="h1" variant="h5">
           REGISTER
         </Typography>
-
+        <Typography component="h1" variant="h5">
+          The road to your next car Starts here!
+        </Typography>
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {Object.entries(inputstate).map(([key, value]) => (
@@ -116,9 +118,9 @@ const SignUpPage = () => {
               </Grid>
             ))}
 
-            <CheckboxComponent
+            {/* <CheckboxComponent
               passCheckBoxFromChildToParent={updatecheckBoxState}
-            />
+            /> */}
             <CRComponent
               cancelBtn={handleBtnCancelClick}
               resetBtn={handleBtnResetClick}

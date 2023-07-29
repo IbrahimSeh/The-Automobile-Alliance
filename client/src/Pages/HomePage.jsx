@@ -109,12 +109,14 @@ const HomePage = () => {
 
   return (
     <Box mt={3}>
-      <Typography mb={3} variant="h3" color="blue">
-        Collection of all cards
+      <Typography mb={3} variant="h3" align="center" color="blue">
+        THE AUTOMOBILE ALLIANCE
       </Typography>
 
       <Typography mb={3} variant="h5" color="blue">
-        Here you can find bussiness cards from all categories
+        The most innovative and technological place to buy and sale cars on the
+        market, Which vehicle you are looking for you can find on our website
+        with the best and fair prices in the market
       </Typography>
       <Typography mb={3} variant="h5" color="blue">
         Collections represents our products organized based on theme. Here
