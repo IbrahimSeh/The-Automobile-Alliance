@@ -3,6 +3,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import DropDownNavLink from "./DropDownNavLink";
+
 const HumborgerNavbar = ({ humgorgerItem }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const handleOpenNavMenu = (event) => {
@@ -10,6 +12,7 @@ const HumborgerNavbar = ({ humgorgerItem }) => {
   };
 
   const handleCloseNavMenu = () => {
+    console.log("on handleCloseNavMenu");
     setAnchorElNav(null);
   };
   return (
@@ -50,7 +53,7 @@ const HumborgerNavbar = ({ humgorgerItem }) => {
                 <Typography
                   sx={{
                     textAlign: "center",
-                    color: `${isActive ? "red" : ""}`,
+                    color: `${isActive ? "warning.main" : "#9453a6"}`,
                   }}
                 >
                   {page.label}
@@ -59,6 +62,9 @@ const HumborgerNavbar = ({ humgorgerItem }) => {
             </NavLink>
           </MenuItem>
         ))}
+        <MenuItem>
+          <DropDownNavLink onCloseNavMenw={handleCloseNavMenu} />
+        </MenuItem>
       </Menu>
     </Box>
   );

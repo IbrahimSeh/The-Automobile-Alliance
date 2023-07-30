@@ -17,6 +17,8 @@ import IsAdminPR from "../components/ProtectedRoute/IsAdminPR";
 import CardSpecification from "../components/Card/CardSpecification";
 import CardEdit from "../components/Card/CardEdit";
 import IsNotLoginPR from "../components/ProtectedRoute/isNotLoginPR";
+import PurchaseCar from "../Pages/PurchaseCar";
+import SaleCar from "../Pages/SaleCar";
 
 const Router = () => {
   return (
@@ -24,6 +26,8 @@ const Router = () => {
       <Route path={ROUTES.HOME} element={<HomePage />} />
       <Route path={ROUTES.FAKEHOME} element={<Navigate to={ROUTES.HOME} />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
+      <Route path={ROUTES.PURCHASECAR} element={<PurchaseCar />} />
+      <Route path={ROUTES.SALECAR} element={<SaleCar />} />
       <Route
         path={ROUTES.LOGIN}
         element={<IsNotLoginPR element={<LogInPage />} />}

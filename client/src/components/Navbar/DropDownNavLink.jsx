@@ -1,31 +1,64 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import NavLinkComponent from "./NavLinkComponent";
 import ROUTES from "../../routes/ROUTES";
+import { NavLink } from "react-router-dom";
+import { Typography } from "@mui/material";
 
-const DropDownNavLink = () => {
+const servicesPages = [
+  {
+    label: "purchasecar",
+    url: ROUTES.PURCHASECAR,
+  },
+  {
+    label: "salecar",
+    url: ROUTES.SALECAR,
+  },
+];
+
+const DropDownNavLink = ({ onCloseNavMenw }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
+    console.log("in handel click");
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    console.log("in on close");
     setAnchorEl(null);
+    if (window.innerWidth < 900) {
+      handelOnCloseNavMenw(); //problem when the screen is not on mobile size(not humburger navbar)
+    }
   };
-
+  const handelOnCloseNavMenw = () => {
+    onCloseNavMenw();
+  };
   return (
     <div>
-      <Button
+      <NavLink
+        sx={{ mt: -1 }}
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Services
-      </Button>
+        <Typography
+          sx={{
+            my: 2,
+            display: "block",
+            p: 2,
+          }}
+          variant="h5"
+          color={"#9453a6"}
+        >
+          Services
+          {open ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
+        </Typography>
+      </NavLink>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -35,9 +68,18 @@ const DropDownNavLink = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <NavLinkComponent label={"purchase a car"} url={""} />
-        <NavLinkComponent label={"sale a car"} url={""} />
-        {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+        <NavLinkComponent
+          key={servicesPages[0].url}
+          onClose={handleClose}
+          // onCloseNavMenw={handelOnCloseNavMenw}
+          {...servicesPages[0]}
+        />
+        <NavLinkComponent
+          key={servicesPages[1].url}
+          onClose={handleClose}
+          // onCloseNavMenw={handelOnCloseNavMenw}
+          {...servicesPages[1]}
+        />
       </Menu>
     </div>
   );

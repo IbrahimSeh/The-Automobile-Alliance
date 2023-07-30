@@ -19,7 +19,6 @@ import NavLinkComponent from "./NavLinkComponent";
 import { authActions } from "../../redux/auth";
 import logoutAvatar from "../../assets/images/logout.png";
 import HumborgerNavbar from "./HumborgerNavbar";
-import SwithMode from "./SwithMode";
 import ToggleColorMode from "./ToggleColorMode";
 import SearchNavBar from "./SearchNavBar";
 import logo from "../../assets/images/car-showroom.png";
@@ -176,19 +175,6 @@ const Navbar = () => {
                 ))
               : ""}
             <DropDownNavLink />
-            {/* <Button>
-              <Typography
-                sx={{
-                  my: 2,
-                  display: "block",
-                  p: 2,
-                }}
-                variant="h5"
-                color={"#9453a6"}
-              >
-                services
-              </Typography>
-            </Button> */}
           </Box>
           <SearchNavBar />
           <Box sx={{ my: 2, p: 1 }}>

@@ -12,7 +12,8 @@ const ROUTES = {
     CREATECARD: "/createcard",
     CARDSPECIFICATION: "/cardspecification",
     CARDEDIT: "/cardedit",
-
+    PURCHASECAR: "/purchasecar",
+    SALECAR: "salecar",
 };
 
 export default ROUTES;
