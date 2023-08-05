@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import CardComponent from "../components/Card/CardComponent";
 import useQueryParams from "../hooks/useQueryParams";
 import ROUTES from "../routes/ROUTES";
+import InterfaceImage from "../components/Home/InterfaceImage";
 
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
@@ -117,6 +118,7 @@ const HomePage = () => {
         market, Which vehicle you are looking for you can find on our website
         with the best and fair prices in the market
       </Typography>
+      <InterfaceImage />
       <Grid container spacing={2}>
         {cardsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>

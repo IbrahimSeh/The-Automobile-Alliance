@@ -1,0 +1,11 @@
+.drop-shadow1 {
+    filter: drop-shadow(30px 10px 4px #4444dd);
+}
+
+.drop-shadow2 {
+    filter: drop-shadow(0 -6mm 4mm rgb(160, 0, 210));
+}
+
+.drop-shadow3 {
+    filter: drop-shadow(0 0 0.75rem crimson);
+}
