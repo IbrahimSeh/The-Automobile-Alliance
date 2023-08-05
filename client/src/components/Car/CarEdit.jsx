@@ -10,7 +10,7 @@ import CRComponent from "../Form/CRComponent";
 import GridItemComponent from "../Form/GridItemComponent";
 import useQueryParams from "../../hooks/useQueryParams";
 
-const CardEdit = () => {
+const CarEdit = () => {
   let qparams = useQueryParams();
   const [value, setValue] = useState(0); // integer state
 
@@ -154,4 +154,4 @@ const CardEdit = () => {
     </Container>
   );
 };
-export default CardEdit;
+export default CarEdit;

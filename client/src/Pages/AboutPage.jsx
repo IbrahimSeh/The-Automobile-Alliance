@@ -1,5 +1,5 @@
 import { Box, Divider, Grid, Typography } from "@mui/material";
-import CardComponentExample from "../components/Card/CardComponentExample";
+import CarComponentExample from "../components/Car/CarComponentExample";
 
 const AboutPage = () => {
   return (
@@ -36,7 +36,7 @@ const AboutPage = () => {
           </Typography>
         </Grid>
         <Grid item xs={6} md={4}>
-          <CardComponentExample />
+          <CarComponentExample />
         </Grid>
       </Grid>
     </Box>

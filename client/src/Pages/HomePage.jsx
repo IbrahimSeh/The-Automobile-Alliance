@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
-import CardComponent from "../components/Card/CardComponent";
+import CarComponent from "../components/Car/CarComponent";
 import useQueryParams from "../hooks/useQueryParams";
 import ROUTES from "../routes/ROUTES";
 import InterfaceImage from "../components/Home/InterfaceImage";
@@ -124,7 +124,7 @@ const HomePage = () => {
       <Grid container spacing={2}>
         {cardsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
-            <CardComponent
+            <CarComponent
               img={item.image ? item.image.url : ""}
               title={item.title}
               subTitle={item.subTitle}

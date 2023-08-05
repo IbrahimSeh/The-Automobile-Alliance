@@ -140,7 +140,12 @@ const Navbar = () => {
   }
 
   return (
-    <AppBar style={navbarstyle} className="the-NavBar" position="static">
+    <AppBar
+      style={navbarstyle}
+      className="the-NavBar"
+      sx={{ width: "103%", ml: -1.5 }}
+      position="static"
+    >
       <Container maxWidth="xl">
         <Toolbar>
           <NavLink activeclassname="is-active" to="/Home">

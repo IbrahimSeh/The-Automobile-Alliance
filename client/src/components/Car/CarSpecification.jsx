@@ -3,9 +3,9 @@ import useQueryParams from "../../hooks/useQueryParams";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import ExtendedCardComponent from "./ExtendedCardComponent";
+import ExtendedCardComponent from "./ExtendedCarComponent";
 
-const CardSpecification = () => {
+const CarSpecification = () => {
   let qparams = useQueryParams();
   const [inputState] = useState({});
   const [userlikeId, setuserlikeId] = useState([]);
@@ -63,4 +63,4 @@ const CardSpecification = () => {
     </Box>
   );
 };
-export default CardSpecification;
+export default CarSpecification;

@@ -1,31 +1,26 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import ROUTES from "../routes/ROUTES";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-
-import ROUTES from "../routes/ROUTES";
-import CardComponent from "../components/Card/CardComponent";
 import useQueryParams from "../hooks/useQueryParams";
+import { toast } from "react-toastify";
+import CardComponent from "../components/Car/CarComponent";
 
-const FavCardsPage = () => {
+const MyCarsPage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-  let userID = "";
-
-  if (localStorage.getItem("token")) {
-    userID = jwt_decode(localStorage.getItem("token"))._id;
-  }
 
   //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cards/get-my-fav-cards")
+      .get("/cards/my-cards")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -109,16 +104,35 @@ const FavCardsPage = () => {
 
   if (cardsArr.length === 0) {
     return (
-      <Typography m={3} variant="h3" color="blue">
-        sorry ! ,you'r Collection of favorite cards is empty.
-      </Typography>
+      <Box className="myCardBox" mt={3}>
+        <Typography m={3} variant="h3" color="blue">
+          sorry ! ,you'r Collection of bussiness cards is empty.
+        </Typography>
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+        >
+          <NavLink mt={3} to={ROUTES.CREATECARD}>
+            <AddCircleIcon
+              sx={{
+                color: "blue",
+                borderRadius: "50%",
+                "&:hover": { color: "#673ab7" },
+                fontSize: "80px",
+              }}
+            />
+          </NavLink>
+        </Grid>
+      </Box>
     );
   }
 
   return (
     <Box className="myCardBox" mt={3}>
       <Typography mb={3} variant="h3" color="blue">
-        Collection of my favorite cards
+        Collection of my cards
       </Typography>
       <Grid container spacing={2}>
         {cardsArr.map((item) => (
@@ -142,20 +156,37 @@ const FavCardsPage = () => {
               bizNumber={item.bizNumber}
               userId={item.user_id}
               onDelete={handleDeleteFromInitialCardsArr}
-              candelete={
-                (payload && payload.isAdmin) ||
-                (item.user_id === userID && payload && payload.biz)
-              }
+              candelete={payload && payload.biz}
               // payload.isAdmin
               onEdit={handleEditFromInitialCardsArr}
-              canEdit={item.user_id === userID && payload && payload.biz}
+              canEdit={payload && payload.biz}
               onLike={handleLikesFromInitialCardsArr}
-              disLike={false}
+              disLike={
+                item.likes.includes(payload && payload._id) ? false : true
+              }
             />
           </Grid>
         ))}
       </Grid>
+
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-end"
+        alignItems="flex-end"
+      >
+        <NavLink mt={3} to={ROUTES.CREATECARD}>
+          <AddCircleIcon
+            sx={{
+              color: "blue",
+              borderRadius: "50%",
+              "&:hover": { color: "#673ab7" },
+              fontSize: "80px",
+            }}
+          />
+        </NavLink>
+      </Grid>
     </Box>
   );
 };
-export default FavCardsPage;
+export default MyCarsPage;

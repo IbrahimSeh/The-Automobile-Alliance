@@ -6,16 +6,16 @@ import AboutPage from "../Pages/AboutPage";
 import LogInPage from "../Pages/LogInPage";
 import SignUpPage from "../Pages/SignUpPage";
 import UserProfilePage from "../Pages/UserProfilePage";
-import FavCardsPage from "../Pages/FavCardsPage";
-import MyCardsPage from "../Pages/MyCardsPage";
+import FavCarsPage from "../Pages/FavCarsPage";
+import MyCarsPage from "../Pages/MyCarsPage";
 import SandBoxPage from "../Pages/SandBoxPage";
-import CreateCard from "../components/Card/CreateCard";
+import CreateCar from "../components/Car/CreateCar";
 import PageNotFound from "../Pages/PageNotFound";
 import IsLoginPR from "../components/ProtectedRoute/IsLoginPR";
 import IsBizPR from "../components/ProtectedRoute/IsBizPR";
 import IsAdminPR from "../components/ProtectedRoute/IsAdminPR";
-import CardSpecification from "../components/Card/CardSpecification";
-import CardEdit from "../components/Card/CardEdit";
+import CarSpecification from "../components/Car/CarSpecification";
+import CarEdit from "../components/Car/CarEdit";
 import IsNotLoginPR from "../components/ProtectedRoute/isNotLoginPR";
 import PurchaseCar from "../Pages/PurchaseCar";
 import SaleCar from "../Pages/SaleCar";
@@ -40,13 +40,13 @@ const Router = () => {
       <Route path={ROUTES.LOGOUT} element={<HomePage />} />
       <Route
         path={ROUTES.FAVCARDS}
-        element={<IsLoginPR element={<FavCardsPage />} />}
+        element={<IsLoginPR element={<FavCarsPage />} />}
       />
       <Route
         path={ROUTES.MYCARDS}
-        element={<IsLoginPR element={<IsBizPR element={<MyCardsPage />} />} />}
+        element={<IsLoginPR element={<IsBizPR element={<MyCarsPage />} />} />}
       ></Route>
-      <Route path={ROUTES.CREATECARD} element={<CreateCard />} />
+      <Route path={ROUTES.CREATECARD} element={<CreateCar />} />
       <Route
         path={ROUTES.SANDBOX}
         element={
@@ -57,8 +57,8 @@ const Router = () => {
           />
         }
       />
-      <Route path={ROUTES.CARDSPECIFICATION} element={<CardSpecification />} />
-      <Route path={ROUTES.CARDEDIT} element={<CardEdit />} />
+      <Route path={ROUTES.CARDSPECIFICATION} element={<CarSpecification />} />
+      <Route path={ROUTES.CARDEDIT} element={<CarEdit />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

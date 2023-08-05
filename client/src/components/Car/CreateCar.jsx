@@ -9,7 +9,7 @@ import SubmitComponent from "../Form/SubmitComponent";
 import CRComponent from "../Form/CRComponent";
 import GridItemComponent from "../Form/GridItemComponent";
 
-const CreateCard = () => {
+const CreateCar = () => {
   const [inputState] = useState({
     title: "",
     subTitle: "",
@@ -117,4 +117,4 @@ const CreateCard = () => {
     </Container>
   );
 };
-export default CreateCard;
+export default CreateCar;

@@ -1,26 +1,31 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { NavLink, useNavigate } from "react-router-dom";
-
-import ROUTES from "../routes/ROUTES";
+import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useQueryParams from "../hooks/useQueryParams";
 import { toast } from "react-toastify";
-import CardComponent from "../components/Card/CardComponent";
 
-const MyCardsPage = () => {
+import ROUTES from "../routes/ROUTES";
+import CarComponent from "../components/Car/CarComponent";
+import useQueryParams from "../hooks/useQueryParams";
+
+const FavCardsPage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+  let userID = "";
+
+  if (localStorage.getItem("token")) {
+    userID = jwt_decode(localStorage.getItem("token"))._id;
+  }
 
   //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cards/my-cards")
+      .get("/cards/get-my-fav-cards")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -104,40 +109,21 @@ const MyCardsPage = () => {
 
   if (cardsArr.length === 0) {
     return (
-      <Box className="myCardBox" mt={3}>
-        <Typography m={3} variant="h3" color="blue">
-          sorry ! ,you'r Collection of bussiness cards is empty.
-        </Typography>
-        <Grid
-          container
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-        >
-          <NavLink mt={3} to={ROUTES.CREATECARD}>
-            <AddCircleIcon
-              sx={{
-                color: "blue",
-                borderRadius: "50%",
-                "&:hover": { color: "#673ab7" },
-                fontSize: "80px",
-              }}
-            />
-          </NavLink>
-        </Grid>
-      </Box>
+      <Typography m={3} variant="h3" color="blue">
+        sorry ! ,you'r Collection of favorite cards is empty.
+      </Typography>
     );
   }
 
   return (
     <Box className="myCardBox" mt={3}>
       <Typography mb={3} variant="h3" color="blue">
-        Collection of my cards
+        Collection of my favorite cards
       </Typography>
       <Grid container spacing={2}>
         {cardsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
-            <CardComponent
+            <CarComponent
               img={item.image ? item.image.url : ""}
               title={item.title}
               subTitle={item.subTitle}
@@ -156,37 +142,20 @@ const MyCardsPage = () => {
               bizNumber={item.bizNumber}
               userId={item.user_id}
               onDelete={handleDeleteFromInitialCardsArr}
-              candelete={payload && payload.biz}
+              candelete={
+                (payload && payload.isAdmin) ||
+                (item.user_id === userID && payload && payload.biz)
+              }
               // payload.isAdmin
               onEdit={handleEditFromInitialCardsArr}
-              canEdit={payload && payload.biz}
+              canEdit={item.user_id === userID && payload && payload.biz}
               onLike={handleLikesFromInitialCardsArr}
-              disLike={
-                item.likes.includes(payload && payload._id) ? false : true
-              }
+              disLike={false}
             />
           </Grid>
         ))}
       </Grid>
-
-      <Grid
-        container
-        direction="row"
-        justifyContent="flex-end"
-        alignItems="flex-end"
-      >
-        <NavLink mt={3} to={ROUTES.CREATECARD}>
-          <AddCircleIcon
-            sx={{
-              color: "blue",
-              borderRadius: "50%",
-              "&:hover": { color: "#673ab7" },
-              fontSize: "80px",
-            }}
-          />
-        </NavLink>
-      </Grid>
     </Box>
   );
 };
-export default MyCardsPage;
+export default FavCardsPage;
