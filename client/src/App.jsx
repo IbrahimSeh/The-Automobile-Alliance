@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Progress from "./components/Progress/progressBar";
-import "./css/App.css";
 import {
   Container,
   ThemeProvider,
@@ -12,20 +11,20 @@ import {
 //redux
 import { useSelector } from "react-redux";
 
-/* toast */
+// toast
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// css
 import "./css/App.css";
 import "./css/BCardFooter.css";
 
 import useLoggedIn from "./hooks/useLoggedIn";
 import Router from "./routes/Router";
+
+// components
 import NavBar from "./components/Navbar/Navbar";
 import BCardFooter from "./components/Footer/BCardFooter";
-
-// import MuiNavbar from "./components/Navbar/MuiNavbar";
-// import Router from "./routes/Router";
 
 const light = {
   palette: {

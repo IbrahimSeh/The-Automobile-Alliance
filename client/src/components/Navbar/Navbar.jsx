@@ -1,15 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Container,
-  Avatar,
-  Button,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, Container, Avatar } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -24,6 +16,7 @@ import SearchNavBar from "./SearchNavBar";
 import logo from "../../assets/images/car-showroom.png";
 import DropDownNavLink from "./DropDownNavLink";
 
+import "../../css/Navbar.css";
 // access to all
 const pages = [
   {
