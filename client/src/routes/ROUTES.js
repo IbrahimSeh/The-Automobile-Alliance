@@ -4,6 +4,7 @@ const ROUTES = {
     ABOUT: "about",
     SIGNUP: "/signup",
     LOGIN: "/login",
+    ADMINLOGIN: "/adminlogin",
     PROFILE: "/profile",
     LOGOUT: "logout",
     FAVCARDS: "/favcards",

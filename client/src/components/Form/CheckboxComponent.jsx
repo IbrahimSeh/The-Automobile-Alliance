@@ -29,7 +29,7 @@ const CheckboxComponent = ({ isChecked, passCheckBoxFromChildToParent }) => {
               color="primary"
             />
           }
-          label="Signup as bussiness"
+          label="Sign Up as Subscription"
         />
       </Grid>
     </Fragment>

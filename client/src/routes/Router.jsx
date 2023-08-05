@@ -19,6 +19,7 @@ import CarEdit from "../components/Car/CarEdit";
 import IsNotLoginPR from "../components/ProtectedRoute/isNotLoginPR";
 import PurchaseCar from "../Pages/PurchaseCar";
 import SaleCar from "../Pages/SaleCar";
+import AdminLogInPage from "../Pages/AdminLogInPage";
 
 const Router = () => {
   return (
@@ -31,6 +32,10 @@ const Router = () => {
       <Route
         path={ROUTES.LOGIN}
         element={<IsNotLoginPR element={<LogInPage />} />}
+      />
+      <Route
+        path={ROUTES.ADMINLOGIN}
+        element={<IsNotLoginPR element={<AdminLogInPage />} />}
       />
       <Route
         path={ROUTES.SIGNUP}

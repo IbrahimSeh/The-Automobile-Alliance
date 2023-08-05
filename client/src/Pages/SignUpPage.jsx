@@ -118,9 +118,9 @@ const SignUpPage = () => {
               </Grid>
             ))}
 
-            {/* <CheckboxComponent
+            <CheckboxComponent
               passCheckBoxFromChildToParent={updatecheckBoxState}
-            /> */}
+            />
             <CRComponent
               cancelBtn={handleBtnCancelClick}
               resetBtn={handleBtnResetClick}
@@ -130,8 +130,18 @@ const SignUpPage = () => {
             onClick={handleBtnSubmitClick}
             disablebtn={btnDisable}
           />
-          <Grid container justifyContent="flex-end">
-            <Grid item>
+          {/* justifyContent="flex-start" */}
+          <Grid container spacing={54}>
+            <Grid item xs={12} sm={6}>
+              <Link
+                href="http://localhost:3000/adminlogin"
+                variant="body2"
+                underline="hover"
+              >
+                Admin? Sign in from here
+              </Link>
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <Link
                 href="http://localhost:3000/login"
                 variant="body2"
