@@ -10,6 +10,7 @@ import CardComponent from "../components/Card/CardComponent";
 import useQueryParams from "../hooks/useQueryParams";
 import ROUTES from "../routes/ROUTES";
 import InterfaceImage from "../components/Home/InterfaceImage";
+import DviderLine from "../components/Home/DviderLine";
 
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
@@ -119,6 +120,7 @@ const HomePage = () => {
         with the best and fair prices in the market
       </Typography>
       <InterfaceImage />
+      <DviderLine text={"ALL THE CAR IN OUR ALLIANCE"} />
       <Grid container spacing={2}>
         {cardsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
