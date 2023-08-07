@@ -10,6 +10,7 @@ import ROUTES from "../../routes/ROUTES";
 import NavLinkComponent from "./NavLinkComponent";
 import { authActions } from "../../redux/auth";
 import logoutAvatar from "../../assets/images/logout.png";
+import favoriteAvatar from "../../assets/images/favorites.png";
 import HumborgerNavbar from "./HumborgerNavbar";
 import ToggleColorMode from "./ToggleColorMode";
 import SearchNavBar from "./SearchNavBar";
@@ -42,7 +43,7 @@ const notAuthPages = [
 ];
 
 //logged in users
-const authedPages = [
+let authedPages = [
   {
     label: <Avatar alt="logout Avatar" src={logoutAvatar} />,
     url: ROUTES.LOGOUT,
@@ -65,19 +66,18 @@ const authedPagesHumborger = [
   },
 ];
 
-//logged in any users
-const anyUserConnected = [
-  {
-    label: "FAV CARDS",
-    url: ROUTES.FAVCARDS,
-  },
-];
-
-// logged in as biz
-const userAsBiz = [
+// logged in as Subscription
+const userAsSubscription = [
   {
     label: "MY CARDS",
     url: ROUTES.MYCARDS,
+  },
+];
+
+const userAsSubscription2 = [
+  {
+    label: <Avatar alt="logout Avatar" src={favoriteAvatar} />,
+    url: ROUTES.FAVCARDS,
   },
 ];
 
@@ -128,19 +128,20 @@ const Navbar = () => {
   humgorgerItem = humgorgerItem.concat(pages);
 
   if (isLoggedIn) {
-    humgorgerItem = humgorgerItem.concat(
-      anyUserConnected,
-      authedPagesHumborger
-    );
+    humgorgerItem = humgorgerItem.concat(authedPagesHumborger);
   } else {
     humgorgerItem = humgorgerItem.concat(notAuthPages);
   }
 
-  if (payload && payload.biz) {
-    humgorgerItem = humgorgerItem.concat(userAsBiz);
+  if (payload && payload.isSubscription) {
+    humgorgerItem = humgorgerItem.concat(userAsSubscription);
   }
   if (payload && payload.isAdmin) {
     humgorgerItem = humgorgerItem.concat(userAsAdmin);
+  }
+
+  if (payload && payload.isSubscription) {
+    authedPages = authedPages.concat(userAsSubscription2);
   }
 
   return (
@@ -161,13 +162,8 @@ const Navbar = () => {
               .map((page) => (
                 <NavLinkComponent key={page.url} {...page} />
               ))}
-            {isLoggedIn
-              ? anyUserConnected.map((page) => (
-                  <NavLinkComponent key={page.url} {...page} />
-                ))
-              : ""}
-            {payload && payload.biz
-              ? userAsBiz.map((page) => (
+            {payload && payload.isSubscription
+              ? userAsSubscription.map((page) => (
                   <NavLinkComponent key={page.url} {...page} />
                 ))
               : ""}
