@@ -130,7 +130,6 @@ const SignUpPage = () => {
             onClick={handleBtnSubmitClick}
             disablebtn={btnDisable}
           />
-          {/* justifyContent="flex-start" */}
           <Grid container spacing={54}>
             <Grid item xs={12} sm={6}>
               <Link

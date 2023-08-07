@@ -27,7 +27,7 @@ const HomePage = () => {
   //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cards/cards")
+      .get("/cards")
       .then(({ data }) => {
         filterFunc(data);
       })

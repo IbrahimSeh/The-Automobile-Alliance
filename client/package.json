@@ -55,5 +55,5 @@
     "crypto": false,
     "stream": false
   },
-  "proxy": "http://localhost:8183"
+  "proxy": "http://localhost:8181"
 }
