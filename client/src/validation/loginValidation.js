@@ -8,15 +8,15 @@ const loginSchema = Joi.object({
 
         .required(),
     password: Joi.string()
-        .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z]).{0,}$"))
+        .pattern(new RegExp(
+            /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
+        ))
         .messages({
             "string.empty": "the password should not be empty",
             "string.pattern.base":
                 "the password should be supper protected, this mean that its should contain only upper and lower case latter's",
         })
-        .min(2)
-        .max(10)
-        .required(),
+        .min(6).max(1024).required(),
 });
 
 const validateLoginSchema = (userInput) => validation(loginSchema, userInput);

@@ -39,22 +39,28 @@ const SignUpPage = () => {
 
   const handleBtnSubmitClick = async (ev) => {
     try {
-      await axios.post("/users/register", {
-        firstName: inputstate.firstName,
-        middleName: inputstate.middleName,
-        lastName: inputstate.lastName,
+      await axios.post("/users", {
+        name: {
+          first: inputstate.firstName,
+          middle: inputstate.middleName,
+          last: inputstate.lastName,
+        },
         phone: inputstate.phone,
         email: inputstate.email,
         password: inputstate.password,
-        imageUrl: inputstate.imageUrl,
-        imageAlt: inputstate.imageAlt,
-        state: inputstate.state,
-        country: inputstate.country,
-        city: inputstate.city,
-        street: inputstate.street,
-        houseNumber: inputstate.houseNumber,
-        zipCode: +inputstate.zipCode,
-        //biz: checkBoxState,
+        image: {
+          url: inputstate.imageUrl,
+          alt: inputstate.imageAlt,
+        },
+        address: {
+          state: inputstate.state,
+          country: inputstate.country,
+          city: inputstate.city,
+          street: inputstate.street,
+          houseNumber: inputstate.houseNumber,
+          zip: +inputstate.zipCode,
+        },
+        isSubscription: checkBoxState,
       });
       toast.success("A new user has been created");
       navigate(ROUTES.LOGIN);

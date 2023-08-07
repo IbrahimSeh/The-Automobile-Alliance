@@ -14,8 +14,7 @@ const registerSchema = Joi.object({
         .required(),
     password: Joi.string()
         .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$", "i"))
-        .min(2)
-        .max(10)
+        .min(6).max(1024)
         .required(),
     imgUrl: Joi.string().min(6).max(1024).allow(null, ''),
     // pattern(new RegExp("(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)")).
@@ -27,7 +26,7 @@ const registerSchema = Joi.object({
     street: Joi.string().min(2).max(256).required(),
     houseNumber: Joi.string().pattern(new RegExp("^[1-9]\\d*(?:[ -]?(?:[a-zA-Z]+|[1-9]\\d*))?$")).min(1).max(256).required(),
     zipCode: Joi.number().min(1).max(99999999),
-    isBussiness: Joi.boolean(),
+    isSubscription: Joi.boolean(),
 });
 
 const signupValidation = (userInput) =>
