@@ -5,7 +5,7 @@ import { AppBar, Box, Toolbar, Container, Avatar } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import jwt_decode from "jwt-decode";
 import ROUTES from "../../routes/ROUTES";
 import NavLinkComponent from "./NavLinkComponent";
 import { authActions } from "../../redux/auth";
@@ -95,8 +95,12 @@ const Navbar = () => {
   const [imgUser, setimgUser] = React.useState("");
   useEffect(() => {
     if (isLoggedIn) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
       axios
-        .get("/users/userInfo")
+        .get("/users/" + jwt_decode(token)._id)
         .then(({ data }) => {
           setimgUser(data.imageUrl);
         })

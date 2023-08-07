@@ -10,7 +10,7 @@ const useLoggedIn = () => {
             if (!token) {
                 return;
             }
-            const { data } = await axios.get("/users/userInfo");
+            const { data } = await axios.get("/users/" + jwt_decode(token)._id);
             const payload = jwt_decode(token);
             dispatch(authActions.login(payload));
             return data;
