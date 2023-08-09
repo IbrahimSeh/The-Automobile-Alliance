@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 
-const NavLinkComponent = ({ url, label, onClose, onCloseNavMenw, ...rest }) => {
+const NavLinkComponent = ({ url, label, onClose, ...rest }) => {
   return (
     <NavLink to={url} onClick={onClose} {...rest}>
       {({ isActive }) => (

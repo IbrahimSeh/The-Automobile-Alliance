@@ -4,15 +4,21 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import DropDownNavLink from "./DropDownNavLink";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux/auth";
 
 const HumborgerNavbar = ({ humgorgerItem }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
+  const dispatch = useDispatch();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    console.log("on handleCloseNavMenu");
+  const handleCloseNavMenu = (ev) => {
+    if (ev.target.innerText === "Logout") {
+      localStorage.removeItem("token");
+      dispatch(authActions.logout());
+    }
     setAnchorElNav(null);
   };
   return (
@@ -48,7 +54,6 @@ const HumborgerNavbar = ({ humgorgerItem }) => {
         {humgorgerItem.map((page) => (
           <MenuItem key={"miniLinks" + page.url} onClick={handleCloseNavMenu}>
             <NavLink to={page.url}>
-              {/* if the current page and the link is the same then it will change the color of the link */}
               {({ isActive }) => (
                 <Typography
                   sx={{

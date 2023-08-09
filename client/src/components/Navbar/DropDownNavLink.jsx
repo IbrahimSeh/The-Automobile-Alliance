@@ -23,18 +23,16 @@ const DropDownNavLink = ({ onCloseNavMenw }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
-    console.log("in handel click");
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
-    console.log("in on close");
+  const handleClose = (ev) => {
     setAnchorEl(null);
     if (window.innerWidth < 900) {
-      handelOnCloseNavMenw(); //problem when the screen is not on mobile size(not humburger navbar)
+      handelOnCloseNavMenw(ev); //problem when the screen is not on mobile size(not humburger navbar)
     }
   };
-  const handelOnCloseNavMenw = () => {
-    onCloseNavMenw();
+  const handelOnCloseNavMenw = (ev) => {
+    onCloseNavMenw(ev);
   };
   return (
     <div>
@@ -71,13 +69,11 @@ const DropDownNavLink = ({ onCloseNavMenw }) => {
         <NavLinkComponent
           key={servicesPages[0].url}
           onClose={handleClose}
-          // onCloseNavMenw={handelOnCloseNavMenw}
           {...servicesPages[0]}
         />
         <NavLinkComponent
           key={servicesPages[1].url}
           onClose={handleClose}
-          // onCloseNavMenw={handelOnCloseNavMenw}
           {...servicesPages[1]}
         />
       </Menu>

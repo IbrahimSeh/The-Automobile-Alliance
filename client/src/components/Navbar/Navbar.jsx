@@ -74,13 +74,18 @@ const userAsSubscription = [
   },
 ];
 
-const userAsSubscription2 = [
+const userAsSubscription2Logo = [
   {
     label: <Avatar alt="logout Avatar" src={favoriteAvatar} />,
     url: ROUTES.FAVCARDS,
   },
 ];
-
+const userAsSubscription2 = [
+  {
+    label: "FAVORITE CAR",
+    url: ROUTES.FAVCARDS,
+  },
+];
 const userAsAdmin = [
   {
     label: "SANDBOX",
@@ -116,6 +121,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const logoutClick = () => {
+    console.log("in log out function");
     localStorage.removeItem("token");
     dispatch(authActions.logout());
   };
@@ -134,14 +140,13 @@ const Navbar = () => {
   }
 
   if (payload && payload.isSubscription) {
-    humgorgerItem = humgorgerItem.concat(userAsSubscription);
+    humgorgerItem = humgorgerItem.concat(
+      userAsSubscription,
+      userAsSubscription2
+    );
   }
   if (payload && payload.isAdmin) {
     humgorgerItem = humgorgerItem.concat(userAsAdmin);
-  }
-
-  if (payload && payload.isSubscription) {
-    authedPages = authedPages.concat(userAsSubscription2);
   }
 
   return (
@@ -196,8 +201,13 @@ const Navbar = () => {
               : notAuthPages.map((page) => (
                   <NavLinkComponent key={page.url} {...page} />
                 ))}
+            {/* user as Subscription */}
+            {payload && payload.isSubscription
+              ? userAsSubscription2Logo.map((page) => (
+                  <NavLinkComponent key={page.url} {...page} />
+                ))
+              : ""}
           </Box>
-
           <HumborgerNavbar humgorgerItem={humgorgerItem} />
         </Toolbar>
       </Container>
