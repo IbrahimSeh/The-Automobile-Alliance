@@ -27,7 +27,7 @@ const HomePage = () => {
   //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cards")
+      .get("/cars")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -79,7 +79,7 @@ const HomePage = () => {
 
   const handleDeleteFromInitialCardsArr = async (id) => {
     try {
-      await axios.delete("/cards/" + id);
+      await axios.delete("/cars/" + id);
       setCardsArr((newCardsArr) =>
         newCardsArr.filter((item) => item._id != id)
       );
@@ -89,19 +89,19 @@ const HomePage = () => {
   };
 
   const handleEditFromInitialCardsArr = (id) => {
-    navigate(`${ROUTES.CARDEDIT}/?cardId=${id}`);
+    navigate(`${ROUTES.CARDEDIT}/?carId=${id}`);
   };
 
   const handleLikesFromInitialCardsArr = async (id) => {
     try {
-      await axios.patch("/cards/card-like/" + id); // /cards/:id
+      await axios.patch("/cars/car-like/" + id); // /cards/:id
       window.location.reload();
     } catch (err) {
-      console.log("error when liking card", err.response.data);
+      console.log("error when liking car", err.response.data);
     }
   };
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARDSPECIFICATION}/?cardId=${id}`);
+    navigate(`${ROUTES.CARDSPECIFICATION}/?carId=${id}`);
   };
 
   if (!cardsArr) {

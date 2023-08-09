@@ -1,4 +1,5 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
+import CreateIcon from "@mui/icons-material/Create";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -11,20 +12,22 @@ import GridItemComponent from "../Form/GridItemComponent";
 
 const CreateCar = () => {
   const [inputState] = useState({
-    title: "",
-    subTitle: "",
-    description: "",
+    manufacturer: "",
+    type: "",
+    subType: "",
+    yearOfProduction: "",
+    previousOwners: "",
+    kilometers: "",
+    engineType: "",
+    fuelType: "",
+    phone: "",
+    email: "",
+    url: "",
+    alt: "",
     state: "",
     country: "",
     city: "",
     street: "",
-    houseNumber: "",
-    zipCode: "",
-    phone: "",
-    email: "",
-    web: "",
-    url: "",
-    alt: "",
   });
 
   const navigate = useNavigate();
@@ -33,20 +36,26 @@ const CreateCar = () => {
   const handleBtnSubmitClick = async (ev) => {
     try {
       await axios.post("/cards/", {
-        title: inputState.title,
-        subTitle: inputState.subTitle,
-        description: inputState.description,
-        state: inputState.state,
-        country: inputState.country,
-        city: inputState.city,
-        street: inputState.street,
-        houseNumber: inputState.houseNumber,
-        email: inputState.email,
-        zipCode: inputState.zipCode,
-        phone: inputState.phone,
-        web: inputState.web,
-        url: inputState.url,
-        alt: inputState.alt,
+        manufacturerData: {
+          manufacturer: inputState.manufacturer,
+          type: inputState.type,
+          subtype: inputState.subtype,
+        },
+        yearOfProduction: inputState.yearOfProduction,
+        previousOwners: inputState.previousOwners,
+        kilometers: inputState.kilometers,
+        engine: {
+          engineType: inputState.engineType,
+          fuelType: inputState.fuelType,
+        },
+        imagesOfTheCar: { url: inputState.url, alt: inputState.alt },
+        address: {
+          state: inputState.state,
+          country: inputState.country,
+          city: inputState.city,
+          street: inputState.street,
+        },
+        communications: { phone: inputState.phone, email: inputState.email },
       });
 
       toast.success("A new card has been created");
@@ -84,10 +93,12 @@ const CreateCar = () => {
           alignItems: "center",
         }}
       >
+        <Avatar sx={{ m: 1, bgcolor: "#945a61" }}>
+          <CreateIcon />
+        </Avatar>
         <Typography component="h1" variant="h5">
-          CREATE CARD
+          CREATE A CAR SALES FORM
         </Typography>
-
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {Object.entries(inputState).map(([key, value]) => (

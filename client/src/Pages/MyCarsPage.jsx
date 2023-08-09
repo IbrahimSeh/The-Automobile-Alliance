@@ -20,7 +20,7 @@ const MyCarsPage = () => {
   //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cards/my-cards")
+      .get("/cars/my-cars")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -72,7 +72,7 @@ const MyCarsPage = () => {
 
   const handleDeleteFromInitialCardsArr = async (id) => {
     try {
-      await axios.delete("/cards/" + id); // /cards/:id
+      await axios.delete("/cars/" + id); // /cards/:id
       setCardsArr((newCardsArr) =>
         newCardsArr.filter((item) => item._id != id)
       );
@@ -83,19 +83,19 @@ const MyCarsPage = () => {
 
   const handleLikesFromInitialCardsArr = async (id) => {
     try {
-      await axios.patch("/cards/card-like/" + id); // /cards/:id
+      await axios.patch("/cars/car-like/" + id); // /cards/:id
       window.location.reload();
     } catch (err) {
-      console.log("error when liking card", err.response.data);
+      console.log("error when liking car", err.response.data);
     }
   };
 
   const handleEditFromInitialCardsArr = (id) => {
-    navigate(`${ROUTES.CARDEDIT}/?cardId=${id}`);
+    navigate(`${ROUTES.CARDEDIT}/?carId=${id}`);
   };
 
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARDSPECIFICATION}/?cardId=${id}`);
+    navigate(`${ROUTES.CARDSPECIFICATION}/?carId=${id}`);
   };
 
   if (!cardsArr) {
@@ -106,7 +106,7 @@ const MyCarsPage = () => {
     return (
       <Box className="myCardBox" mt={3}>
         <Typography m={3} variant="h3" color="blue">
-          sorry ! ,you'r Collection of bussiness cards is empty.
+          sorry ! ,you'r Collection cars is empty.
         </Typography>
         <Grid
           container
@@ -132,7 +132,7 @@ const MyCarsPage = () => {
   return (
     <Box className="myCardBox" mt={3}>
       <Typography mb={3} variant="h3" color="blue">
-        Collection of my cards
+        Collection of my cars
       </Typography>
       <Grid container spacing={2}>
         {cardsArr.map((item) => (

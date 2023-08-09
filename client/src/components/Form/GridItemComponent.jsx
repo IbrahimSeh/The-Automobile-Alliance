@@ -2,7 +2,7 @@ import { Alert, TextField } from "@mui/material";
 import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
 import validateRegisterSchema from "../../validation/signupValidation";
-import validateCardSchema from "../../validation/CreateCardValidation";
+import validateCardSchema from "../../validation/CreateCarValidation";
 
 const GridItemComponent = ({
   inputKey,
@@ -68,7 +68,7 @@ const GridItemComponent = ({
         onBlur(false);
       }
     } else {
-      if (schema === "user" || schema === "card") {
+      if (schema === "user" || schema === "car") {
         onBlur(true);
       }
     }

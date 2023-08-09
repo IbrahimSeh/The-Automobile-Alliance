@@ -12,7 +12,7 @@ import SandBoxPage from "../Pages/SandBoxPage";
 import CreateCar from "../components/Car/CreateCar";
 import PageNotFound from "../Pages/PageNotFound";
 import IsLoginPR from "../components/ProtectedRoute/IsLoginPR";
-import IsBizPR from "../components/ProtectedRoute/IsBizPR";
+import IsBizPR from "../components/ProtectedRoute/IsSubscriptionPR";
 import IsAdminPR from "../components/ProtectedRoute/IsAdminPR";
 import CarSpecification from "../components/Car/CarSpecification";
 import CarEdit from "../components/Car/CarEdit";
@@ -48,8 +48,8 @@ const Router = () => {
         element={<IsLoginPR element={<FavCarsPage />} />}
       />
       <Route
-        path={ROUTES.MYCARDS}
-        element={<IsLoginPR element={<IsBizPR element={<MyCarsPage />} />} />}
+        path={ROUTES.ADDCAR}
+        element={<IsLoginPR element={<IsAdminPR element={<MyCarsPage />} />} />}
       ></Route>
       <Route path={ROUTES.CREATECARD} element={<CreateCar />} />
       <Route

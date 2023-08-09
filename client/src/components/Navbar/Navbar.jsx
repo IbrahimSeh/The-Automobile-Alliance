@@ -1,7 +1,14 @@
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppBar, Box, Toolbar, Container, Avatar } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Container,
+  Avatar,
+  Tooltip,
+} from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -10,7 +17,8 @@ import ROUTES from "../../routes/ROUTES";
 import NavLinkComponent from "./NavLinkComponent";
 import { authActions } from "../../redux/auth";
 import logoutAvatar from "../../assets/images/logout.png";
-import favoriteAvatar from "../../assets/images/favorites.png";
+import Fade from "@mui/material/Fade";
+import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
 import HumborgerNavbar from "./HumborgerNavbar";
 import ToggleColorMode from "./ToggleColorMode";
 import SearchNavBar from "./SearchNavBar";
@@ -45,7 +53,16 @@ const notAuthPages = [
 //logged in users
 let authedPages = [
   {
-    label: <Avatar alt="logout Avatar" src={logoutAvatar} />,
+    label: (
+      <Tooltip
+        TransitionComponent={Fade}
+        TransitionProps={{ timeout: 600 }}
+        title="LogOut"
+        placement="bottom-end"
+      >
+        <Avatar alt="logout Avatar" src={logoutAvatar} />
+      </Tooltip>
+    ),
     url: ROUTES.LOGOUT,
   },
   {
@@ -66,17 +83,18 @@ const authedPagesHumborger = [
   },
 ];
 
-// logged in as Subscription
-const userAsSubscription = [
-  {
-    label: "MY CARDS",
-    url: ROUTES.MYCARDS,
-  },
-];
-
 const userAsSubscription2Logo = [
   {
-    label: <Avatar alt="logout Avatar" src={favoriteAvatar} />,
+    label: (
+      <Tooltip
+        TransitionComponent={Fade}
+        TransitionProps={{ timeout: 600 }}
+        title="Favorite Cars"
+        placement="bottom-end"
+      >
+        <FavoriteBorderTwoToneIcon fontSize="large" />
+      </Tooltip>
+    ),
     url: ROUTES.FAVCARDS,
   },
 ];
@@ -116,12 +134,20 @@ const Navbar = () => {
     }
   }, [isLoggedIn]);
 
-  authedPages[1].label = <Avatar alt="user Avatar" src={imgUser} />;
+  authedPages[1].label = (
+    <Tooltip
+      TransitionComponent={Fade}
+      TransitionProps={{ timeout: 600 }}
+      title="User Profile"
+      placement="bottom-end"
+    >
+      <Avatar alt="user Avatar" src={imgUser} />
+    </Tooltip>
+  );
   const payload = useSelector((bigState) => bigState.authSlice.payload);
   const dispatch = useDispatch();
 
   const logoutClick = () => {
-    console.log("in log out function");
     localStorage.removeItem("token");
     dispatch(authActions.logout());
   };
@@ -140,10 +166,7 @@ const Navbar = () => {
   }
 
   if (payload && payload.isSubscription) {
-    humgorgerItem = humgorgerItem.concat(
-      userAsSubscription,
-      userAsSubscription2
-    );
+    humgorgerItem = humgorgerItem.concat(userAsSubscription2);
   }
   if (payload && payload.isAdmin) {
     humgorgerItem = humgorgerItem.concat(userAsAdmin);
@@ -167,11 +190,6 @@ const Navbar = () => {
               .map((page) => (
                 <NavLinkComponent key={page.url} {...page} />
               ))}
-            {payload && payload.isSubscription
-              ? userAsSubscription.map((page) => (
-                  <NavLinkComponent key={page.url} {...page} />
-                ))
-              : ""}
             {payload && payload.isAdmin
               ? userAsAdmin.map((page) => (
                   <NavLinkComponent key={page.url} {...page} />

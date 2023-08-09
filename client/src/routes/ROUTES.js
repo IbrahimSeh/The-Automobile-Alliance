@@ -8,7 +8,7 @@ const ROUTES = {
     PROFILE: "/profile",
     LOGOUT: "logout",
     FAVCARDS: "/favcards",
-    MYCARDS: "/mycards",
+    ADDCAR: "/addcar",
     SANDBOX: "/sandbox",
     CREATECARD: "/createcard",
     CARDSPECIFICATION: "/cardspecification",

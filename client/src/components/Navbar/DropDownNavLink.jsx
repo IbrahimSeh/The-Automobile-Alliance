@@ -5,8 +5,8 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import NavLinkComponent from "./NavLinkComponent";
 import ROUTES from "../../routes/ROUTES";
-import { NavLink } from "react-router-dom";
 import { Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const servicesPages = [
   {
@@ -17,9 +17,14 @@ const servicesPages = [
     label: "salecar",
     url: ROUTES.SALECAR,
   },
+  {
+    label: "add car",
+    url: ROUTES.ADDCAR,
+  },
 ];
 
 const DropDownNavLink = ({ onCloseNavMenw }) => {
+  const payload = useSelector((bigState) => bigState.authSlice.payload);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -36,7 +41,7 @@ const DropDownNavLink = ({ onCloseNavMenw }) => {
   };
   return (
     <div>
-      <NavLink
+      <Button
         sx={{ mt: -1 }}
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
@@ -56,7 +61,7 @@ const DropDownNavLink = ({ onCloseNavMenw }) => {
           Services
           {open ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
         </Typography>
-      </NavLink>
+      </Button>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -76,6 +81,15 @@ const DropDownNavLink = ({ onCloseNavMenw }) => {
           onClose={handleClose}
           {...servicesPages[1]}
         />
+        {payload && payload.isAdmin ? (
+          <NavLinkComponent
+            key={servicesPages[2].url}
+            onClose={handleClose}
+            {...servicesPages[2]}
+          />
+        ) : (
+          ""
+        )}
       </Menu>
     </div>
   );

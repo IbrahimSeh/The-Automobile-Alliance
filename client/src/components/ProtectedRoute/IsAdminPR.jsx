@@ -7,12 +7,13 @@ const IsAdminPR = ({ element }) => {
   //* html section
   const token = localStorage.getItem("token");
   const decodeToken = jwt_decode(token);
-  const isAdmin =
-    String(
-      JSON.stringify(decodeToken).split(":")[3].split(",")[0]
-    ).toLowerCase() === "true";
+  // console.log("token = ", decodeToken.isAdmin);
+  // const isAdmin =
+  //   String(
+  //     JSON.stringify(decodeToken).split(":")[3].split(",")[0]
+  //   ).toLowerCase() === "true";
 
-  if (isAdmin) {
+  if (decodeToken.isAdmin) {
     return element;
   } else {
     toast.warning("you must login as admin user first");

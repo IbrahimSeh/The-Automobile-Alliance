@@ -7,12 +7,11 @@ const IsBizPR = ({ element }) => {
   //* html section
   const token = localStorage.getItem("token");
   const decodeToken = jwt_decode(token);
-  const isBiz =
-    String(
-      JSON.stringify(decodeToken).split(":")[2].split(",")[0]
-    ).toLowerCase() === "true";
-
-  if (isBiz) {
+  // const isBiz =
+  //   String(
+  //     JSON.stringify(decodeToken).split(":")[2].split(",")[0]
+  //   ).toLowerCase() === "true";
+  if (decodeToken.isSubscription) {
     return element;
   } else {
     toast.warning("you must login as bussiness user first");

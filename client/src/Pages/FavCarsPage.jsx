@@ -25,7 +25,7 @@ const FavCardsPage = () => {
   //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cards/get-my-fav-cards")
+      .get("/cards/my-cards")
       .then(({ data }) => {
         filterFunc(data);
       })
