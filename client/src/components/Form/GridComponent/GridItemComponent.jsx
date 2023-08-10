@@ -1,9 +1,11 @@
-import { Alert, MenuItem, TextField } from "@mui/material";
+import { Alert, TextField } from "@mui/material";
 import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
 import validateRegisterSchema from "../../../validation/signupValidation";
 import validateCarSchema from "../../../validation/CreateCarValidation";
-import carManufacturer from "./carManufacturer";
+import getLabel from "./helper/getLabel";
+import getType from "./helper/getType";
+import checkIfRequired from "./helper/checkIfRequired";
 
 const GridItemComponent = ({
   inputKey,
@@ -20,21 +22,25 @@ const GridItemComponent = ({
     phone: "",
     email: "",
     password: "",
-    imgUrl: "",
-    imgAlt: "",
+    url: "",
+    alt: "",
     state: "",
     country: "",
     city: "",
     street: "",
     houseNumber: "",
-    zip: "",
+    zipCode: "",
     title: "",
     subTitle: "",
     description: "",
-    zipCode: "",
     web: "",
-    url: "",
-    alt: "",
+    type: "",
+    subType: "",
+    yearOfProduction: "",
+    previousOwners: "",
+    kilometers: "",
+    engineType: "",
+    fuelType: "",
   });
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   let joiResponse;
@@ -75,102 +81,31 @@ const GridItemComponent = ({
     }
   };
 
-  const getType = (inputKey) => {
-    switch (inputKey) {
-      case "email":
-        return "email";
-      case "password":
-        return "password";
-      default:
-        return;
-    }
-  };
-
-  const getLabel = (label) => {
-    let newLabel = "";
-    let arrUppCase = [];
-    for (let i = 0; i < label.length; i++) {
-      //store the index of uppCase characters
-      if (label[i] === label[i].toUpperCase()) {
-        arrUppCase.push(i);
-      }
-    }
-    let prevIndex = 0;
-    for (let i = 0; i < arrUppCase.length; i++) {
-      //build new str : add " "before uppCase & conver char to lowCase
-      newLabel +=
-        label.slice(prevIndex + 1, arrUppCase[i]) +
-        " " +
-        label[arrUppCase[i]].toLowerCase();
-      prevIndex = arrUppCase[i];
-    }
-    newLabel += label.slice(arrUppCase[arrUppCase.length - 1] + 1); //add the last segment of str(after the last uppCase char)
-    return arrUppCase.length === 0 ? label : label[0] + newLabel;
-  };
-
-  const checkIfRequired = (inputKey) => {
-    switch (inputKey) {
-      case "middleName":
-        return false;
-      case "state":
-        return false;
-      case "zipCode":
-        return false;
-      case "web":
-        return false;
-      case "url":
-        return false;
-      case "alt":
-        return false;
-      case "subType":
-        return false;
-      default:
-        return true;
-    }
-  };
-  // const getSelection = (inputKey) => {
-  //   switch (inputKey) {
-  //     case "manufacturer":
-  //       return true;
-  //     default:
-  //       return false;
-  //   }
-  // };
-
   return (
     <Fragment>
-      {inputKey === "manufacturer" ? (
-        <textFieldSelect inputKey getLabel handleInputChange handelBlurChange />
-      ) : (
-        <Fragment>
-          <TextField
-            autoComplete={"given-" + inputKey}
-            name={inputKey}
-            required={checkIfRequired(inputKey)}
-            fullWidth
-            helperText=""
-            type={getType(inputKey)}
-            //select={getSelection(inputKey)}
-            id={inputKey}
-            label={getLabel(inputKey)}
-            value={
-              inputState[inputKey] == "" ? inputValue : inputState[inputKey]
-            }
-            onChange={handleInputChange}
-            onBlur={handelBlurChange}
-          />
-          {inputsErrorsState && inputsErrorsState[inputKey] && (
-            <Alert severity="warning">
-              {inputsErrorsState[inputKey].map((item) => (
-                <div key={`${inputKey}-errors` + item}>
-                  {item.includes("pattern:")
-                    ? item.split("pattern:")[0] + "pattern"
-                    : item}
-                </div>
-              ))}
-            </Alert>
-          )}
-        </Fragment>
+      <TextField
+        autoComplete={"given-" + inputKey}
+        name={inputKey}
+        required={checkIfRequired(inputKey)}
+        fullWidth
+        helperText=""
+        type={getType(inputKey)}
+        id={inputKey}
+        label={getLabel(inputKey)}
+        value={inputState[inputKey] === "" ? inputValue : inputState[inputKey]}
+        onChange={handleInputChange}
+        onBlur={handelBlurChange}
+      />
+      {inputsErrorsState && inputsErrorsState[inputKey] && (
+        <Alert severity="warning">
+          {inputsErrorsState[inputKey].map((item) => (
+            <div key={`${inputKey}-errors` + item}>
+              {item.includes("pattern:")
+                ? item.split("pattern:")[0] + "pattern"
+                : item}
+            </div>
+          ))}
+        </Alert>
       )}
     </Fragment>
   );

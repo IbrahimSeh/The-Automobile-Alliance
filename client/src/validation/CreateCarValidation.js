@@ -5,7 +5,7 @@ import validation from "./validation";
 const createCardSchema = Joi.object({
     manufacturer: Joi.string().pattern(new RegExp("^[A-Z][a-z0-9-\\s]{0,}$", "i")).min(2).max(256).required(),
     type: Joi.string().pattern(new RegExp("^[A-Z][a-z0-9-\\s]{0,}$", "i")).min(2).max(256).required(),
-    subtype: Joi.string().min(1).max(1024).allow(null, ''),
+    subtype: Joi.string().max(1024).allow(null, ''),
     yearOfProduction: Joi.number().required(),
     previousOwners: Joi.number().min(1).max(256).required(),
     kilometers: Joi.number().allow(null, ''),

@@ -9,10 +9,10 @@ import ROUTES from "../../routes/ROUTES";
 import SubmitComponent from "../Form/SubmitComponent";
 import CRComponent from "../Form/CRComponent";
 import GridItemComponent from "../Form/GridComponent/GridItemComponent";
+import TextFieldSelect from "../Form/GridComponent/TextFieldSelect";
 
 const CreateCar = () => {
   const [inputState] = useState({
-    manufacturer: "",
     type: "",
     subType: "",
     yearOfProduction: "",
@@ -29,15 +29,15 @@ const CreateCar = () => {
     city: "",
     street: "",
   });
-
+  let manufacturerSelected;
   const navigate = useNavigate();
   const [btnDisable, setbtnDisable] = useState(true);
 
   const handleBtnSubmitClick = async (ev) => {
     try {
-      await axios.post("/cards/", {
+      await axios.post("/cars/", {
         manufacturerData: {
-          manufacturer: inputState.manufacturer,
+          manufacturer: manufacturerSelected,
           type: inputState.type,
           subtype: inputState.subtype,
         },
@@ -79,10 +79,12 @@ const CreateCar = () => {
   };
 
   const onBlurHandel = (submitLock) => {
-    console.log("onBlurHandel");
     setbtnDisable(submitLock);
   };
 
+  const updateSelectedState = (value) => {
+    manufacturerSelected = value;
+  };
   return (
     <Container component="main" maxWidth="md">
       <Box
@@ -101,6 +103,11 @@ const CreateCar = () => {
         </Typography>
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextFieldSelect
+                passSelectedFromChildToParent={updateSelectedState}
+              />
+            </Grid>
             {Object.entries(inputState).map(([key, value]) => (
               <Grid item xs={12} sm={6} key={key + Date.now()}>
                 <GridItemComponent
@@ -109,7 +116,7 @@ const CreateCar = () => {
                   onChange={updateState}
                   onBlur={onBlurHandel}
                   prevState={inputState}
-                  schema={"card"}
+                  schema={"car"}
                 />
               </Grid>
             ))}
