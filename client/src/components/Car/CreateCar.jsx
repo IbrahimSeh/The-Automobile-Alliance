@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import ROUTES from "../../routes/ROUTES";
 import SubmitComponent from "../Form/SubmitComponent";
 import CRComponent from "../Form/CRComponent";
-import GridItemComponent from "../Form/GridItemComponent";
+import GridItemComponent from "../Form/GridComponent/GridItemComponent";
 
 const CreateCar = () => {
   const [inputState] = useState({

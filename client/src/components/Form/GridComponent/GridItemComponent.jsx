@@ -1,8 +1,9 @@
-import { Alert, TextField } from "@mui/material";
+import { Alert, MenuItem, TextField } from "@mui/material";
 import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
-import validateRegisterSchema from "../../validation/signupValidation";
-import validateCardSchema from "../../validation/CreateCarValidation";
+import validateRegisterSchema from "../../../validation/signupValidation";
+import validateCarSchema from "../../../validation/CreateCarValidation";
+import carManufacturer from "./carManufacturer";
 
 const GridItemComponent = ({
   inputKey,
@@ -45,8 +46,8 @@ const GridItemComponent = ({
   };
 
   const handelBlurChange = () => {
-    if (schema === "card") {
-      joiResponse = validateCardSchema(prevState);
+    if (schema === "car") {
+      joiResponse = validateCarSchema(prevState);
     } else {
       if (schema === "user") {
         joiResponse = validateRegisterSchema(prevState);
@@ -127,33 +128,49 @@ const GridItemComponent = ({
         return true;
     }
   };
+  // const getSelection = (inputKey) => {
+  //   switch (inputKey) {
+  //     case "manufacturer":
+  //       return true;
+  //     default:
+  //       return false;
+  //   }
+  // };
 
   return (
     <Fragment>
-      <TextField
-        autoComplete={"given-" + inputKey}
-        name={inputKey}
-        required={checkIfRequired(inputKey)}
-        fullWidth
-        //autoFocus={inputKey === "firstName" ? true : false}
-        helperText=""
-        type={getType(inputKey)}
-        id={inputKey}
-        label={getLabel(inputKey)}
-        value={inputState[inputKey] == "" ? inputValue : inputState[inputKey]}
-        onChange={handleInputChange}
-        onBlur={handelBlurChange}
-      />
-      {inputsErrorsState && inputsErrorsState[inputKey] && (
-        <Alert severity="warning">
-          {inputsErrorsState[inputKey].map((item) => (
-            <div key={`${inputKey}-errors` + item}>
-              {item.includes("pattern:")
-                ? item.split("pattern:")[0] + "pattern"
-                : item}
-            </div>
-          ))}
-        </Alert>
+      {inputKey === "manufacturer" ? (
+        <textFieldSelect inputKey getLabel handleInputChange handelBlurChange />
+      ) : (
+        <Fragment>
+          <TextField
+            autoComplete={"given-" + inputKey}
+            name={inputKey}
+            required={checkIfRequired(inputKey)}
+            fullWidth
+            helperText=""
+            type={getType(inputKey)}
+            //select={getSelection(inputKey)}
+            id={inputKey}
+            label={getLabel(inputKey)}
+            value={
+              inputState[inputKey] == "" ? inputValue : inputState[inputKey]
+            }
+            onChange={handleInputChange}
+            onBlur={handelBlurChange}
+          />
+          {inputsErrorsState && inputsErrorsState[inputKey] && (
+            <Alert severity="warning">
+              {inputsErrorsState[inputKey].map((item) => (
+                <div key={`${inputKey}-errors` + item}>
+                  {item.includes("pattern:")
+                    ? item.split("pattern:")[0] + "pattern"
+                    : item}
+                </div>
+              ))}
+            </Alert>
+          )}
+        </Fragment>
       )}
     </Fragment>
   );

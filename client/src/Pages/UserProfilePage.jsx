@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
-import GridItemComponent from "../components/Form/GridItemComponent";
+import GridItemComponent from "../components/Form/GridComponent/GridItemComponent";
 import CRComponent from "../components/Form/CRComponent";
 import SubmitComponent from "../components/Form/SubmitComponent";
 import CheckboxComponent from "../components/Form/CheckboxComponent";
