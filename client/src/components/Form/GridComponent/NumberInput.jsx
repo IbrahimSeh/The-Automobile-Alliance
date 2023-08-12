@@ -1,30 +1,30 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
+import carManufacturer from "./helper/carManufacturer";
 
-const TextFieldSelect = ({ passSelectedFromChildToParent, arrayToSelect }) => {
-  const [manufacturer, setManufacturer] = useState("");
+const NumberInput = ({ passSelectedFromChildToParent }) => {
+  const [previousOwners, setPreviousOwners] = useState();
 
   const handleChange = (event) => {
-    setManufacturer(event.target.value);
+    setPreviousOwners(event.target.value);
     passSelectedFromChildToParent(event.target.value);
   };
   return (
     <Fragment>
       <TextField
         autoComplete={"given-"}
-        name={"manufacturer"}
+        name={"previousOwners"}
         required
         fullWidth
-        id={"manufacturer"}
-        label={"manufacturer"}
-        value={manufacturer}
+        label={"previous owners"}
+        value={previousOwners}
         onChange={handleChange}
         //onBlur={onBlur}
-        select
-        defaultValue="Skoda"
-        //helperText="Please select your car manufacturer"
+        type="number"
+        defaultValue={0}
+        InputProps={{ inputProps: { min: 0, max: 300 } }}
       >
-        {arrayToSelect.map((option) => (
+        {carManufacturer.map((option) => (
           <MenuItem key={option.label} value={option.label}>
             {option.label}
           </MenuItem>
@@ -33,4 +33,4 @@ const TextFieldSelect = ({ passSelectedFromChildToParent, arrayToSelect }) => {
     </Fragment>
   );
 };
-export default TextFieldSelect;
+export default NumberInput;

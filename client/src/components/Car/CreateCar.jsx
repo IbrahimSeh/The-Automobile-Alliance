@@ -5,22 +5,24 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-
+import carManufacturer from "./helper/carManufacturer";
+import fuelType from "./helper/fuelType";
 import ROUTES from "../../routes/ROUTES";
 import SubmitComponent from "../Form/SubmitComponent";
 import CRComponent from "../Form/CRComponent";
 import GridItemComponent from "../Form/GridComponent/GridItemComponent";
 import TextFieldSelect from "../Form/GridComponent/TextFieldSelect";
 import DatePickerOpenTo from "../Form/GridComponent/DatePicker";
+import NumberInput from "../Form/GridComponent/NumberInput";
 
 const CreateCar = () => {
   const [inputState] = useState({
     type: "",
     subType: "",
-    previousOwners: "",
+    //previousOwners: "",
     kilometers: "",
     engineType: "",
-    fuelType: "",
+    //fuelType: "",
     phone: "",
     email: "",
     url: "",
@@ -31,6 +33,8 @@ const CreateCar = () => {
     street: "",
   });
   const [manufacturerSelected, setManufacturerSelected] = useState("");
+  const [previousOwners, setPreviousOwners] = useState(0);
+  const [fuelType, setFuelType] = useState("");
   const [yearOfProductionSelected, setYearOfProduction] = useState(
     dayjs("2022-04-17")
   );
@@ -46,11 +50,11 @@ const CreateCar = () => {
           subType: inputState.subType,
         },
         yearOfProduction: yearOfProductionSelected.$y,
-        previousOwners: inputState.previousOwners,
+        previousOwners: previousOwners,
         kilometers: inputState.kilometers,
         engine: {
           engineType: inputState.engineType,
-          fuelType: inputState.fuelType,
+          fuelType: fuelType,
         },
         image: { url: inputState.url, alt: inputState.alt },
         address: {
@@ -90,9 +94,14 @@ const CreateCar = () => {
   const updateSelectedState = (value) => {
     setManufacturerSelected(value);
   };
+  const updateSelectedFuelType = (fuelType) => {
+    setFuelType(fuelType);
+  };
   const updateSelectedYear = (year) => {
     setYearOfProduction(year);
-    //console.log("yearofpro = ", yearOfProductionSelected.$y);
+  };
+  const updateSelectedPrevOwners = (hands) => {
+    setPreviousOwners(hands);
   };
   return (
     <Container component="main" maxWidth="md">
@@ -112,6 +121,11 @@ const CreateCar = () => {
         </Typography>
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <NumberInput
+                passSelectedFromChildToParent={updateSelectedPrevOwners}
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextFieldSelect
                 passSelectedFromChildToParent={updateSelectedState}
