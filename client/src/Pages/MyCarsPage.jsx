@@ -52,7 +52,9 @@ const MyCarsPage = () => {
       setOriginalCardsArr(data);
       setCardsArr(
         data.filter(
-          (card) => card.title.startsWith(filter) || card._id.startsWith(filter)
+          (car) =>
+            car.manufacturerData.manufacturer.startsWith(filter) ||
+            car._id.startsWith(filter)
         )
       );
       return;
@@ -64,7 +66,9 @@ const MyCarsPage = () => {
       let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCardsArr));
       setCardsArr(
         newOriginalCardsArr.filter(
-          (card) => card.title.startsWith(filter) || card._id.startsWith(filter)
+          (car) =>
+            car.manufacturerData.manufacturer.startsWith(filter) ||
+            car._id.startsWith(filter)
         )
       );
     }

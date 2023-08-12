@@ -4,18 +4,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
 
 import ROUTES from "../../routes/ROUTES";
 import SubmitComponent from "../Form/SubmitComponent";
 import CRComponent from "../Form/CRComponent";
 import GridItemComponent from "../Form/GridComponent/GridItemComponent";
 import TextFieldSelect from "../Form/GridComponent/TextFieldSelect";
+import DatePickerOpenTo from "../Form/GridComponent/DatePicker";
 
 const CreateCar = () => {
   const [inputState] = useState({
     type: "",
     subType: "",
-    yearOfProduction: "",
     previousOwners: "",
     kilometers: "",
     engineType: "",
@@ -30,19 +31,21 @@ const CreateCar = () => {
     street: "",
   });
   const [manufacturerSelected, setManufacturerSelected] = useState("");
+  const [yearOfProductionSelected, setYearOfProduction] = useState(
+    dayjs("2022-04-17")
+  );
   const navigate = useNavigate();
   const [btnDisable, setbtnDisable] = useState(true);
 
   const handleBtnSubmitClick = async (ev) => {
     try {
-      console.log("manufacturerSelected = ", manufacturerSelected);
       await axios.post("/cars/", {
         manufacturerData: {
           manufacturer: manufacturerSelected,
           type: inputState.type,
           subType: inputState.subType,
         },
-        yearOfProduction: inputState.yearOfProduction,
+        yearOfProduction: yearOfProductionSelected.$y,
         previousOwners: inputState.previousOwners,
         kilometers: inputState.kilometers,
         engine: {
@@ -80,12 +83,16 @@ const CreateCar = () => {
   };
 
   const onBlurHandel = (submitLock) => {
-    console.log("submitLock = ", submitLock);
+    //console.log("submitLock = ", submitLock);
     setbtnDisable(submitLock);
   };
 
   const updateSelectedState = (value) => {
     setManufacturerSelected(value);
+  };
+  const updateSelectedYear = (year) => {
+    setYearOfProduction(year);
+    //console.log("yearofpro = ", yearOfProductionSelected.$y);
   };
   return (
     <Container component="main" maxWidth="md">
@@ -108,6 +115,11 @@ const CreateCar = () => {
             <Grid item xs={12} sm={6}>
               <TextFieldSelect
                 passSelectedFromChildToParent={updateSelectedState}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <DatePickerOpenTo
+                passSelectedFromChildToParent={updateSelectedYear}
               />
             </Grid>
             {Object.entries(inputState).map(([key, value]) => (

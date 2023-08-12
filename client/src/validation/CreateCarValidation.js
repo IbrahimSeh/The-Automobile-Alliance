@@ -28,7 +28,6 @@ const createCarSchema = Joi.object({
 
 const CreateCarValidation = (userInput) => {
     validation(createCarSchema, userInput);
-    console.log('userInput = ', userInput);
 }
 
 export default CreateCarValidation;
