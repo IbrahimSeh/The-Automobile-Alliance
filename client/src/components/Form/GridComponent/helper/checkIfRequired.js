@@ -8,10 +8,10 @@ const checkIfRequired = (inputKey) => {
             return false;
         case "web":
             return false;
-        case "url":
-            return false;
-        case "alt":
-            return false;
+        // case "url":
+        //     return false;
+        // case "alt":
+        //     return false;
         case "subType":
             return false;
         default:

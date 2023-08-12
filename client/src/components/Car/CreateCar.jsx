@@ -29,17 +29,18 @@ const CreateCar = () => {
     city: "",
     street: "",
   });
-  let manufacturerSelected;
+  const [manufacturerSelected, setManufacturerSelected] = useState("");
   const navigate = useNavigate();
   const [btnDisable, setbtnDisable] = useState(true);
 
   const handleBtnSubmitClick = async (ev) => {
     try {
+      console.log("manufacturerSelected = ", manufacturerSelected);
       await axios.post("/cars/", {
         manufacturerData: {
           manufacturer: manufacturerSelected,
           type: inputState.type,
-          subtype: inputState.subtype,
+          subType: inputState.subType,
         },
         yearOfProduction: inputState.yearOfProduction,
         previousOwners: inputState.previousOwners,
@@ -48,7 +49,7 @@ const CreateCar = () => {
           engineType: inputState.engineType,
           fuelType: inputState.fuelType,
         },
-        imagesOfTheCar: { url: inputState.url, alt: inputState.alt },
+        image: { url: inputState.url, alt: inputState.alt },
         address: {
           state: inputState.state,
           country: inputState.country,
@@ -79,11 +80,12 @@ const CreateCar = () => {
   };
 
   const onBlurHandel = (submitLock) => {
+    console.log("submitLock = ", submitLock);
     setbtnDisable(submitLock);
   };
 
   const updateSelectedState = (value) => {
-    manufacturerSelected = value;
+    setManufacturerSelected(value);
   };
   return (
     <Container component="main" maxWidth="md">
