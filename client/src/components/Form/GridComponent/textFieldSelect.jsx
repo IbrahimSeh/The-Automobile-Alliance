@@ -6,8 +6,10 @@ const TextFieldSelect = ({
   passSelectedFromChildToParent,
   listOfSelection,
   inputKey,
+  selectedMan,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
+  console.log("selectedMan = ", selectedMan);
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
     passSelectedFromChildToParent(event.target.value);

@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import carManufacturerSelection from "../Form/GridComponent/helper/carManufacturerSelection";
 import fuelTypeSelection from "../Form/GridComponent/helper/fuelTypeSelection";
+import typeSelection from "../Form/GridComponent/helper/typeSelection";
 import ROUTES from "../../routes/ROUTES";
 import SubmitComponent from "../Form/SubmitComponent";
 import CRComponent from "../Form/CRComponent";
@@ -17,7 +18,7 @@ import NumberInput from "../Form/GridComponent/NumberInput";
 
 const CreateCar = () => {
   const [inputState] = useState({
-    type: "",
+    //type: "",
     subType: "",
     kilometers: "",
     engineType: "",
@@ -30,9 +31,10 @@ const CreateCar = () => {
     city: "",
     street: "",
   });
-  const [manufacturerSelected, setManufacturerSelected] = useState("");
+  const [manufacturerSelected, setManufacturerSelected] = useState("SKODA");
   const [previousOwners, setPreviousOwners] = useState(0);
   const [fuelType, setFuelType] = useState("");
+  const [type, setType] = useState("");
   const [btnDisable, setbtnDisable] = useState(true);
   const [yearOfProductionSelected, setYearOfProduction] = useState(
     dayjs("2022-04-17")
@@ -44,7 +46,7 @@ const CreateCar = () => {
       await axios.post("/cars/", {
         manufacturerData: {
           manufacturer: manufacturerSelected,
-          type: inputState.type,
+          type: type,
           subType: inputState.subType,
         },
         yearOfProduction: yearOfProductionSelected.$y,
@@ -84,6 +86,8 @@ const CreateCar = () => {
 
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
 
+  const updateSelectedType = (type) => setType(type);
+
   const updateSelectedYear = (year) => setYearOfProduction(year);
 
   const updateSelectedPrevOwners = (hands) => setPreviousOwners(hands);
@@ -111,6 +115,7 @@ const CreateCar = () => {
                 passSelectedFromChildToParent={updateSelectedState}
                 listOfSelection={carManufacturerSelection}
                 inputKey={"manufacturer"}
+                selectedMan={manufacturerSelected}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -118,6 +123,15 @@ const CreateCar = () => {
                 passSelectedFromChildToParent={updateSelectedFuelType}
                 listOfSelection={fuelTypeSelection}
                 inputKey={"fuelType"}
+                selectedMan={manufacturerSelected}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextFieldSelect
+                passSelectedFromChildToParent={updateSelectedType}
+                listOfSelection={typeSelection[manufacturerSelected]}
+                inputKey={"type"}
+                selectedMan={manufacturerSelected}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
