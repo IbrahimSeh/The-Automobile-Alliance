@@ -19,10 +19,8 @@ const CreateCar = () => {
   const [inputState] = useState({
     type: "",
     subType: "",
-    //previousOwners: "",
     kilometers: "",
     engineType: "",
-    //fuelType: "",
     phone: "",
     email: "",
     url: "",
@@ -35,11 +33,11 @@ const CreateCar = () => {
   const [manufacturerSelected, setManufacturerSelected] = useState("");
   const [previousOwners, setPreviousOwners] = useState(0);
   const [fuelType, setFuelType] = useState("");
+  const [btnDisable, setbtnDisable] = useState(true);
   const [yearOfProductionSelected, setYearOfProduction] = useState(
     dayjs("2022-04-17")
   );
   const navigate = useNavigate();
-  const [btnDisable, setbtnDisable] = useState(true);
 
   const handleBtnSubmitClick = async (ev) => {
     try {
@@ -74,35 +72,22 @@ const CreateCar = () => {
     }
   };
 
-  const handleBtnCancelClick = () => {
-    navigate(ROUTES.MYCARDS);
-  };
+  const handleBtnCancelClick = () => navigate(ROUTES.MYCARDS);
 
-  const handleBtnResetClick = () => {
-    window.location.reload();
-  };
+  const handleBtnResetClick = () => window.location.reload();
 
-  const updateState = (key, value) => {
-    inputState[key] = value;
-  };
+  const updateState = (key, value) => (inputState[key] = value);
 
-  const onBlurHandel = (submitLock) => {
-    //console.log("submitLock = ", submitLock);
-    setbtnDisable(submitLock);
-  };
+  const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
 
-  const updateSelectedState = (value) => {
-    setManufacturerSelected(value);
-  };
-  const updateSelectedFuelType = (fuelType) => {
-    setFuelType(fuelType);
-  };
-  const updateSelectedYear = (year) => {
-    setYearOfProduction(year);
-  };
-  const updateSelectedPrevOwners = (hands) => {
-    setPreviousOwners(hands);
-  };
+  const updateSelectedState = (value) => setManufacturerSelected(value);
+
+  const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
+
+  const updateSelectedYear = (year) => setYearOfProduction(year);
+
+  const updateSelectedPrevOwners = (hands) => setPreviousOwners(hands);
+
   return (
     <Container component="main" maxWidth="md">
       <Box
