@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-import carManufacturer from "./helper/carManufacturer";
-import fuelType from "./helper/fuelType";
+import carManufacturerSelection from "../Form/GridComponent/helper/carManufacturerSelection";
+import fuelTypeSelection from "../Form/GridComponent/helper/fuelTypeSelection";
 import ROUTES from "../../routes/ROUTES";
 import SubmitComponent from "../Form/SubmitComponent";
 import CRComponent from "../Form/CRComponent";
@@ -122,13 +122,22 @@ const CreateCar = () => {
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <NumberInput
-                passSelectedFromChildToParent={updateSelectedPrevOwners}
+              <TextFieldSelect
+                passSelectedFromChildToParent={updateSelectedState}
+                listOfSelection={carManufacturerSelection}
+                inputKey={"manufacturer"}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextFieldSelect
-                passSelectedFromChildToParent={updateSelectedState}
+                passSelectedFromChildToParent={updateSelectedFuelType}
+                listOfSelection={fuelTypeSelection}
+                inputKey={"fuelType"}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <NumberInput
+                passSelectedFromChildToParent={updateSelectedPrevOwners}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
