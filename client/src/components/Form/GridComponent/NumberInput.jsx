@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import carManufacturer from "./helper/carManufacturerSelection";
 
 const NumberInput = ({ passSelectedFromChildToParent }) => {
-  const [previousOwners, setPreviousOwners] = useState();
+  const [previousOwners, setPreviousOwners] = useState(0);
 
   const handleChange = (event) => {
     setPreviousOwners(event.target.value);
@@ -21,7 +21,7 @@ const NumberInput = ({ passSelectedFromChildToParent }) => {
         onChange={handleChange}
         //onBlur={onBlur}
         type="number"
-        defaultValue={0}
+        //defaultValue={0}
         InputProps={{ inputProps: { min: 0, max: 300 } }}
       >
         {carManufacturer.map((option) => (

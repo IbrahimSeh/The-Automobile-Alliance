@@ -18,13 +18,16 @@ const carManufacturer = [
         label: "VOLKSWAGEN",
     },
     {
-        label: "GM",
+        label: "SUBARU",
     },
     {
         label: "ISUZU",
     },
     {
         label: "DODGE",
+    },
+    {
+        label: "FORD",
     },
 ];
 

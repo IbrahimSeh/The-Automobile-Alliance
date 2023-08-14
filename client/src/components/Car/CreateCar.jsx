@@ -15,6 +15,7 @@ import GridItemComponent from "../Form/GridComponent/GridItemComponent";
 import TextFieldSelect from "../Form/GridComponent/TextFieldSelect";
 import DatePickerOpenTo from "../Form/GridComponent/DatePicker";
 import NumberInput from "../Form/GridComponent/NumberInput";
+import TexFieldSelectForType from "../Form/GridComponent/TexFieldSelectForType";
 
 const CreateCar = () => {
   const [inputState] = useState({
@@ -31,7 +32,7 @@ const CreateCar = () => {
     city: "",
     street: "",
   });
-  const [manufacturerSelected, setManufacturerSelected] = useState("SKODA");
+  const [manufacturerSelected, setManufacturerSelected] = useState("ALL");
   const [previousOwners, setPreviousOwners] = useState(0);
   const [fuelType, setFuelType] = useState("");
   const [type, setType] = useState("");
@@ -39,6 +40,7 @@ const CreateCar = () => {
   const [yearOfProductionSelected, setYearOfProduction] = useState(
     dayjs("2022-04-17")
   );
+  //const [manuRelatedToType, setManuRelatedToType] = useState("");
   const navigate = useNavigate();
 
   const handleBtnSubmitClick = async (ev) => {
@@ -82,7 +84,10 @@ const CreateCar = () => {
 
   const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
 
-  const updateSelectedState = (value) => setManufacturerSelected(value);
+  const updateSelectedManufacturer = (value) => {
+    //setManuRelatedToType(value);
+    setManufacturerSelected(value);
+  };
 
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
 
@@ -112,7 +117,7 @@ const CreateCar = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextFieldSelect
-                passSelectedFromChildToParent={updateSelectedState}
+                passSelectedFromChildToParent={updateSelectedManufacturer}
                 listOfSelection={carManufacturerSelection}
                 inputKey={"manufacturer"}
                 selectedMan={manufacturerSelected}
@@ -127,8 +132,11 @@ const CreateCar = () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextFieldSelect
+              <TexFieldSelectForType
                 passSelectedFromChildToParent={updateSelectedType}
+                returnManufacturerRelatedToSelectedType={
+                  updateSelectedManufacturer
+                }
                 listOfSelection={typeSelection[manufacturerSelected]}
                 inputKey={"type"}
                 selectedMan={manufacturerSelected}

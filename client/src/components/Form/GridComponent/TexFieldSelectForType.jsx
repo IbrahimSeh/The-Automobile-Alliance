@@ -3,12 +3,13 @@ import { Fragment, useState } from "react";
 import getLabel from "./helper/getLabel";
 import typeSelection from "./helper/typeSelection";
 
-const TextFieldSelect = ({
+const TexFieldSelectForType = ({
   passSelectedFromChildToParent,
   returnManufacturerRelatedToSelectedType,
   listOfSelection,
   inputKey,
   selectedMan,
+  valueRelatedToType,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const handleChange = (event) => {
@@ -59,4 +60,4 @@ const TextFieldSelect = ({
 // TextFieldSelect.propTypes = {
 //   listOfSelection: PropTypes.array,
 // };
-export default TextFieldSelect;
+export default TexFieldSelectForType;
