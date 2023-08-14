@@ -2,7 +2,7 @@ import { MenuItem, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
 import getLabel from "./helper/getLabel";
 
-const TextFieldSelect = ({
+const TextFieldSelectForFuel = ({
   passSelectedFromChildToParent,
   listOfSelection,
   inputKey,
@@ -18,16 +18,12 @@ const TextFieldSelect = ({
     <Fragment>
       <TextField
         autoComplete={"given-"}
-        //name={inputKey}
+        name={inputKey}
         required
         fullWidth
         id={inputKey}
         label={getLabel(inputKey)}
-        value={
-          selectedManufacturerRelatedToType === "ALL"
-            ? selectedValue
-            : selectedManufacturerRelatedToType
-        }
+        value={selectedValue}
         onChange={handleChange}
         //onBlur={onBlur}
         select
@@ -43,7 +39,4 @@ const TextFieldSelect = ({
   );
 };
 
-// TextFieldSelect.propTypes = {
-//   listOfSelection: PropTypes.array,
-// };
-export default TextFieldSelect;
+export default TextFieldSelectForFuel;

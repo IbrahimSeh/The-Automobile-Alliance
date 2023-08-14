@@ -8,12 +8,12 @@ const TexFieldSelectForType = ({
   returnManufacturerRelatedToSelectedType,
   listOfSelection,
   inputKey,
-  selectedMan,
-  valueRelatedToType,
+  selectedManufacturer,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const handleChange = (event) => {
-    if (selectedMan === "ALL") {
+    if (selectedManufacturer === "ALL") {
+      console.log("in All");
       returnManufacturerRelatedToSelectedType(
         getManufacturerRelatedToSelectedType(event.target.value)
       );
@@ -35,7 +35,7 @@ const TexFieldSelectForType = ({
     <Fragment>
       <TextField
         autoComplete={"given-"}
-        name={inputKey}
+        //name={inputKey}
         required
         fullWidth
         id={inputKey}
@@ -44,7 +44,7 @@ const TexFieldSelectForType = ({
         onChange={handleChange}
         //onBlur={onBlur}
         select
-        defaultValue="Skoda"
+        //defaultValue="Skoda"
         //helperText="Please select your car manufacturer"
       >
         {listOfSelection.map((option) => (

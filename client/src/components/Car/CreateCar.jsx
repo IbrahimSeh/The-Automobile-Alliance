@@ -16,6 +16,7 @@ import TextFieldSelect from "../Form/GridComponent/TextFieldSelect";
 import DatePickerOpenTo from "../Form/GridComponent/DatePicker";
 import NumberInput from "../Form/GridComponent/NumberInput";
 import TexFieldSelectForType from "../Form/GridComponent/TexFieldSelectForType";
+import TextFieldSelectForFuel from "../Form/GridComponent/TextFieldSelectForFuel";
 
 const CreateCar = () => {
   const [inputState] = useState({
@@ -86,6 +87,7 @@ const CreateCar = () => {
 
   const updateSelectedManufacturer = (value) => {
     //setManuRelatedToType(value);
+    console.log(value);
     setManufacturerSelected(value);
   };
 
@@ -120,15 +122,14 @@ const CreateCar = () => {
                 passSelectedFromChildToParent={updateSelectedManufacturer}
                 listOfSelection={carManufacturerSelection}
                 inputKey={"manufacturer"}
-                selectedMan={manufacturerSelected}
+                selectedManufacturerRelatedToType={manufacturerSelected}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextFieldSelect
+              <TextFieldSelectForFuel
                 passSelectedFromChildToParent={updateSelectedFuelType}
                 listOfSelection={fuelTypeSelection}
                 inputKey={"fuelType"}
-                selectedMan={manufacturerSelected}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -139,7 +140,7 @@ const CreateCar = () => {
                 }
                 listOfSelection={typeSelection[manufacturerSelected]}
                 inputKey={"type"}
-                selectedMan={manufacturerSelected}
+                selectedManufacturer={manufacturerSelected}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
