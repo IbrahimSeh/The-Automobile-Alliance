@@ -1,28 +1,31 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
 import carManufacturer from "./helper/carManufacturerSelection";
+import getLabel from "./helper/getLabel";
 
-const NumberInput = ({ passSelectedFromChildToParent }) => {
-  const [previousOwners, setPreviousOwners] = useState(0);
+const NumberInput = ({ passSelectedFromChildToParent, inputKey }) => {
+  const [selectedValue, setSelectedValue] = useState(0);
 
   const handleChange = (event) => {
-    setPreviousOwners(event.target.value);
+    setSelectedValue(event.target.value);
     passSelectedFromChildToParent(event.target.value);
   };
   return (
     <Fragment>
       <TextField
         autoComplete={"given-"}
-        name={"previousOwners"}
+        name={inputKey}
         required
         fullWidth
-        label={"previous owners"}
-        value={previousOwners}
+        label={getLabel(inputKey)}
+        value={selectedValue}
         onChange={handleChange}
-        //onBlur={onBlur}
         type="number"
-        //defaultValue={0}
-        InputProps={{ inputProps: { min: 0, max: 300 } }}
+        InputProps={
+          inputKey === "previousOwners"
+            ? { inputProps: { min: 0, max: 300 } }
+            : { inputProps: { min: 0, max: 2000000 } }
+        }
       >
         {carManufacturer.map((option) => (
           <MenuItem key={option.label} value={option.label}>

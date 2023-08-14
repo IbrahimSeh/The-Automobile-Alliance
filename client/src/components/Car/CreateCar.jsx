@@ -20,9 +20,7 @@ import TextFieldSelectForFuel from "../Form/GridComponent/TextFieldSelectForFuel
 
 const CreateCar = () => {
   const [inputState] = useState({
-    //type: "",
     subType: "",
-    kilometers: "",
     engineType: "",
     phone: "",
     email: "",
@@ -35,6 +33,7 @@ const CreateCar = () => {
   });
   const [manufacturerSelected, setManufacturerSelected] = useState("ALL");
   const [previousOwners, setPreviousOwners] = useState(0);
+  const [kilometers, setKilometers] = useState(0);
   const [fuelType, setFuelType] = useState("");
   const [type, setType] = useState("");
   const [btnDisable, setbtnDisable] = useState(true);
@@ -54,7 +53,7 @@ const CreateCar = () => {
         },
         yearOfProduction: yearOfProductionSelected.$y,
         previousOwners: previousOwners,
-        kilometers: inputState.kilometers,
+        kilometers: kilometers,
         engine: {
           engineType: inputState.engineType,
           fuelType: fuelType,
@@ -86,9 +85,8 @@ const CreateCar = () => {
   const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
 
   const updateSelectedManufacturer = (value) => {
-    //setManuRelatedToType(value);
-    console.log(value);
     setManufacturerSelected(value);
+    setType("");
   };
 
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
@@ -98,6 +96,7 @@ const CreateCar = () => {
   const updateSelectedYear = (year) => setYearOfProduction(year);
 
   const updateSelectedPrevOwners = (hands) => setPreviousOwners(hands);
+  const updateSelectedKilometers = (KM) => setKilometers(KM);
 
   return (
     <Container component="main" maxWidth="md">
@@ -126,13 +125,6 @@ const CreateCar = () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextFieldSelectForFuel
-                passSelectedFromChildToParent={updateSelectedFuelType}
-                listOfSelection={fuelTypeSelection}
-                inputKey={"fuelType"}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
               <TexFieldSelectForType
                 passSelectedFromChildToParent={updateSelectedType}
                 returnManufacturerRelatedToSelectedType={
@@ -144,13 +136,27 @@ const CreateCar = () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+              <TextFieldSelectForFuel
+                passSelectedFromChildToParent={updateSelectedFuelType}
+                listOfSelection={fuelTypeSelection}
+                inputKey={"fuelType"}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <NumberInput
                 passSelectedFromChildToParent={updateSelectedPrevOwners}
+                inputKey={"previousOwners"}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <DatePickerOpenTo
                 passSelectedFromChildToParent={updateSelectedYear}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <NumberInput
+                passSelectedFromChildToParent={updateSelectedKilometers}
+                inputKey={"kilometers"}
               />
             </Grid>
             {Object.entries(inputState).map(([key, value]) => (

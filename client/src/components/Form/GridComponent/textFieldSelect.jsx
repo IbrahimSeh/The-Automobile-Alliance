@@ -18,7 +18,7 @@ const TextFieldSelect = ({
     <Fragment>
       <TextField
         autoComplete={"given-"}
-        //name={inputKey}
+        name={inputKey}
         required
         fullWidth
         id={inputKey}
@@ -29,9 +29,7 @@ const TextFieldSelect = ({
             : selectedManufacturerRelatedToType
         }
         onChange={handleChange}
-        //onBlur={onBlur}
         select
-        //defaultValue="Skoda"
       >
         {listOfSelection.map((option) => (
           <MenuItem key={option.label} value={option.label}>
