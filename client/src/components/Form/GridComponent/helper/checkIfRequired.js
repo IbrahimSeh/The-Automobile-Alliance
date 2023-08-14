@@ -10,8 +10,10 @@ const checkIfRequired = (inputKey) => {
             return false;
         case "email":
             return false;
-        // case "alt":
-        //     return false;
+        case "url":
+            return false;
+        case "alt":
+            return false;
         case "subType":
             return false;
         default:

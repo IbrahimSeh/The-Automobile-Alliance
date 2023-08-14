@@ -14,18 +14,20 @@ import {
 import PropTypes from "prop-types";
 
 const ExtendedCarComponent = ({
-  title,
-  subTitle,
-  description,
+  manufacturer,
+  type,
+  subType,
+  engineType,
+  fuelType,
+  yearOfProduction,
+  previousOwners,
+  kilometers,
   state,
   country,
   city,
-  houseNumber,
   street,
-  zipCode,
   phone,
   email,
-  web,
   url,
   alt,
   cardNumber,
@@ -40,7 +42,11 @@ const ExtendedCarComponent = ({
         <CardMedia component="img" image={url} />
       </CardActionArea>
       <CardActionArea>
-        <CardHeader title={title} subheader={subTitle} alt={alt}></CardHeader>
+        <CardHeader
+          title={manufacturer}
+          subheader={type + " " + subType}
+          alt={alt}
+        ></CardHeader>
       </CardActionArea>
       <Divider variant="middle" />
       <CardContent>
@@ -67,15 +73,37 @@ const ExtendedCarComponent = ({
             " ,City: " +
             city +
             " ,Street: " +
-            street +
-            " ,HN: " +
-            houseNumber}
+            street}
         </Typography>
         <Typography component="div">
           <Box fontWeight="fontWeightMedium" display="inline">
-            zipCode :
+            engine :
           </Box>{" "}
-          {zipCode}
+          {engineType}
+        </Typography>
+        <Typography component="div">
+          <Box fontWeight="fontWeightMedium" display="inline">
+            fuel :
+          </Box>{" "}
+          {fuelType}
+        </Typography>
+        <Typography component="div">
+          <Box fontWeight="fontWeightMedium" display="inline">
+            year of production :
+          </Box>{" "}
+          {yearOfProduction}
+        </Typography>
+        <Typography component="div">
+          <Box fontWeight="fontWeightMedium" display="inline">
+            previous Owners :
+          </Box>{" "}
+          {previousOwners + " hands"}
+        </Typography>
+        <Typography component="div">
+          <Box fontWeight="fontWeightMedium" display="inline">
+            K"M :
+          </Box>{" "}
+          {kilometers}
         </Typography>
         <Typography component="div">
           <Box fontWeight="fontWeightMedium" display="inline">
@@ -88,12 +116,6 @@ const ExtendedCarComponent = ({
             User Created Number :
           </Box>{" "}
           {userCreated}
-        </Typography>
-        <Typography component="div">
-          <Box fontWeight="fontWeightMedium" display="inline">
-            Web :
-          </Box>{" "}
-          {web}
         </Typography>
         <Typography component="div">
           <Box fontWeight="fontWeightMedium" display="inline">
@@ -122,41 +144,34 @@ const ExtendedCarComponent = ({
           </Box>{" "}
           {CardCreationDate}
         </Typography>
-        <Typography component="div">
-          <Box fontWeight="fontWeightMedium" display="inline">
-            Card Description :
-          </Box>{" "}
-          {description}
-        </Typography>
       </CardContent>
     </Card>
   );
 };
 
-ExtendedCarComponent.propTypes = {
-  img: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  country: PropTypes.string.isRequired,
-  city: PropTypes.string.isRequired,
-  street: PropTypes.string.isRequired,
-  houseNumber: PropTypes.string.isRequired,
-  zipCode: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  cardNumber: PropTypes.string.isRequired,
-  userCreated: PropTypes.string.isRequired,
-  bizNumber: PropTypes.string.isRequired,
-  CardCreationDate: PropTypes.string.isRequired,
-};
+// ExtendedCarComponent.propTypes = {
+//   img: PropTypes.string.isRequired,
+//   title: PropTypes.string.isRequired,
+//   subTitle: PropTypes.string.isRequired,
+//   description: PropTypes.string.isRequired,
+//   country: PropTypes.string.isRequired,
+//   city: PropTypes.string.isRequired,
+//   street: PropTypes.string.isRequired,
+//   houseNumber: PropTypes.string.isRequired,
+//   zipCode: PropTypes.string.isRequired,
+//   phone: PropTypes.string.isRequired,
+//   email: PropTypes.string.isRequired,
+//   cardNumber: PropTypes.string.isRequired,
+//   userCreated: PropTypes.string.isRequired,
+//   bizNumber: PropTypes.string.isRequired,
+//   CardCreationDate: PropTypes.string.isRequired,
+// };
 
 ExtendedCarComponent.defaultProps = {
   img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K",
   url: "",
   alt: "",
   state: "",
-  web: "",
 };
 
 export default ExtendedCarComponent;

@@ -21,12 +21,13 @@ import { useSelector } from "react-redux";
 
 const CarComponent = ({
   img,
-  title,
-  subTitle,
+  manufacturer,
+  type,
+  subType,
   phone,
   address,
   id,
-  clickOnCard,
+  clickOnCar,
   bizNumber,
   onDelete,
   candelete,
@@ -54,17 +55,20 @@ const CarComponent = ({
     onLike(id);
   };
 
-  const handleClickCard = () => {
-    clickOnCard(id);
+  const handleClickCar = () => {
+    clickOnCar(id);
   };
 
   return (
-    <Card square raised onClick={handleClickCard} sx={{ borderRadius: 2 }}>
+    <Card square raised onClick={handleClickCar} sx={{ borderRadius: 2 }}>
       <CardActionArea>
         <CardMedia component="img" image={img} />
       </CardActionArea>
       <CardActionArea>
-        <CardHeader title={title} subheader={subTitle}></CardHeader>
+        <CardHeader
+          title={manufacturer}
+          subheader={type + " " + subType}
+        ></CardHeader>
       </CardActionArea>
       <Divider variant="middle" />
       <CardContent>

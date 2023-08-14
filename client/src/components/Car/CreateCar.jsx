@@ -68,7 +68,7 @@ const CreateCar = () => {
         communications: { phone: inputState.phone, email: inputState.email },
       });
 
-      toast.success("A new card has been created");
+      toast.success("A new car has been created");
       navigate(ROUTES.MYCARDS);
     } catch (err) {
       console.log("error from axios", err.response.data);

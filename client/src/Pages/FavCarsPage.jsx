@@ -96,11 +96,11 @@ const FavCardsPage = () => {
   };
 
   const handleEditFromInitialCardsArr = (id) => {
-    navigate(`${ROUTES.CARDEDIT}/?cardId=${id}`);
+    navigate(`${ROUTES.CAREDIT}/?cardId=${id}`);
   };
 
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARDSPECIFICATION}/?cardId=${id}`);
+    navigate(`${ROUTES.CARSPECIFICATION}/?cardId=${id}`);
   };
 
   if (!cardsArr) {
@@ -125,30 +125,36 @@ const FavCardsPage = () => {
           <Grid item xs={4} key={item._id + Date.now()}>
             <CarComponent
               img={item.image ? item.image.url : ""}
-              title={item.title}
-              subTitle={item.subTitle}
+              manufacturer={
+                item.manufacturerData ? item.manufacturerData.manufacturer : ""
+              }
+              type={item.manufacturerData ? item.manufacturerData.type : ""}
+              subType={
+                item.manufacturerData ? item.manufacturerData.subType : ""
+              }
               phone={item.phone}
               address={
-                item.country +
-                ", " +
-                item.city +
-                ", " +
-                item.street +
-                ", " +
-                item.houseNumber
+                item.address
+                  ? item.address.country +
+                    ", " +
+                    item.address.city +
+                    ", " +
+                    item.address.street
+                  : ""
               }
               id={item._id}
-              clickOnCard={handleOnClick}
+              clickOnCar={handleOnClick}
               bizNumber={item.bizNumber}
               userId={item.user_id}
               onDelete={handleDeleteFromInitialCardsArr}
               candelete={
                 (payload && payload.isAdmin) ||
-                (item.user_id === userID && payload && payload.biz)
+                (item.user_id === userID && payload && payload.isSubscription)
               }
-              // payload.isAdmin
               onEdit={handleEditFromInitialCardsArr}
-              canEdit={item.user_id === userID && payload && payload.biz}
+              canEdit={
+                item.user_id === userID && payload && payload.isSubscription
+              }
               onLike={handleLikesFromInitialCardsArr}
               disLike={false}
             />

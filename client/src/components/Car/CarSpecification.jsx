@@ -13,7 +13,7 @@ const CarSpecification = () => {
 
   useEffect(() => {
     axios
-      .get("/cards/card/" + qparams.cardId)
+      .get("/cars/" + qparams.carId)
       .then(({ data }) => {
         for (const key in JSON.parse(JSON.stringify(data))) {
           inputState[key] = data[key];
@@ -24,7 +24,7 @@ const CarSpecification = () => {
         console.log("err from axioas", err);
         toast.error("Oops");
       });
-  }, [inputState, qparams.cardId]);
+  }, [inputState, qparams.carId]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -40,18 +40,32 @@ const CarSpecification = () => {
         Card Specification Page
       </Typography>
       <ExtendedCardComponent
-        title={inputState.title ? inputState.title : ""}
-        subTitle={inputState.subTitle ? inputState.subTitle : ""}
-        description={inputState.description ? inputState.description : ""}
-        state={inputState.state}
-        country={inputState.country ? inputState.country : ""}
-        city={inputState.city ? inputState.city : ""}
-        houseNumber={inputState.houseNumber ? inputState.houseNumber : ""}
-        street={inputState.street ? inputState.street : ""}
-        zipCode={inputState.zipcode ? inputState.zipcode : ""}
-        phone={inputState.phone ? inputState.phone : ""}
-        email={inputState.email ? inputState.email : ""}
-        web={inputState.web}
+        manufacturer={
+          inputState.manufacturerData
+            ? inputState.manufacturerData.manufacturer
+            : ""
+        }
+        type={
+          inputState.manufacturerData ? inputState.manufacturerData.type : ""
+        }
+        subType={
+          inputState.manufacturerData ? inputState.manufacturerData.subType : ""
+        }
+        engineType={inputState.engine ? inputState.engine.engineType : ""}
+        fuelType={inputState.engine ? inputState.engine.fuelType : ""}
+        yearOfProduction={
+          inputState.yearOfProduction ? inputState.yearOfProduction : ""
+        }
+        previousOwners={
+          inputState.previousOwners ? inputState.previousOwners : ""
+        }
+        kilometers={inputState.kilometers ? inputState.kilometers : ""}
+        state={inputState.address ? inputState.address.state : ""}
+        country={inputState.address ? inputState.address.country : ""}
+        city={inputState.address ? inputState.address.city : ""}
+        street={inputState.address ? inputState.address.street : ""}
+        phone={inputState.communications ? inputState.communications.phone : ""}
+        email={inputState.communications ? inputState.communications.email : ""}
         url={inputState.image ? inputState.image.url : ""}
         alt={inputState.image ? inputState.image.alt : ""}
         cardNumber={inputState._id ? inputState._id : ""}

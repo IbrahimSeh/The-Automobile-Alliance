@@ -93,7 +93,7 @@ const HomePage = () => {
   };
 
   const handleEditFromInitialCardsArr = (id) => {
-    navigate(`${ROUTES.CARDEDIT}/?carId=${id}`);
+    navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
   };
 
   const handleLikesFromInitialCardsArr = async (id) => {
@@ -105,7 +105,7 @@ const HomePage = () => {
     }
   };
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARDSPECIFICATION}/?carId=${id}`);
+    navigate(`${ROUTES.CARSPECIFICATION}/${id}`);
   };
 
   if (!cardsArr) {
@@ -130,29 +130,36 @@ const HomePage = () => {
           <Grid item xs={4} key={item._id + Date.now()}>
             <CarComponent
               img={item.image ? item.image.url : ""}
-              title={item.title}
-              subTitle={item.subTitle}
+              manufacturer={
+                item.manufacturerData ? item.manufacturerData.manufacturer : ""
+              }
+              type={item.manufacturerData ? item.manufacturerData.type : ""}
+              subType={
+                item.manufacturerData ? item.manufacturerData.subType : ""
+              }
               phone={item.phone}
               address={
-                item.country +
-                ", " +
-                item.city +
-                ", " +
-                item.street +
-                ", " +
-                item.houseNumber
+                item.address
+                  ? item.address.country +
+                    ", " +
+                    item.address.city +
+                    ", " +
+                    item.address.street
+                  : ""
               }
               id={item._id}
-              clickOnCard={handleOnClick}
+              clickOnCar={handleOnClick}
               bizNumber={item.bizNumber}
               userId={item.user_id}
               onDelete={handleDeleteFromInitialCardsArr}
               candelete={
                 (payload && payload.isAdmin) ||
-                (item.user_id === userID && payload && payload.biz)
+                (item.user_id === userID && payload && payload.isSubscription)
               }
               onEdit={handleEditFromInitialCardsArr}
-              canEdit={item.user_id === userID && payload && payload.biz}
+              canEdit={
+                item.user_id === userID && payload && payload.isSubscription
+              }
               onLike={handleLikesFromInitialCardsArr}
               disLike={
                 item.likes.includes(payload && payload._id) ? false : true

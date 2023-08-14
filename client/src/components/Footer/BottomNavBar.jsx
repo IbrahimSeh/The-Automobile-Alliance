@@ -20,8 +20,8 @@ const pages = [
 //logged in any users
 const anyUserConnected = [
   {
-    label: "FAV CARDS",
-    url: ROUTES.FAVCARDS,
+    label: "FAV CARS",
+    url: ROUTES.FAVCARS,
     icon: <FavoriteBorderIcon />,
   },
 ];
@@ -29,8 +29,8 @@ const anyUserConnected = [
 //logged in as biz user
 const bizUserConnected = [
   {
-    label: "MY CARDS",
-    url: ROUTES.MYCARDS,
+    label: "MY CARS",
+    url: ROUTES.MYCARS,
     icon: <PortraitRoundedIcon />,
   },
 ];
@@ -60,7 +60,7 @@ const BottomNavBar = () => {
                   <FooterNavLink key={page.url} {...page} />
                 ))
               : ""}
-            {payload && payload.biz
+            {payload && payload.isSubscription
               ? bizUserConnected.map((page) => (
                   <FooterNavLink key={page.url} {...page} />
                 ))

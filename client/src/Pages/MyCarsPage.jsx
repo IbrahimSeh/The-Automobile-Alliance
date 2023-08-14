@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 import CardComponent from "../components/Car/CarComponent";
 
 const MyCarsPage = () => {
-  const [originalCardsArr, setOriginalCardsArr] = useState(null);
-  const [cardsArr, setCardsArr] = useState(null);
+  const [originalCarsArr, setOriginalCarsArr] = useState(null);
+  const [carsArr, setCarsArr] = useState(null);
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
@@ -36,7 +36,7 @@ const MyCarsPage = () => {
   }, [qparams.filter]);
 
   const filterFunc = (data) => {
-    if (!originalCardsArr && !data) {
+    if (!originalCarsArr && !data) {
       return;
     }
 
@@ -45,12 +45,12 @@ const MyCarsPage = () => {
       filter = qparams.filter;
     }
 
-    if (!originalCardsArr && data) {
+    if (!originalCarsArr && data) {
       /*
         when component loaded and states not loaded
       */
-      setOriginalCardsArr(data);
-      setCardsArr(
+      setOriginalCarsArr(data);
+      setCarsArr(
         data.filter(
           (car) =>
             car.manufacturerData.manufacturer.startsWith(filter) ||
@@ -59,12 +59,12 @@ const MyCarsPage = () => {
       );
       return;
     }
-    if (originalCardsArr) {
+    if (originalCarsArr) {
       /*
         when all loaded and states loaded
       */
-      let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCardsArr));
-      setCardsArr(
+      let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCarsArr));
+      setCarsArr(
         newOriginalCardsArr.filter(
           (car) =>
             car.manufacturerData.manufacturer.startsWith(filter) ||
@@ -77,9 +77,7 @@ const MyCarsPage = () => {
   const handleDeleteFromInitialCardsArr = async (id) => {
     try {
       await axios.delete("/cars/" + id); // /cards/:id
-      setCardsArr((newCardsArr) =>
-        newCardsArr.filter((item) => item._id != id)
-      );
+      setCarsArr((newCardsArr) => newCardsArr.filter((item) => item._id != id));
     } catch (err) {
       console.log("error when deleting", err.response.data);
     }
@@ -95,18 +93,18 @@ const MyCarsPage = () => {
   };
 
   const handleEditFromInitialCardsArr = (id) => {
-    navigate(`${ROUTES.CARDEDIT}/?carId=${id}`);
+    navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
   };
 
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARDSPECIFICATION}/?carId=${id}`);
+    navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
 
-  if (!cardsArr) {
+  if (!carsArr) {
     return <CircularProgress />;
   }
 
-  if (cardsArr.length === 0) {
+  if (carsArr.length === 0) {
     return (
       <Box className="myCardBox" mt={3}>
         <Typography m={3} variant="h3" color="blue">
@@ -118,7 +116,7 @@ const MyCarsPage = () => {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <NavLink mt={3} to={ROUTES.CREATECARD}>
+          <NavLink mt={3} to={ROUTES.CREATECAR}>
             <AddCircleIcon
               sx={{
                 color: "blue",
@@ -139,31 +137,36 @@ const MyCarsPage = () => {
         Collection of my cars
       </Typography>
       <Grid container spacing={2}>
-        {cardsArr.map((item) => (
+        {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
             <CardComponent
               img={item.image ? item.image.url : ""}
-              title={item.title}
-              subTitle={item.subTitle}
+              manufacturer={
+                item.manufacturerData ? item.manufacturerData.manufacturer : ""
+              }
+              type={item.manufacturerData ? item.manufacturerData.type : ""}
+              subType={
+                item.manufacturerData ? item.manufacturerData.subType : ""
+              }
               phone={item.phone}
               address={
-                item.country +
-                ", " +
-                item.city +
-                ", " +
-                item.street +
-                ", " +
-                item.houseNumber
+                item.address
+                  ? item.address.country +
+                    ", " +
+                    item.address.city +
+                    ", " +
+                    item.address.street
+                  : ""
               }
               id={item._id}
-              clickOnCard={handleOnClick}
+              clickOnCar={handleOnClick}
               bizNumber={item.bizNumber}
               userId={item.user_id}
               onDelete={handleDeleteFromInitialCardsArr}
-              candelete={payload && payload.biz}
+              candelete={payload && payload.isAdmin}
               // payload.isAdmin
               onEdit={handleEditFromInitialCardsArr}
-              canEdit={payload && payload.biz}
+              canEdit={payload && payload.isAdmin}
               onLike={handleLikesFromInitialCardsArr}
               disLike={
                 item.likes.includes(payload && payload._id) ? false : true

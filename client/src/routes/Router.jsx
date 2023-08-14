@@ -44,14 +44,14 @@ const Router = () => {
       <Route path={ROUTES.PROFILE} element={<UserProfilePage />} />
       <Route path={ROUTES.LOGOUT} element={<HomePage />} />
       <Route
-        path={ROUTES.FAVCARDS}
+        path={ROUTES.FAVCARS}
         element={<IsLoginPR element={<FavCarsPage />} />}
       />
       <Route
         path={ROUTES.ADDCAR}
         element={<IsLoginPR element={<IsAdminPR element={<MyCarsPage />} />} />}
       ></Route>
-      <Route path={ROUTES.CREATECARD} element={<CreateCar />} />
+      <Route path={ROUTES.CREATECAR} element={<CreateCar />} />
       <Route
         path={ROUTES.SANDBOX}
         element={
@@ -62,8 +62,8 @@ const Router = () => {
           />
         }
       />
-      <Route path={ROUTES.CARDSPECIFICATION} element={<CarSpecification />} />
-      <Route path={ROUTES.CARDEDIT} element={<CarEdit />} />
+      <Route path={ROUTES.CARSPECIFICATION} element={<CarSpecification />} />
+      <Route path={ROUTES.CAREDIT} element={<CarEdit />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
