@@ -1,52 +1,71 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
+import CreateIcon from "@mui/icons-material/Create";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import dayjs from "dayjs";
+import carManufacturerSelection from "../Form/GridComponent/helper/carManufacturerSelection";
+import fuelTypeSelection from "../Form/GridComponent/helper/fuelTypeSelection";
+import typeSelection from "../Form/GridComponent/helper/typeSelection";
 import ROUTES from "../../routes/ROUTES";
 import SubmitComponent from "../Form/SubmitComponent";
 import CRComponent from "../Form/CRComponent";
 import GridItemComponent from "../Form/GridComponent/GridItemComponent";
+import TextFieldSelect from "../Form/GridComponent/TextFieldSelect";
+import DatePickerOpenTo from "../Form/GridComponent/DatePicker";
+import NumberInput from "../Form/GridComponent/NumberInput";
+import TexFieldSelectForType from "../Form/GridComponent/TexFieldSelectForType";
+import TextFieldSelectForFuel from "../Form/GridComponent/TextFieldSelectForFuel";
 import useQueryParams from "../../hooks/useQueryParams";
 
 const CarEdit = () => {
   let qparams = useQueryParams();
-  const [value, setValue] = useState(0); // integer state
-
-  const [inputState] = useState({
-    title: "",
-    subTitle: "",
-    description: "",
-    state: "",
-    country: "",
-    city: "",
-    street: "",
-    houseNumber: "",
-    zipCode: "",
-    phone: "",
-    email: "",
-    web: "",
-    url: "",
-    alt: "",
-  });
-
-  const [btnDisable, setbtnDisable] = useState(false);
+  const [inputState] = useState({});
+  const [manufacturerSelected, setManufacturerSelected] = useState("SKODA");
+  const [previousOwners, setPreviousOwners] = useState(0);
+  const [kilometers, setKilometers] = useState(0);
+  const [fuelType, setFuelType] = useState("");
+  const [type, setType] = useState("");
+  const [btnDisable, setbtnDisable] = useState(true);
+  const [yearOfProductionSelected, setYearOfProduction] = useState(
+    dayjs("2022-04-17")
+  );
   const navigate = useNavigate();
 
-  // /cards/card/:id
+  //get data for specific car for update
   useEffect(() => {
     axios
-      .get("/cards/card/" + qparams.cardId)
+      .get("/cars/" + qparams.carId)
       .then(({ data }) => {
         for (const key in JSON.parse(JSON.stringify(data))) {
           inputState[key] = data[key];
         }
         inputState.url = inputState.image.url;
         inputState.alt = inputState.image.alt;
-        inputState.zipCode += "";
-        delete inputState._id;
         delete inputState.image;
+        inputState.phone = inputState.communications.phone;
+        inputState.email = inputState.communications.email;
+        delete inputState.communications;
+        setManufacturerSelected(inputState.manufacturerData.manufacturer);
+        setType(inputState.manufacturerData.type);
+        inputState.subType = inputState.manufacturerData.subType;
+        delete inputState.manufacturerData;
+        inputState.engineType = inputState.engine.engineType;
+        setFuelType(inputState.engine.fuelType);
+        delete inputState.engine;
+        inputState.state = inputState.address.state;
+        inputState.country = inputState.address.country;
+        inputState.city = inputState.address.city;
+        inputState.street = inputState.address.street;
+        delete inputState.address;
+        setPreviousOwners(inputState.previousOwners);
+        setKilometers(inputState.kilometers);
+        setYearOfProduction(inputState.yearOfProduction);
+        delete inputState.previousOwners;
+        delete inputState.kilometers;
+        delete inputState.yearOfProduction;
+        delete inputState._id;
         delete inputState.createdAt;
         delete inputState.likes;
         delete inputState.bizNumber;
@@ -57,59 +76,59 @@ const CarEdit = () => {
         console.log("err from axioas", err);
         toast.error("Oops");
       });
-  }, [inputState, qparams.cardId]);
+  }, [inputState, qparams.carId]);
 
   const handleBtnSubmitClick = async (ev) => {
     try {
-      await axios.put("/cards/" + qparams.cardId, {
-        title: inputState.title,
-        subTitle: inputState.subTitle,
-        description: inputState.description,
-        state: inputState.state,
-        country: inputState.country,
-        city: inputState.city,
-        street: inputState.street,
-        houseNumber: inputState.houseNumber,
-        email: inputState.email,
-        zipCode: inputState.zipCode,
-        phone: inputState.phone,
-        web: inputState.web,
-        url: inputState.url,
-        alt: inputState.alt,
+      await axios.post("/cars/", {
+        manufacturerData: {
+          manufacturer: manufacturerSelected,
+          type: type,
+          subType: inputState.subType,
+        },
+        yearOfProduction: yearOfProductionSelected.$y,
+        previousOwners: previousOwners,
+        kilometers: kilometers,
+        engine: {
+          engineType: inputState.engineType,
+          fuelType: fuelType,
+        },
+        image: { url: inputState.url, alt: inputState.alt },
+        address: {
+          state: inputState.state,
+          country: inputState.country,
+          city: inputState.city,
+          street: inputState.street,
+        },
+        communications: { phone: inputState.phone, email: inputState.email },
       });
 
-      toast.success("the card has been edited");
+      toast.success("A new car has been created");
       navigate(ROUTES.MYCARDS);
     } catch (err) {
       console.log("error from axios", err.response.data);
-      toast.error("the card has been not edited");
+      toast.error("the card has been not created");
     }
   };
 
-  const handleBtnCancelClick = () => {
-    navigate(ROUTES.MYCARDS);
-  };
+  const handleBtnCancelClick = () => navigate(ROUTES.MYCARDS);
 
-  const handleBtnResetClick = () => {
-    window.location.reload();
-  };
+  const handleBtnResetClick = () => window.location.reload();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      inputState.zipCode += "";
-      setValue(1);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [inputState, setValue]);
+  const updateState = (key, value) => (inputState[key] = value);
 
-  const updateState = (key, value) => {
-    inputState[key] = value;
-  };
+  const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
 
-  const onBlurHandel = (submitLock) => {
-    console.log("onBlurHandel");
-    setbtnDisable(submitLock);
-  };
+  const updateSelectedManufacturer = (value) => setManufacturerSelected(value);
+
+  const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
+
+  const updateSelectedType = (type) => setType(type);
+
+  const updateSelectedYear = (year) => setYearOfProduction(year);
+
+  const updateSelectedPrevOwners = (hands) => setPreviousOwners(hands);
+  const updateSelectedKilometers = (KM) => setKilometers(KM);
 
   return (
     <Container component="main" maxWidth="md">
@@ -121,21 +140,68 @@ const CarEdit = () => {
           alignItems: "center",
         }}
       >
+        <Avatar sx={{ m: 1, bgcolor: "#945a61" }}>
+          <CreateIcon />
+        </Avatar>
         <Typography component="h1" variant="h5">
-          CARD UPDATE
+          CARD UPDATE FORM
         </Typography>
-
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextFieldSelect
+                passSelectedFromChildToParent={updateSelectedManufacturer}
+                listOfSelection={carManufacturerSelection}
+                inputKey={"manufacturer"}
+                selectedManufacturerRelatedToType={manufacturerSelected}
+                inputValue={manufacturerSelected}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TexFieldSelectForType
+                passSelectedFromChildToParent={updateSelectedType}
+                returnManufacturerRelatedToSelectedType={
+                  updateSelectedManufacturer
+                }
+                listOfSelection={typeSelection[manufacturerSelected]}
+                inputKey={"type"}
+                selectedManufacturer={manufacturerSelected}
+                inputValue={type}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextFieldSelectForFuel
+                passSelectedFromChildToParent={updateSelectedFuelType}
+                listOfSelection={fuelTypeSelection}
+                inputKey={"fuelType"}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <NumberInput
+                passSelectedFromChildToParent={updateSelectedPrevOwners}
+                inputKey={"previousOwners"}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <DatePickerOpenTo
+                passSelectedFromChildToParent={updateSelectedYear}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <NumberInput
+                passSelectedFromChildToParent={updateSelectedKilometers}
+                inputKey={"kilometers"}
+              />
+            </Grid>
             {Object.entries(inputState).map(([key, value]) => (
               <Grid item xs={12} sm={6} key={key + Date.now()}>
                 <GridItemComponent
                   inputKey={key}
-                  inputValue={inputState[key] + ""}
+                  inputValue={value}
                   onChange={updateState}
                   onBlur={onBlurHandel}
                   prevState={inputState}
-                  schema={"card"}
+                  schema={"car"}
                 />
               </Grid>
             ))}

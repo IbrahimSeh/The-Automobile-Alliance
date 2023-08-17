@@ -84,10 +84,7 @@ const CreateCar = () => {
 
   const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
 
-  const updateSelectedManufacturer = (value) => {
-    setManufacturerSelected(value);
-    setType("");
-  };
+  const updateSelectedManufacturer = (value) => setManufacturerSelected(value);
 
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
 

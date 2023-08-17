@@ -7,6 +7,7 @@ const TextFieldSelect = ({
   listOfSelection,
   inputKey,
   selectedManufacturerRelatedToType,
+  inputValue,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const handleChange = (event) => {
@@ -14,6 +15,16 @@ const TextFieldSelect = ({
     passSelectedFromChildToParent(event.target.value);
   };
 
+  const getValue = () => {
+    if (inputValue !== undefined) {
+      return inputValue;
+    }
+    if (selectedManufacturerRelatedToType === "ALL") {
+      return selectedValue;
+    } else {
+      return selectedManufacturerRelatedToType;
+    }
+  };
   return (
     <Fragment>
       <TextField
@@ -23,11 +34,7 @@ const TextFieldSelect = ({
         fullWidth
         id={inputKey}
         label={getLabel(inputKey)}
-        value={
-          selectedManufacturerRelatedToType === "ALL"
-            ? selectedValue
-            : selectedManufacturerRelatedToType
-        }
+        value={getValue()}
         onChange={handleChange}
         select
       >

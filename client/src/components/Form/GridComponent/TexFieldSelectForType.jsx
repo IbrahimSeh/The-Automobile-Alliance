@@ -9,6 +9,7 @@ const TexFieldSelectForType = ({
   listOfSelection,
   inputKey,
   selectedManufacturer,
+  inputValue,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const handleChange = (event) => {
@@ -39,7 +40,7 @@ const TexFieldSelectForType = ({
         fullWidth
         id={inputKey}
         label={getLabel(inputKey)}
-        value={selectedValue}
+        value={inputValue !== undefined ? inputValue : selectedValue}
         onChange={handleChange}
         select
       >

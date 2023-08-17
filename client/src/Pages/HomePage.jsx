@@ -13,8 +13,8 @@ import InterfaceImage from "../components/Home/InterfaceImage";
 import DviderLine from "../components/Home/DviderLine";
 
 const HomePage = () => {
-  const [originalCardsArr, setOriginalCardsArr] = useState(null);
-  const [cardsArr, setCardsArr] = useState(null);
+  const [originalCarsArr, setOriginalCarsArr] = useState(null);
+  const [carsArr, setCarsArr] = useState(null);
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
@@ -43,7 +43,7 @@ const HomePage = () => {
   }, [qparams.filter]);
 
   const filterFunc = (data) => {
-    if (!originalCardsArr && !data) {
+    if (!originalCarsArr && !data) {
       return;
     }
 
@@ -52,12 +52,12 @@ const HomePage = () => {
       filter = qparams.filter;
     }
 
-    if (!originalCardsArr && data) {
+    if (!originalCarsArr && data) {
       /*
         when component loaded and states not loaded
       */
-      setOriginalCardsArr(data);
-      setCardsArr(
+      setOriginalCarsArr(data);
+      setCarsArr(
         data.filter(
           (car) =>
             car.manufacturerData.manufacturer.startsWith(filter) ||
@@ -66,13 +66,13 @@ const HomePage = () => {
       );
       return;
     }
-    if (originalCardsArr) {
+    if (originalCarsArr) {
       /*
         when all loaded and states loaded
       */
-      let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCardsArr));
-      setCardsArr(
-        newOriginalCardsArr.filter(
+      let newOriginalCarsArr = JSON.parse(JSON.stringify(originalCarsArr));
+      setCarsArr(
+        newOriginalCarsArr.filter(
           (car) =>
             car.manufacturerData.manufacturer.startsWith(filter) ||
             car._id.startsWith(filter)
@@ -81,22 +81,20 @@ const HomePage = () => {
     }
   };
 
-  const handleDeleteFromInitialCardsArr = async (id) => {
+  const handleDeleteFromInitialCarsArr = async (id) => {
     try {
       await axios.delete("/cars/" + id);
-      setCardsArr((newCardsArr) =>
-        newCardsArr.filter((item) => item._id != id)
-      );
+      setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
       console.log("error when deleting", err.response.data);
     }
   };
 
-  const handleEditFromInitialCardsArr = (id) => {
+  const handleEditFromInitialCarsArr = (id) => {
     navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
   };
 
-  const handleLikesFromInitialCardsArr = async (id) => {
+  const handleLikesFromInitialCarsArr = async (id) => {
     try {
       await axios.patch("/cars/car-like/" + id); // /cards/:id
       window.location.reload();
@@ -105,10 +103,10 @@ const HomePage = () => {
     }
   };
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARSPECIFICATION}/${id}`);
+    navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
 
-  if (!cardsArr) {
+  if (!carsArr) {
     return <CircularProgress />;
   }
 
@@ -126,7 +124,7 @@ const HomePage = () => {
       <InterfaceImage />
       <DviderLine text={"ALL THE CAR IN OUR ALLIANCE"} />
       <Grid container spacing={2}>
-        {cardsArr.map((item) => (
+        {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
             <CarComponent
               img={item.image ? item.image.url : ""}
@@ -151,16 +149,16 @@ const HomePage = () => {
               clickOnCar={handleOnClick}
               bizNumber={item.bizNumber}
               userId={item.user_id}
-              onDelete={handleDeleteFromInitialCardsArr}
+              onDelete={handleDeleteFromInitialCarsArr}
               candelete={
                 (payload && payload.isAdmin) ||
                 (item.user_id === userID && payload && payload.isSubscription)
               }
-              onEdit={handleEditFromInitialCardsArr}
+              onEdit={handleEditFromInitialCarsArr}
               canEdit={
                 item.user_id === userID && payload && payload.isSubscription
               }
-              onLike={handleLikesFromInitialCardsArr}
+              onLike={handleLikesFromInitialCarsArr}
               disLike={
                 item.likes.includes(payload && payload._id) ? false : true
               }

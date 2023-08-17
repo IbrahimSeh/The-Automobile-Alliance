@@ -182,7 +182,7 @@ const MyCarsPage = () => {
         justifyContent="flex-end"
         alignItems="flex-end"
       >
-        <NavLink mt={3} to={ROUTES.CREATECARD}>
+        <NavLink mt={3} to={ROUTES.CREATECAR}>
           <AddCircleIcon
             sx={{
               color: "blue",

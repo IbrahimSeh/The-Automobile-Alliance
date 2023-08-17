@@ -37,9 +37,9 @@ const ExtendedCarComponent = ({
   CardCreationDate,
 }) => {
   return (
-    <Card square raised>
+    <Card square raised sx={{ borderRadius: 2 }}>
       <CardActionArea>
-        <CardMedia component="img" image={url} />
+        <CardMedia component="img" image={url} sx={{ objectFit: "contain" }} />
       </CardActionArea>
       <CardActionArea>
         <CardHeader

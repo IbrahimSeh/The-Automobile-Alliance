@@ -10,7 +10,7 @@ const CarSpecification = () => {
   const [inputState] = useState({});
   const [userlikeId, setuserlikeId] = useState([]);
   const [value, setValue] = useState(0);
-
+  //console.log("qparams.carId = ", qparams.carId);
   useEffect(() => {
     axios
       .get("/cars/" + qparams.carId)
