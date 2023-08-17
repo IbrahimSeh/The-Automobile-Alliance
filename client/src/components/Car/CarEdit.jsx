@@ -80,13 +80,13 @@ const CarEdit = () => {
 
   const handleBtnSubmitClick = async (ev) => {
     try {
-      await axios.post("/cars/", {
+      await axios.put("/cars/" + qparams.carId, {
         manufacturerData: {
           manufacturer: manufacturerSelected,
           type: type,
           subType: inputState.subType,
         },
-        yearOfProduction: yearOfProductionSelected.$y,
+        yearOfProduction: yearOfProductionSelected,
         previousOwners: previousOwners,
         kilometers: kilometers,
         engine: {
@@ -103,15 +103,15 @@ const CarEdit = () => {
         communications: { phone: inputState.phone, email: inputState.email },
       });
 
-      toast.success("A new car has been created");
-      navigate(ROUTES.MYCARDS);
+      toast.success("the car has been edited");
+      navigate(ROUTES.ADDCAR);
     } catch (err) {
       console.log("error from axios", err.response.data);
-      toast.error("the card has been not created");
+      toast.error("the car has been not edited");
     }
   };
 
-  const handleBtnCancelClick = () => navigate(ROUTES.MYCARDS);
+  const handleBtnCancelClick = () => navigate(ROUTES.MYCARS);
 
   const handleBtnResetClick = () => window.location.reload();
 
@@ -144,7 +144,7 @@ const CarEdit = () => {
           <CreateIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          CARD UPDATE FORM
+          CAR UPDATE FORM
         </Typography>
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -174,23 +174,27 @@ const CarEdit = () => {
                 passSelectedFromChildToParent={updateSelectedFuelType}
                 listOfSelection={fuelTypeSelection}
                 inputKey={"fuelType"}
+                inputValue={fuelType}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <NumberInput
                 passSelectedFromChildToParent={updateSelectedPrevOwners}
                 inputKey={"previousOwners"}
+                inputValue={previousOwners}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <DatePickerOpenTo
                 passSelectedFromChildToParent={updateSelectedYear}
+                inputValue={yearOfProductionSelected}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <NumberInput
                 passSelectedFromChildToParent={updateSelectedKilometers}
                 inputKey={"kilometers"}
+                inputValue={kilometers}
               />
             </Grid>
             {Object.entries(inputState).map(([key, value]) => (

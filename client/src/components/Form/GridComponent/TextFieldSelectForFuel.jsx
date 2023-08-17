@@ -7,6 +7,7 @@ const TextFieldSelectForFuel = ({
   listOfSelection,
   inputKey,
   selectedManufacturerRelatedToType,
+  inputValue,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const handleChange = (event) => {
@@ -23,11 +24,9 @@ const TextFieldSelectForFuel = ({
         fullWidth
         id={inputKey}
         label={getLabel(inputKey)}
-        value={selectedValue}
+        value={inputValue !== undefined ? inputValue : selectedValue}
         onChange={handleChange}
-        //onBlur={onBlur}
         select
-        //defaultValue="Skoda"
       >
         {listOfSelection.map((option) => (
           <MenuItem key={option.label} value={option.label}>

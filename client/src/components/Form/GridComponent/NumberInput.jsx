@@ -3,7 +3,11 @@ import { Fragment, useState } from "react";
 import carManufacturer from "./helper/carManufacturerSelection";
 import getLabel from "./helper/getLabel";
 
-const NumberInput = ({ passSelectedFromChildToParent, inputKey }) => {
+const NumberInput = ({
+  passSelectedFromChildToParent,
+  inputKey,
+  inputValue,
+}) => {
   const [selectedValue, setSelectedValue] = useState(0);
 
   const handleChange = (event) => {
@@ -18,7 +22,7 @@ const NumberInput = ({ passSelectedFromChildToParent, inputKey }) => {
         required
         fullWidth
         label={getLabel(inputKey)}
-        value={selectedValue}
+        value={inputValue !== undefined ? inputValue : selectedValue}
         onChange={handleChange}
         type="number"
         InputProps={
