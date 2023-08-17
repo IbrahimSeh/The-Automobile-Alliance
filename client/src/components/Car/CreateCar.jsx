@@ -17,6 +17,7 @@ import DatePickerOpenTo from "../Form/GridComponent/DatePicker";
 import NumberInput from "../Form/GridComponent/NumberInput";
 import TexFieldSelectForType from "../Form/GridComponent/TexFieldSelectForType";
 import TextFieldSelectForFuel from "../Form/GridComponent/TextFieldSelectForFuel";
+import UploadImage from "../Form/GridComponent/UploadImage";
 
 const CreateCar = () => {
   const [inputState] = useState({
@@ -168,6 +169,7 @@ const CreateCar = () => {
                 />
               </Grid>
             ))}
+            <UploadImage />
             <CRComponent
               cancelBtn={handleBtnCancelClick}
               resetBtn={handleBtnResetClick}
