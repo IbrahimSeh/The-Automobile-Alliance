@@ -76,7 +76,7 @@ const CreateCar = () => {
     }
   };
 
-  const handleBtnCancelClick = () => navigate(ROUTES.MYCARDS);
+  const handleBtnCancelClick = () => navigate(ROUTES.ADDCAR);
   const handleBtnResetClick = () => window.location.reload();
   const updateState = (key, value) => (inputState[key] = value);
   const onBlurHandel = (submitLock) => setbtnDisable(submitLock);

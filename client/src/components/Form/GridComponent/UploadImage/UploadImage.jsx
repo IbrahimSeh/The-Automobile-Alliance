@@ -2,7 +2,10 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import { Box, Container, ImageList, ImageListItem } from "@mui/material";
 
-const UploadImage = ({ passSelectedFromChildToParent }) => {
+const UploadImage = ({
+  passSelectedFromChildToParent,
+  itemDataFromCarEdit,
+}) => {
   const [itemData, setItemData] = useState([]);
   let tempItemData = [
     {
@@ -24,7 +27,10 @@ const UploadImage = ({ passSelectedFromChildToParent }) => {
       cols: 2,
     },
   ];
-
+  // if (itemDataFromCarEdit[0].img !== "") {
+  //   setItemData(itemDataFromCarEdit);
+  //   console.log("here");
+  // }
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) tempItemData[0].title = file.name;

@@ -18,6 +18,7 @@ import NumberInput from "../Form/GridComponent/NumberInput";
 import TexFieldSelectForType from "../Form/GridComponent/TexFieldSelectForType";
 import TextFieldSelectForFuel from "../Form/GridComponent/TextFieldSelectForFuel";
 import useQueryParams from "../../hooks/useQueryParams";
+import UploadImage from "../Form/GridComponent/UploadImage/UploadImage";
 
 const CarEdit = () => {
   let qparams = useQueryParams();
@@ -31,6 +32,8 @@ const CarEdit = () => {
   const [yearOfProductionSelected, setYearOfProduction] = useState(
     dayjs("2022-04-17")
   );
+  const [url, setUrl] = useState([]);
+  const [alt, setAlt] = useState([]);
   const navigate = useNavigate();
 
   //get data for specific car for update
@@ -41,8 +44,8 @@ const CarEdit = () => {
         for (const key in JSON.parse(JSON.stringify(data))) {
           inputState[key] = data[key];
         }
-        inputState.url = inputState.image.url;
-        inputState.alt = inputState.image.alt;
+        setUrl(inputState.image.url);
+        setAlt(inputState.image.alt);
         delete inputState.image;
         inputState.phone = inputState.communications.phone;
         inputState.email = inputState.communications.email;
@@ -77,7 +80,26 @@ const CarEdit = () => {
         toast.error("Oops");
       });
   }, [inputState, qparams.carId]);
-
+  let tempItemData = [
+    {
+      img: url[0],
+      title: alt[0],
+      rows: 2,
+      cols: 2,
+    },
+    {
+      img: url[1],
+      title: alt[1],
+      rows: 3,
+      cols: 2,
+    },
+    {
+      img: url[2],
+      title: alt[2],
+      rows: 2,
+      cols: 2,
+    },
+  ];
   const handleBtnSubmitClick = async (ev) => {
     try {
       await axios.put("/cars/" + qparams.carId, {
@@ -93,7 +115,7 @@ const CarEdit = () => {
           engineType: inputState.engineType,
           fuelType: fuelType,
         },
-        image: { url: inputState.url, alt: inputState.alt },
+        image: { url: url, alt: alt },
         address: {
           state: inputState.state,
           country: inputState.country,
@@ -111,25 +133,37 @@ const CarEdit = () => {
     }
   };
 
-  const handleBtnCancelClick = () => navigate(ROUTES.MYCARS);
-
+  const handleBtnCancelClick = () => navigate(ROUTES.ADDCAR);
   const handleBtnResetClick = () => window.location.reload();
-
   const updateState = (key, value) => (inputState[key] = value);
-
   const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
-
   const updateSelectedManufacturer = (value) => setManufacturerSelected(value);
-
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
-
   const updateSelectedType = (type) => setType(type);
-
   const updateSelectedYear = (year) => setYearOfProduction(year);
-
   const updateSelectedPrevOwners = (hands) => setPreviousOwners(hands);
   const updateSelectedKilometers = (KM) => setKilometers(KM);
+  const updateSelectedAlt = (alt) => setAlt(alt);
+  const updateSelectedUrl = (url) => setUrl(url);
 
+  const updateSelectedImage = (event) => {
+    let tempalt = [];
+    if (event.target.files[0]) tempalt[0] = event.target.files[0].name;
+    if (event.target.files[1]) tempalt[1] = event.target.files[1].name;
+    if (event.target.files[2]) tempalt[2] = event.target.files[2].name;
+    updateSelectedAlt(tempalt);
+    let tempurl = [];
+    const reader = new FileReader();
+    const reader1 = new FileReader();
+    const reader2 = new FileReader();
+    reader.onloadend = () => (tempurl[0] = reader.result);
+    reader1.onloadend = () => (tempurl[1] = reader1.result);
+    reader2.onloadend = () => (tempurl[2] = reader2.result);
+    if (event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+    if (event.target.files[1]) reader1.readAsDataURL(event.target.files[1]);
+    if (event.target.files[2]) reader2.readAsDataURL(event.target.files[2]);
+    updateSelectedUrl(tempurl);
+  };
   return (
     <Container component="main" maxWidth="md">
       <Box
@@ -209,6 +243,10 @@ const CarEdit = () => {
                 />
               </Grid>
             ))}
+            <UploadImage
+              passSelectedFromChildToParent={updateSelectedImage}
+              itemDataFromCarEdit={tempItemData}
+            />
             <CRComponent
               cancelBtn={handleBtnCancelClick}
               resetBtn={handleBtnResetClick}

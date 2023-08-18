@@ -30,7 +30,7 @@ const anyUserConnected = [
 const bizUserConnected = [
   {
     label: "MY CARS",
-    url: ROUTES.MYCARS,
+    url: ROUTES.ADDCAR,
     icon: <PortraitRoundedIcon />,
   },
 ];
