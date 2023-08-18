@@ -69,7 +69,7 @@ const CreateCar = () => {
       });
 
       toast.success("A new car has been created");
-      navigate(ROUTES.MYCARS);
+      navigate(ROUTES.ADDCAR);
     } catch (err) {
       console.log("error from axios", err.response.data);
       toast.error("the card has been not created");
@@ -90,7 +90,6 @@ const CreateCar = () => {
   const updateSelectedUrl = (url) => setUrl(url);
 
   const updateSelectedImage = (event) => {
-    //console.log("event = ", event);
     let tempalt = [];
     if (event.target.files[0]) tempalt[0] = event.target.files[0].name;
     if (event.target.files[1]) tempalt[1] = event.target.files[1].name;

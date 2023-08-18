@@ -56,10 +56,7 @@ const UploadImage = ({ passSelectedFromChildToParent }) => {
     if (file2 !== undefined) reader2.readAsDataURL(file2);
   };
 
-  const handelClick = (event) => {
-    event.stopPropagation();
-    console.log("yes");
-  };
+  const handelClick = (event) => setItemData([]);
 
   return (
     <Container maxWidth="md" sx={{ mt: 8 }}>
@@ -91,20 +88,7 @@ const UploadImage = ({ passSelectedFromChildToParent }) => {
         <Button variant="contained" component="span">
           Add up to three photos
         </Button>
-        {itemData.length === 0 ? (
-          ""
-        ) : (
-          <Box
-            mt={-5}
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="flex-end"
-          >
-            <Button variant="outlined" color="secondary" onClick={handelClick}>
-              clear photos
-            </Button>
-          </Box>
-        )}
+
         <input
           id="upload-image"
           hidden
@@ -114,6 +98,20 @@ const UploadImage = ({ passSelectedFromChildToParent }) => {
           onChange={handleFileUpload}
         />
       </label>
+      {itemData.length === 0 ? (
+        ""
+      ) : (
+        <Box
+          mt={-5}
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+        >
+          <Button variant="outlined" color="secondary" onClick={handelClick}>
+            clear photos
+          </Button>
+        </Box>
+      )}
     </Container>
   );
 };
