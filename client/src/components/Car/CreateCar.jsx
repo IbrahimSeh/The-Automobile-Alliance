@@ -69,7 +69,7 @@ const CreateCar = () => {
       });
 
       toast.success("A new car has been created");
-      navigate(ROUTES.MYCARDS);
+      navigate(ROUTES.MYCARS);
     } catch (err) {
       console.log("error from axios", err.response.data);
       toast.error("the card has been not created");

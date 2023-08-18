@@ -127,13 +127,16 @@ const HomePage = () => {
         {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
             <CarComponent
-              img={item.image ? item.image.url : ""}
+              img={item.image ? item.image.url[0] : ""}
               manufacturer={
                 item.manufacturerData ? item.manufacturerData.manufacturer : ""
               }
               type={item.manufacturerData ? item.manufacturerData.type : ""}
               subType={
                 item.manufacturerData ? item.manufacturerData.subType : ""
+              }
+              yearOfProduction={
+                item.yearOfProduction ? item.yearOfProduction : ""
               }
               phone={item.phone}
               address={

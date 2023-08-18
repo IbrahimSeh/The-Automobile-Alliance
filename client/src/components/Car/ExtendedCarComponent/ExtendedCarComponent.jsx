@@ -11,7 +11,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import PropTypes from "prop-types";
+import SliderImages from "./SliderImages";
 
 const ExtendedCarComponent = ({
   manufacturer,
@@ -38,18 +38,21 @@ const ExtendedCarComponent = ({
 }) => {
   return (
     <Card square raised sx={{ borderRadius: 2 }}>
-      <CardActionArea>
-        <CardMedia component="img" image={url} sx={{ objectFit: "contain" }} />
-      </CardActionArea>
+      <SliderImages sliderImages={url} alt={alt} />
       <CardActionArea>
         <CardHeader
           title={manufacturer}
           subheader={type + " " + subType}
-          alt={alt}
         ></CardHeader>
       </CardActionArea>
       <Divider variant="middle" />
       <CardContent>
+        <Typography component="div">
+          <Box fontWeight="fontWeightMedium" display="inline">
+            alt :
+          </Box>{" "}
+          {alt}
+        </Typography>
         <Typography component="div">
           <Box fontWeight="fontWeightMedium" display="inline">
             Phone :
@@ -148,24 +151,6 @@ const ExtendedCarComponent = ({
     </Card>
   );
 };
-
-// ExtendedCarComponent.propTypes = {
-//   img: PropTypes.string.isRequired,
-//   title: PropTypes.string.isRequired,
-//   subTitle: PropTypes.string.isRequired,
-//   description: PropTypes.string.isRequired,
-//   country: PropTypes.string.isRequired,
-//   city: PropTypes.string.isRequired,
-//   street: PropTypes.string.isRequired,
-//   houseNumber: PropTypes.string.isRequired,
-//   zipCode: PropTypes.string.isRequired,
-//   phone: PropTypes.string.isRequired,
-//   email: PropTypes.string.isRequired,
-//   cardNumber: PropTypes.string.isRequired,
-//   userCreated: PropTypes.string.isRequired,
-//   bizNumber: PropTypes.string.isRequired,
-//   CardCreationDate: PropTypes.string.isRequired,
-// };
 
 ExtendedCarComponent.defaultProps = {
   img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K",

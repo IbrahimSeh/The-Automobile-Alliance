@@ -3,7 +3,7 @@ import useQueryParams from "../../hooks/useQueryParams";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import ExtendedCardComponent from "./ExtendedCarComponent";
+import ExtendedCardComponent from "./ExtendedCarComponent/ExtendedCarComponent";
 
 const CarSpecification = () => {
   let qparams = useQueryParams();
@@ -56,10 +56,8 @@ const CarSpecification = () => {
         yearOfProduction={
           inputState.yearOfProduction ? inputState.yearOfProduction : ""
         }
-        previousOwners={
-          inputState.previousOwners ? inputState.previousOwners : ""
-        }
-        kilometers={inputState.kilometers ? inputState.kilometers : ""}
+        previousOwners={inputState.previousOwners}
+        kilometers={inputState.kilometers}
         state={inputState.address ? inputState.address.state : ""}
         country={inputState.address ? inputState.address.country : ""}
         city={inputState.address ? inputState.address.city : ""}
@@ -67,12 +65,12 @@ const CarSpecification = () => {
         phone={inputState.communications ? inputState.communications.phone : ""}
         email={inputState.communications ? inputState.communications.email : ""}
         url={inputState.image ? inputState.image.url : ""}
-        alt={inputState.image ? inputState.image.alt : ""}
-        cardNumber={inputState._id ? inputState._id : ""}
-        userCreated={inputState.user_id ? inputState.user_id : ""}
+        alt={inputState.image ? inputState.image.alt[0] : ""}
+        cardNumber={inputState._id}
+        userCreated={inputState.user_id}
         favoritUsers={userlikeId}
-        bizNumber={inputState.bizNumber ? inputState.bizNumber : ""}
-        CardCreationDate={inputState.createdAt ? inputState.createdAt : ""}
+        bizNumber={inputState.bizNumber}
+        CardCreationDate={inputState.createdAt}
       />
     </Box>
   );

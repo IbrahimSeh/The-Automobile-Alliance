@@ -24,6 +24,7 @@ const CarComponent = ({
   manufacturer,
   type,
   subType,
+  yearOfProduction,
   phone,
   address,
   id,
@@ -67,7 +68,7 @@ const CarComponent = ({
       <CardActionArea>
         <CardHeader
           title={manufacturer}
-          subheader={type + " " + subType}
+          subheader={type + "   " + subType + "   " + yearOfProduction}
         ></CardHeader>
       </CardActionArea>
       <Divider variant="middle" />

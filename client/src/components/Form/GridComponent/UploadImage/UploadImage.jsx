@@ -60,7 +60,7 @@ const UploadImage = ({ passSelectedFromChildToParent }) => {
     event.stopPropagation();
     console.log("yes");
   };
-  if (itemData[0]) console.log("src1 = ", itemData[0].img);
+
   return (
     <Container maxWidth="md" sx={{ mt: 8 }}>
       <label htmlFor="upload-image">
