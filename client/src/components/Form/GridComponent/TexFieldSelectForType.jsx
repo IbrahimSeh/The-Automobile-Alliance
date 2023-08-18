@@ -12,6 +12,7 @@ const TexFieldSelectForType = ({
   inputValue,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
+
   const handleChange = (event) => {
     if (selectedManufacturer === "ALL") {
       returnManufacturerRelatedToSelectedType(

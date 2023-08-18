@@ -1,10 +1,8 @@
 import { useState } from "react";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import { Box, Container, Grid } from "@mui/material";
-import QuiltedImageList from "./QuiltedImageList";
+import { Box, Container, ImageList, ImageListItem } from "@mui/material";
 
-const UploadImage = () => {
+const UploadImage = ({ passSelectedFromChildToParent }) => {
   const [itemData, setItemData] = useState([]);
   let tempItemData = [
     {
@@ -26,6 +24,7 @@ const UploadImage = () => {
       cols: 2,
     },
   ];
+
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) tempItemData[0].title = file.name;
@@ -51,6 +50,7 @@ const UploadImage = () => {
       tempItemData[2].img = reader2.result;
       setItemData(tempItemData);
     };
+    passSelectedFromChildToParent(event);
     if (file !== undefined) reader.readAsDataURL(file);
     if (file1 !== undefined) reader1.readAsDataURL(file1);
     if (file2 !== undefined) reader2.readAsDataURL(file2);
@@ -60,11 +60,34 @@ const UploadImage = () => {
     event.stopPropagation();
     console.log("yes");
   };
-
+  if (itemData[0]) console.log("src1 = ", itemData[0].img);
   return (
     <Container maxWidth="md" sx={{ mt: 8 }}>
       <label htmlFor="upload-image">
-        {itemData.length === 0 ? "" : <QuiltedImageList itemData={itemData} />}
+        {itemData.length === 0 ? (
+          ""
+        ) : (
+          <ImageList
+            sx={{ width: 850, height: 450, mt: 2, mb: 2 }}
+            variant="quilted"
+            cols={4}
+            rowHeight={121}
+          >
+            {itemData.map((item) =>
+              item.img !== "" ? (
+                <ImageListItem
+                  key={item.title + Date.now()}
+                  cols={item.cols || 1}
+                  rows={item.rows || 1}
+                >
+                  <img src={item.img} alt={item.title} loading="lazy" />
+                </ImageListItem>
+              ) : (
+                ""
+              )
+            )}
+          </ImageList>
+        )}
         <Button variant="contained" component="span">
           Add up to three photos
         </Button>
@@ -73,7 +96,6 @@ const UploadImage = () => {
         ) : (
           <Box
             mt={-5}
-            //margin
             display="flex"
             justifyContent="flex-end"
             alignItems="flex-end"
@@ -83,31 +105,6 @@ const UploadImage = () => {
             </Button>
           </Box>
         )}
-
-        {/* <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                fullWidth
-                variant="outlined"
-                component="span"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Add up to three photos
-              </Button>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <Button
-                fullWidth
-                variant="outlined"
-                color="secondary"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={handelClick}
-              >
-                clear photos
-              </Button>
-            </Grid>
-          </Grid> */}
         <input
           id="upload-image"
           hidden

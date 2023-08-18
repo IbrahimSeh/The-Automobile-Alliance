@@ -17,8 +17,8 @@ const createCarSchema = Joi.object({
     email: Joi.string()
         .email({ tlds: { allow: false } })
         .min(6).max(256).allow(null, ''),
-    url: Joi.string().allow(null, ''),
-    alt: Joi.string().min(2).max(256).allow(null, ''),
+    // url: Joi.string().allow(null, ''),
+    // alt: Joi.string().min(2).max(256).allow(null, ''),
     state: Joi.string().min(2).max(256).allow(null, ''),
     country: Joi.string().min(2).max(256).required(),
     city: Joi.string().min(2).max(256).required(),
