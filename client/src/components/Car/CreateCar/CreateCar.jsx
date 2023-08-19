@@ -18,7 +18,7 @@ import NumberInput from "../../Form/GridComponent/NumberInput";
 import TexFieldSelectForType from "../../Form/GridComponent/TexFieldSelectForType";
 import TextFieldSelectForFuel from "../../Form/GridComponent/TextFieldSelectForFuel";
 import UploadImage from "../../Form/GridComponent/UploadImage/UploadImage";
-import validateSelectedField from "./validateSelectedField";
+import { validateSelectedField } from "./validateSelectedField";
 import AlertDialogSlide from "./AlertDialogSlide";
 
 const CreateCar = () => {
@@ -32,6 +32,7 @@ const CreateCar = () => {
     city: "",
     street: "",
   });
+
   const [manufacturerSelected, setManufacturerSelected] = useState("ALL");
   const [previousOwners, setPreviousOwners] = useState(0);
   const [kilometers, setKilometers] = useState(0);
@@ -45,21 +46,19 @@ const CreateCar = () => {
   const [alt, setAlt] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
-  let dialogErrMsg = [];
+  const [dialogErrMsg, setDialogErrMsg] = useState([]);
   const handleBtnSubmitClick = async (ev) => {
-    //console.log('res = ',validateSelectedField(manufacturerSelected, type, fuelType));
+    //validate manufacturer, type & fuelType
     if (
       validateSelectedField(manufacturerSelected, type, fuelType).length !== 0
     ) {
-      dialogErrMsg = validateSelectedField(
-        manufacturerSelected,
-        type,
-        fuelType
+      setDialogErrMsg(
+        validateSelectedField(manufacturerSelected, type, fuelType)
       );
       setOpenDialog(true);
-      console.log("return");
       return;
     }
+
     try {
       await axios.post("/cars/", {
         manufacturerData: {
@@ -178,6 +177,8 @@ const CreateCar = () => {
               <NumberInput
                 passSelectedFromChildToParent={updateSelectedPrevOwners}
                 inputKey={"previousOwners"}
+                previousOwners={previousOwners}
+                kilometers={kilometers}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -189,6 +190,8 @@ const CreateCar = () => {
               <NumberInput
                 passSelectedFromChildToParent={updateSelectedKilometers}
                 inputKey={"kilometers"}
+                previousOwners={previousOwners}
+                kilometers={kilometers}
               />
             </Grid>
             {Object.entries(inputState).map(([key, value]) => (

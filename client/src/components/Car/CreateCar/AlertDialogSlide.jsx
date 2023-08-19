@@ -6,6 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
+import { List, ListItem, ListItemText } from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -13,9 +14,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const AlertDialogSlide = ({ falgToOpen, closeFromCreateCar, information }) => {
   const handleClose = () => closeFromCreateCar();
-  for (let i = 0; i < information.length; i++) {
-    console.log(information[i]);
-  }
+
+  //   for (let i = 0; i < information.length; i++) {
+  //     console.log(information[i]);
+  //   }
+
   return (
     <div>
       <Dialog
@@ -27,10 +30,19 @@ const AlertDialogSlide = ({ falgToOpen, closeFromCreateCar, information }) => {
       >
         <DialogTitle>{"You need to validate these fields"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
+          {/* <DialogContentText id="alert-dialog-slide-description">
             Let Google help apps determine location. This means sending
             anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
+          </DialogContentText> */}
+          <List
+            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          >
+            {information.map((value, index) => (
+              <ListItem key={index} disableGutters>
+                <ListItemText primary={`${value}`} />
+              </ListItem>
+            ))}
+          </List>
         </DialogContent>
         <DialogActions>
           {/* <Button onClick={handleClose}>Disagree</Button> */}
