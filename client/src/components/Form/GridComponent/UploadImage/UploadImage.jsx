@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Box, Container, ImageList, ImageListItem } from "@mui/material";
 
@@ -27,10 +27,12 @@ const UploadImage = ({
       cols: 2,
     },
   ];
-  // if (itemDataFromCarEdit[0].img !== "") {
-  //   setItemData(itemDataFromCarEdit);
-  //   console.log("here");
-  // }
+  useEffect(() => {
+    if (itemDataFromCarEdit !== undefined) {
+      setItemData(itemDataFromCarEdit);
+    }
+  }, [itemDataFromCarEdit]);
+
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) tempItemData[0].title = file.name;
@@ -76,10 +78,10 @@ const UploadImage = ({
             cols={4}
             rowHeight={121}
           >
-            {itemData.map((item) =>
-              item.img !== "" ? (
+            {itemData.map((item, index) =>
+              item.img !== undefined ? (
                 <ImageListItem
-                  key={item.title + Date.now()}
+                  key={index + Date.now()}
                   cols={item.cols || 1}
                   rows={item.rows || 1}
                 >
@@ -92,7 +94,7 @@ const UploadImage = ({
           </ImageList>
         )}
         <Button variant="contained" component="span">
-          Add up to three photos
+          Edit up to three photos
         </Button>
 
         <input
