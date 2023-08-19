@@ -7,6 +7,7 @@ const UploadImage = ({
   itemDataFromCarEdit,
 }) => {
   const [itemData, setItemData] = useState([]);
+  const [flagToclear, setFlagToclear] = useState(false);
   let tempItemData = [
     {
       img: "",
@@ -28,12 +29,15 @@ const UploadImage = ({
     },
   ];
   useEffect(() => {
-    if (itemDataFromCarEdit !== undefined) {
+    console.log("useEffect");
+    if (flagToclear !== true && itemDataFromCarEdit !== undefined) {
+      console.log("in useEffect");
       setItemData(itemDataFromCarEdit);
     }
-  }, [itemDataFromCarEdit]);
+  }, [itemDataFromCarEdit, flagToclear]);
 
   const handleFileUpload = (event) => {
+    console.log("in add");
     const file = event.target.files[0];
     if (file) tempItemData[0].title = file.name;
     const file1 = event.target.files[1];
@@ -64,8 +68,11 @@ const UploadImage = ({
     if (file2 !== undefined) reader2.readAsDataURL(file2);
   };
 
-  const handelClick = (event) => setItemData([]);
-
+  const handelClickClearPhotos = (event) => {
+    console.log("yes");
+    setItemData([]);
+    setFlagToclear(true);
+  };
   return (
     <Container maxWidth="md" sx={{ mt: 8 }}>
       <label htmlFor="upload-image">
@@ -79,7 +86,7 @@ const UploadImage = ({
             rowHeight={121}
           >
             {itemData.map((item, index) =>
-              item.img !== undefined ? (
+              item.img !== undefined && item.img !== "" ? (
                 <ImageListItem
                   key={index + Date.now()}
                   cols={item.cols || 1}
@@ -94,7 +101,7 @@ const UploadImage = ({
           </ImageList>
         )}
         <Button variant="contained" component="span">
-          Edit up to three photos
+          Add up to three photos
         </Button>
 
         <input
@@ -115,7 +122,11 @@ const UploadImage = ({
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <Button variant="outlined" color="secondary" onClick={handelClick}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={handelClickClearPhotos}
+          >
             clear photos
           </Button>
         </Box>

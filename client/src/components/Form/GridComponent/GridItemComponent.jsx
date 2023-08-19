@@ -54,6 +54,7 @@ const GridItemComponent = ({
   const handelBlurChange = () => {
     if (schema === "car") {
       joiResponse = validateCarSchema(prevState);
+      console.log("joiResponse = ", joiResponse);
     } else {
       if (schema === "user") {
         joiResponse = validateRegisterSchema(prevState);

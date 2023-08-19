@@ -1,7 +1,9 @@
 import { Button } from "@mui/material";
 import { Fragment } from "react";
 
-const SubmitComponent = ({ onClick, disablebtn }) => {
+const SubmitComponent = ({ onClick, disablebtn, FromForm }) => {
+  // console.log("disablebtn = ", disablebtn);
+  // console.log("FromForm = ", FromForm);
   const handleBtnSubmitClick = (ev) => {
     onClick(ev);
   };

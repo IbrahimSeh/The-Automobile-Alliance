@@ -28,7 +28,7 @@ const CarEdit = () => {
   const [kilometers, setKilometers] = useState(0);
   const [fuelType, setFuelType] = useState("");
   const [type, setType] = useState("");
-  const [btnDisable, setbtnDisable] = useState(true);
+  const [btnDisable, setbtnDisable] = useState(false);
   const [yearOfProductionSelected, setYearOfProduction] = useState(
     dayjs("2022-04-17")
   );
@@ -256,6 +256,7 @@ const CarEdit = () => {
           <SubmitComponent
             onClick={handleBtnSubmitClick}
             disablebtn={btnDisable}
+            FromForm={"CarEdit"}
           />
         </Box>
       </Box>
