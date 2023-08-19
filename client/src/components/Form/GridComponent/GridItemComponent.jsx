@@ -52,10 +52,10 @@ const GridItemComponent = ({
   };
 
   const handelBlurChange = () => {
-    console.log("on blur");
+    //console.log("on blur");
     if (schema === "car") {
       joiResponse = validateCarSchema(prevState);
-      console.log("joiResponse = ", joiResponse);
+      //console.log("joiResponse = ", joiResponse);
     } else {
       if (schema === "user") {
         joiResponse = validateRegisterSchema(prevState);

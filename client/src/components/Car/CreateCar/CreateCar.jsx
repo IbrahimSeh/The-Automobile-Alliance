@@ -5,19 +5,21 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-import carManufacturerSelection from "../Form/GridComponent/helper/carManufacturerSelection";
-import fuelTypeSelection from "../Form/GridComponent/helper/fuelTypeSelection";
-import typeSelection from "../Form/GridComponent/helper/typeSelection";
-import ROUTES from "../../routes/ROUTES";
-import SubmitComponent from "../Form/SubmitComponent";
-import CRComponent from "../Form/CRComponent";
-import GridItemComponent from "../Form/GridComponent/GridItemComponent";
-import TextFieldSelect from "../Form/GridComponent/TextFieldSelect";
-import DatePickerOpenTo from "../Form/GridComponent/DatePicker";
-import NumberInput from "../Form/GridComponent/NumberInput";
-import TexFieldSelectForType from "../Form/GridComponent/TexFieldSelectForType";
-import TextFieldSelectForFuel from "../Form/GridComponent/TextFieldSelectForFuel";
-import UploadImage from "../Form/GridComponent/UploadImage/UploadImage";
+import carManufacturerSelection from "../../Form/GridComponent/helper/carManufacturerSelection";
+import fuelTypeSelection from "../../Form/GridComponent/helper/fuelTypeSelection";
+import typeSelection from "../../Form/GridComponent/helper/typeSelection";
+import ROUTES from "../../../routes/ROUTES";
+import SubmitComponent from "../../Form/SubmitComponent";
+import CRComponent from "../../Form/CRComponent";
+import GridItemComponent from "../../Form/GridComponent/GridItemComponent";
+import TextFieldSelect from "../../Form/GridComponent/TextFieldSelect";
+import DatePickerOpenTo from "../../Form/GridComponent/DatePicker";
+import NumberInput from "../../Form/GridComponent/NumberInput";
+import TexFieldSelectForType from "../../Form/GridComponent/TexFieldSelectForType";
+import TextFieldSelectForFuel from "../../Form/GridComponent/TextFieldSelectForFuel";
+import UploadImage from "../../Form/GridComponent/UploadImage/UploadImage";
+import validateSelectedField from "./validateSelectedField";
+import AlertDialogSlide from "./AlertDialogSlide";
 
 const CreateCar = () => {
   const [inputState] = useState({
@@ -41,9 +43,18 @@ const CreateCar = () => {
   );
   const [url, setUrl] = useState([]);
   const [alt, setAlt] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
 
   const handleBtnSubmitClick = async (ev) => {
+    //console.log('res = ',validateSelectedField(manufacturerSelected, type, fuelType));
+    if (
+      validateSelectedField(manufacturerSelected, type, fuelType).length !== 0
+    ) {
+      setOpenDialog(true);
+      console.log("return");
+      return;
+    }
     try {
       await axios.post("/cars/", {
         manufacturerData: {
@@ -117,6 +128,7 @@ const CreateCar = () => {
           alignItems: "center",
         }}
       >
+        <AlertDialogSlide falgToOpen={openDialog} />
         <Avatar sx={{ m: 1, bgcolor: "#945a61" }}>
           <CreateIcon />
         </Avatar>
