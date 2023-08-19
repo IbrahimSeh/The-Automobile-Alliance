@@ -45,12 +45,17 @@ const CreateCar = () => {
   const [alt, setAlt] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
-
+  let dialogErrMsg = [];
   const handleBtnSubmitClick = async (ev) => {
     //console.log('res = ',validateSelectedField(manufacturerSelected, type, fuelType));
     if (
       validateSelectedField(manufacturerSelected, type, fuelType).length !== 0
     ) {
+      dialogErrMsg = validateSelectedField(
+        manufacturerSelected,
+        type,
+        fuelType
+      );
       setOpenDialog(true);
       console.log("return");
       return;
@@ -99,6 +104,7 @@ const CreateCar = () => {
   const updateSelectedKilometers = (KM) => setKilometers(KM);
   const updateSelectedAlt = (alt) => setAlt(alt);
   const updateSelectedUrl = (url) => setUrl(url);
+  const handelClose = () => setOpenDialog(false);
 
   const updateSelectedImage = (event) => {
     let tempalt = [];
@@ -128,7 +134,11 @@ const CreateCar = () => {
           alignItems: "center",
         }}
       >
-        <AlertDialogSlide falgToOpen={openDialog} />
+        <AlertDialogSlide
+          falgToOpen={openDialog}
+          closeFromCreateCar={handelClose}
+          information={dialogErrMsg}
+        />
         <Avatar sx={{ m: 1, bgcolor: "#945a61" }}>
           <CreateIcon />
         </Avatar>

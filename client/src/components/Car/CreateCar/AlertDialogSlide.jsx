@@ -11,31 +11,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AlertDialogSlide = ({ falgToOpen }) => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  React.useEffect(() => {
-    if (falgToOpen === true) handleClickOpen();
-  }, [falgToOpen]);
-
+const AlertDialogSlide = ({ falgToOpen, closeFromCreateCar, information }) => {
+  const handleClose = () => closeFromCreateCar();
+  for (let i = 0; i < information.length; i++) {
+    console.log(information[i]);
+  }
   return (
     <div>
-      {/* <Button hidden onClick={handleClickOpen}></Button> */}
       <Dialog
-        open={open}
+        open={falgToOpen}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>{"You need to validate these fields"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             Let Google help apps determine location. This means sending
@@ -43,7 +33,7 @@ const AlertDialogSlide = ({ falgToOpen }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
+          {/* <Button onClick={handleClose}>Disagree</Button> */}
           <Button onClick={handleClose}>Agree</Button>
         </DialogActions>
       </Dialog>
