@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useQueryParams from "../hooks/useQueryParams";
 import { toast } from "react-toastify";
-import CardComponent from "../components/Car/CarComponent";
+import CardComponent from "../components/Car/CarComponent/CarComponent";
 
 const MyCarsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);

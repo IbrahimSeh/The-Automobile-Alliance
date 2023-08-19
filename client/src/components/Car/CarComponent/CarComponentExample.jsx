@@ -16,6 +16,7 @@ import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import DEFAULTCARIMAGE from "./helpers/DefaultCarImage";
 
 const CarComponentExample = ({
   img,
@@ -98,7 +99,7 @@ CarComponentExample.propTypes = {
 };
 
 CarComponentExample.defaultProps = {
-  img: "https://img.freepik.com/free-photo/bussiness-people-working-team-office_1303-22863.jpg?w=2000",
+  img: DEFAULTCARIMAGE,
   title: "example title",
   subTitle: "example subtitle",
   phone: "0501234567",

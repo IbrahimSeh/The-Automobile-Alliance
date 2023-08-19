@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
-import CarComponent from "../components/Car/CarComponent";
+import CarComponent from "../components/Car/CarComponent/CarComponent";
 import useQueryParams from "../hooks/useQueryParams";
 import ROUTES from "../routes/ROUTES";
 import InterfaceImage from "../components/Home/InterfaceImage";

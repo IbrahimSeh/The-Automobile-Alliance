@@ -32,6 +32,7 @@ const validation = (schema, userInput) => {
       errorObjArr.email = [...errorObjArr.email, "invalid email"]
     */
   }
+  console.log('errorObjArr = ', errorObjArr);
   return errorObjArr;
 };
 export default validation;

@@ -14,12 +14,13 @@ const DatePickerOpenTo = ({ passSelectedFromChildToParent, inputValue }) => {
     setYearOfProduction(event);
     passSelectedFromChildToParent(event);
   };
+
   return (
     <Box sx={{ mt: -1 }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={["DatePicker"]}>
           <DatePicker
-            label={'"year of production"'}
+            label={'"year of production *"'}
             openTo="year"
             views={["year"]}
             //value={YearOfProduction}

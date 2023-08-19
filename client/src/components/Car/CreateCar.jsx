@@ -131,6 +131,7 @@ const CreateCar = () => {
                 listOfSelection={carManufacturerSelection}
                 inputKey={"manufacturer"}
                 selectedManufacturerRelatedToType={manufacturerSelected}
+                onBlur={onBlurHandel}
               />
             </Grid>
             <Grid item xs={12} sm={6}>

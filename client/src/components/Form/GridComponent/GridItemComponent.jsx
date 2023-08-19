@@ -52,6 +52,7 @@ const GridItemComponent = ({
   };
 
   const handelBlurChange = () => {
+    console.log("on blur");
     if (schema === "car") {
       joiResponse = validateCarSchema(prevState);
       console.log("joiResponse = ", joiResponse);

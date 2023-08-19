@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import ROUTES from "../routes/ROUTES";
-import CarComponent from "../components/Car/CarComponent";
+import CarComponent from "../components/Car/CarComponent/CarComponent";
 import useQueryParams from "../hooks/useQueryParams";
 
 const FavCardsPage = () => {

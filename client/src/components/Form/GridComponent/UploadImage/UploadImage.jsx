@@ -29,15 +29,12 @@ const UploadImage = ({
     },
   ];
   useEffect(() => {
-    console.log("useEffect");
     if (flagToclear !== true && itemDataFromCarEdit !== undefined) {
-      console.log("in useEffect");
       setItemData(itemDataFromCarEdit);
     }
   }, [itemDataFromCarEdit, flagToclear]);
 
   const handleFileUpload = (event) => {
-    console.log("in add");
     const file = event.target.files[0];
     if (file) tempItemData[0].title = file.name;
     const file1 = event.target.files[1];
@@ -69,7 +66,6 @@ const UploadImage = ({
   };
 
   const handelClickClearPhotos = (event) => {
-    console.log("yes");
     setItemData([]);
     setFlagToclear(true);
   };

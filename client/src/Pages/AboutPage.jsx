@@ -1,5 +1,5 @@
 import { Box, Divider, Grid, Typography } from "@mui/material";
-import CarComponentExample from "../components/Car/CarComponentExample";
+import CarComponentExample from "../components/Car/CarComponent/CarComponentExample";
 
 const AboutPage = () => {
   return (
