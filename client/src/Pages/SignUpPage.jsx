@@ -70,25 +70,11 @@ const SignUpPage = () => {
     }
   };
 
-  const handleBtnCancelClick = () => {
-    navigate(ROUTES.HOME);
-  };
-
-  const handleBtnResetClick = () => {
-    window.location.reload();
-  };
-
-  const updateState = (key, value) => {
-    inputstate[key] = value;
-  };
-
-  const onBlurHandel = (submitLock) => {
-    setbtnDisable(submitLock);
-  };
-
-  const updatecheckBoxState = (value) => {
-    checkBoxState = value;
-  };
+  const handleBtnCancelClick = () => navigate(ROUTES.HOME);
+  const handleBtnResetClick = () => window.location.reload();
+  const updateState = (key, value) => (inputstate[key] = value);
+  const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
+  const updatecheckBoxState = (value) => (checkBoxState = value);
 
   return (
     <Container component="main" maxWidth="md">

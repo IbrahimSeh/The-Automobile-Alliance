@@ -1,6 +1,5 @@
-import { Alert, MenuItem, TextField } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
-import carManufacturer from "./helper/carManufacturerSelection";
+import { Alert, TextField } from "@mui/material";
+import { Fragment, useState } from "react";
 import getLabel from "./helper/getLabel";
 import { validateOwnersAndKm } from "../../Car/CreateCar/validateSelectedField";
 
@@ -10,7 +9,6 @@ const NumberInput = ({
   inputValue,
   prevState,
 }) => {
-  // const [selectedValue, setSelectedValue] = useState(0);
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const [inputState, setInputState] = useState({
     previousOwners: "",
@@ -19,7 +17,6 @@ const NumberInput = ({
   let joiResponse;
 
   const handleChange = (event) => {
-    console.log("handleChange");
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[event.target.id] = event.target.value;
     setInputState(newInputState);
@@ -27,12 +24,8 @@ const NumberInput = ({
   };
 
   const handelBlurChange = () => {
-    console.log("handelBlurChange");
-    //validate Owners And Km
     joiResponse = validateOwnersAndKm(prevState);
-    console.log("joiResponse = ", joiResponse);
     setInputsErrorsState(joiResponse);
-    console.log("inputsErrorsState = ", inputsErrorsState);
   };
 
   return (
@@ -43,9 +36,9 @@ const NumberInput = ({
         required
         fullWidth
         label={getLabel(inputKey)}
-        value={inputValue !== undefined ? inputState[inputKey] : inputValue}
-        onChange={handleChange}
+        value={inputValue !== "" ? inputValue : inputState[inputKey]}
         type="number"
+        onChange={handleChange}
         onBlur={handelBlurChange}
         InputProps={
           inputKey === "previousOwners"

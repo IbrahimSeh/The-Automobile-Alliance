@@ -216,6 +216,10 @@ const CarEdit = () => {
                 passSelectedFromChildToParent={updateSelectedPrevOwners}
                 inputKey={"previousOwners"}
                 inputValue={previousOwners}
+                prevState={{
+                  previousOwners: previousOwners,
+                  kilometers: kilometers,
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -229,6 +233,10 @@ const CarEdit = () => {
                 passSelectedFromChildToParent={updateSelectedKilometers}
                 inputKey={"kilometers"}
                 inputValue={kilometers}
+                prevState={{
+                  previousOwners: previousOwners,
+                  kilometers: kilometers,
+                }}
               />
             </Grid>
             {Object.entries(inputState).map(([key, value]) => (

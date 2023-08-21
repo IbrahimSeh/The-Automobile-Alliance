@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -17,22 +18,8 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../redux/auth";
 
 const UserProfilePage = () => {
-  const [inputstate] = useState({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    password: "",
-    imgAlt: "",
-    imgUrl: "",
-    state: "",
-    country: "",
-    city: "",
-    street: "",
-    houseNumber: "",
-    zipCode: "",
-  });
+  const [inputstate] = useState({});
+  const userId = jwt_decode(localStorage.getItem("token"))._id;
   const [value, setValue] = useState(0);
   const [checked, setChecked] = useState(false);
   const [flagIfCheckBoxUpdated, setFlagIfCheckBoxUpdated] = useState(false);
@@ -42,45 +29,67 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     axios
-      .get("/users/userInfo")
+      .get("/users/" + userId)
       .then(({ data }) => {
         for (const key in JSON.parse(JSON.stringify(data))) {
+          console.log("key = ", key);
           inputstate[key] = data[key];
         }
-        inputstate.zipCode += "";
-        inputstate.imgUrl = inputstate.imageUrl;
-        inputstate.imgAlt = inputstate.imageAlt;
-        setChecked(inputstate.biz);
-        delete inputstate.password;
+
+        setChecked(inputstate.isSubscription);
+        inputstate.firstName = inputstate.name.first;
+        inputstate.middleName = inputstate.name.middle;
+        inputstate.lastName = inputstate.name.last;
+        delete inputstate.name;
+        inputstate.state = inputstate.address.state;
+        inputstate.country = inputstate.address.country;
+        inputstate.city = inputstate.address.city;
+        inputstate.street = inputstate.address.street;
+        inputstate.houseNumber = inputstate.address.houseNumber;
+        inputstate.zipCode = inputstate.address.zip;
+        delete inputstate.address;
+        inputstate.url = inputstate.image.url;
+        inputstate.alt = inputstate.image.alt;
+        delete inputstate.image;
+        // inputstate.phone = inputstate.phone + "";
+        // inputstate.email = inputstate.email + "";
+        // inputstate.password = inputstate.password + "";
         delete inputstate.isAdmin;
-        delete inputstate.biz;
+        delete inputstate.isSubscription;
         delete inputstate._id;
-        delete inputstate.imageUrl;
-        delete inputstate.imageAlt;
+        delete inputstate.__v;
+        delete inputstate.createdAt;
       })
       .catch((err) => {
         console.log("err from axioas", err);
         toast.error("Oops");
       });
-  }, [inputstate]);
-
+  }, [inputstate, userId]);
+  console.log("inputstate = ", inputstate);
   const handleBtnSubmitClick = async (ev) => {
     try {
-      await axios.put("/users/userInfo/", {
-        firstName: inputstate.firstName,
-        middleName: inputstate.middleName,
-        lastName: inputstate.lastName,
+      await axios.put("/users/" + userId, {
+        name: {
+          first: inputstate.firstName,
+          middle: inputstate.middleName,
+          last: inputstate.lastName,
+        },
         phone: inputstate.phone,
         email: inputstate.email,
-        imageUrl: inputstate.imgUrl,
-        imageAlt: inputstate.imgAlt,
-        state: inputstate.state,
-        country: inputstate.country,
-        city: inputstate.city,
-        street: inputstate.street,
-        houseNumber: inputstate.houseNumber,
-        zipCode: inputstate.zipCode,
-        biz: checked,
+        password: inputstate.password,
+        image: {
+          url: inputstate.imageUrl,
+          alt: inputstate.imageAlt,
+        },
+        address: {
+          state: inputstate.state,
+          country: inputstate.country,
+          city: inputstate.city,
+          street: inputstate.street,
+          houseNumber: inputstate.houseNumber,
+          zip: +inputstate.zipCode,
+        },
+        isSubscription: checked,
       });
       toast.success("the user information has been updated");
       if (flagIfCheckBoxUpdated === true) {
@@ -110,22 +119,10 @@ const UserProfilePage = () => {
     return () => clearTimeout(timer);
   }, [inputstate, setValue]);
 
-  const handleBtnCancelClick = () => {
-    navigate(ROUTES.HOME);
-  };
-
-  const handleBtnResetClick = () => {
-    window.location.reload();
-  };
-
-  const updateState = (key, value) => {
-    inputstate[key] = value;
-  };
-
-  const onBlurHandel = (submitLock) => {
-    setbtnDisable(submitLock);
-  };
-
+  const handleBtnCancelClick = () => navigate(ROUTES.HOME);
+  const handleBtnResetClick = () => window.location.reload();
+  const updateState = (key, value) => (inputstate[key] = value);
+  const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
   const updatecheckBoxState = (value) => {
     setFlagIfCheckBoxUpdated(!flagIfCheckBoxUpdated);
     setChecked(value);

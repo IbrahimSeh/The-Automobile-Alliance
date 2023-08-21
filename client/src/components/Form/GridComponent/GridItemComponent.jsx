@@ -1,6 +1,6 @@
 import { Alert, TextField } from "@mui/material";
 import PropTypes from "prop-types";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import validateRegisterSchema from "../../../validation/signupValidation";
 import validateCarSchema from "../../../validation/CreateCarValidation";
 import getLabel from "./helper/getLabel";
@@ -15,6 +15,7 @@ const GridItemComponent = ({
   prevState,
   schema,
 }) => {
+  // const [value, setValue] = useState(0);
   const [inputState, setInputState] = useState({
     firstName: "",
     middleName: "",
@@ -52,11 +53,10 @@ const GridItemComponent = ({
   };
 
   const handelBlurChange = () => {
-    //console.log("on blur");
     if (schema === "car") {
       joiResponse = validateCarSchema(prevState);
-      console.log("prevState = ", prevState);
-      console.log("joiResponse = ", joiResponse);
+      // console.log("prevState = ", prevState);
+      // console.log("joiResponse = ", joiResponse);
     } else {
       if (schema === "user") {
         joiResponse = validateRegisterSchema(prevState);
@@ -82,9 +82,15 @@ const GridItemComponent = ({
         onBlur(true);
       }
     }
-    console.log("inputsErrorsState = ", inputsErrorsState);
   };
 
+  // useEffect(() => {
+  //   console.log("here");
+  //   const timer = setTimeout(() => {
+  //     setValue(1);
+  //   }, 500);
+  //   return () => clearTimeout(timer);
+  // }, [setValue]);
   return (
     <Fragment>
       <TextField
