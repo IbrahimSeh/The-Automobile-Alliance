@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import ROUTES from "../routes/ROUTES";
 import validateLoginSchema from "../validation/loginValidation";
 import useLoggedIn from "../hooks/useLoggedIn";
-import CRComponent from "../components/Form/CRComponent";
+import CRComponent from "../components/Form/FormButtons/CRComponent";
 
 const LogInPage = () => {
   const [inputState, setInputState] = useState({

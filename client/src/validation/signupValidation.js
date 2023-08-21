@@ -12,13 +12,10 @@ const registerSchema = Joi.object({
     email: Joi.string().min(6).max(256)
         .email({ tlds: { allow: false } })
         .required(),
-    password: Joi.string()
-        .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$", "i"))
-        .min(6).max(1024)
-        .required(),
-    imgUrl: Joi.string().min(6).max(1024).allow(null, ''),
+
+    url: Joi.string().min(6).max(1024).allow(null, ''),
     // pattern(new RegExp("(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)")).
-    imgAlt: Joi.string().min(6).max(256).allow(null, ''),
+    alt: Joi.string().min(6).max(256).allow(null, ''),
     state: Joi.string().min(2).max(256).allow(null, ''),
     // .pattern(new RegExp("[A-Z][a-z]+(?: +[A-Z][a-z]+)*")).
     country: Joi.string().min(2).max(256).required(),
@@ -28,8 +25,14 @@ const registerSchema = Joi.object({
     zipCode: Joi.number().min(1).max(99999999),
     isSubscription: Joi.boolean(),
 });
+const registerPasswordSchema = Joi.object({
+    password: Joi.string()
+        .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$", "i"))
+        .min(6).max(1024)
+        .required(),
+});
 
-const signupValidation = (userInput) =>
+const validateRegisterSchema = (userInput) =>
     validation(registerSchema, userInput);
 
-export default signupValidation;
+export { validateRegisterSchema, registerPasswordSchema };

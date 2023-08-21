@@ -1,8 +1,8 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
-import getLabel from "./helper/getLabel";
+import getLabel from "../helper/getLabel";
 
-const TextFieldSelectForFuel = ({
+const TextFieldSelect = ({
   passSelectedFromChildToParent,
   listOfSelection,
   inputKey,
@@ -15,6 +15,16 @@ const TextFieldSelectForFuel = ({
     passSelectedFromChildToParent(event.target.value);
   };
 
+  const getValue = () => {
+    if (inputValue !== undefined) {
+      return inputValue;
+    }
+    if (selectedManufacturerRelatedToType === "ALL") {
+      return selectedValue;
+    } else {
+      return selectedManufacturerRelatedToType;
+    }
+  };
   return (
     <Fragment>
       <TextField
@@ -24,7 +34,7 @@ const TextFieldSelectForFuel = ({
         fullWidth
         id={inputKey}
         label={getLabel(inputKey)}
-        value={inputValue !== undefined ? inputValue : selectedValue}
+        value={getValue()}
         onChange={handleChange}
         select
       >
@@ -38,4 +48,7 @@ const TextFieldSelectForFuel = ({
   );
 };
 
-export default TextFieldSelectForFuel;
+// TextFieldSelect.propTypes = {
+//   listOfSelection: PropTypes.array,
+// };
+export default TextFieldSelect;

@@ -9,16 +9,18 @@ import carManufacturerSelection from "../Form/GridComponent/helper/carManufactur
 import fuelTypeSelection from "../Form/GridComponent/helper/fuelTypeSelection";
 import typeSelection from "../Form/GridComponent/helper/typeSelection";
 import ROUTES from "../../routes/ROUTES";
-import SubmitComponent from "../Form/SubmitComponent";
-import CRComponent from "../Form/CRComponent";
+import SubmitComponent from "../Form/FormButtons/SubmitComponent";
+import CRComponent from "../Form/FormButtons/CRComponent";
 import GridItemComponent from "../Form/GridComponent/GridItemComponent";
-import TextFieldSelect from "../Form/GridComponent/TextFieldSelect";
-import DatePickerOpenTo from "../Form/GridComponent/DatePicker";
-import NumberInput from "../Form/GridComponent/NumberInput";
-import TexFieldSelectForType from "../Form/GridComponent/TexFieldSelectForType";
-import TextFieldSelectForFuel from "../Form/GridComponent/TextFieldSelectForFuel";
+import TextFieldSelect from "../Form/GridComponent/OtherTextField/TextFieldSelect";
+import DatePickerOpenTo from "../Form/GridComponent/OtherTextField/DatePicker";
+import NumberInput from "../Form/GridComponent/OtherTextField/NumberInput";
+import TexFieldSelectForType from "../Form/GridComponent/OtherTextField/TexFieldSelectForType";
+import TextFieldSelectForFuel from "../Form/GridComponent/OtherTextField/TextFieldSelectForFuel";
 import useQueryParams from "../../hooks/useQueryParams";
 import UploadImage from "../Form/GridComponent/UploadImage/UploadImage";
+import AlertDialogSlide from "../Dialog(Popup)/AlertDialogSlide";
+import { validateSelectedField } from "./CreateCar/validateSelectedField";
 
 const CarEdit = () => {
   let qparams = useQueryParams();
@@ -34,6 +36,8 @@ const CarEdit = () => {
   );
   const [url, setUrl] = useState([]);
   const [alt, setAlt] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogErrMsg, setDialogErrMsg] = useState([]);
   const navigate = useNavigate();
 
   //get data for specific car for update
@@ -101,6 +105,16 @@ const CarEdit = () => {
     },
   ];
   const handleBtnSubmitClick = async (ev) => {
+    //validate manufacturer, type & fuelType
+    if (
+      validateSelectedField(manufacturerSelected, type, fuelType).length !== 0
+    ) {
+      setDialogErrMsg(
+        validateSelectedField(manufacturerSelected, type, fuelType)
+      );
+      setOpenDialog(true);
+      return;
+    }
     try {
       await axios.put("/cars/" + qparams.carId, {
         manufacturerData: {
@@ -145,6 +159,7 @@ const CarEdit = () => {
   const updateSelectedKilometers = (KM) => setKilometers(KM);
   const updateSelectedAlt = (alt) => setAlt(alt);
   const updateSelectedUrl = (url) => setUrl(url);
+  const handelClose = () => setOpenDialog(false);
 
   const updateSelectedImage = (event) => {
     let tempalt = [];
@@ -174,6 +189,11 @@ const CarEdit = () => {
           alignItems: "center",
         }}
       >
+        <AlertDialogSlide
+          falgToOpen={openDialog}
+          closeFromCreateCar={handelClose}
+          information={dialogErrMsg}
+        />
         <Avatar sx={{ m: 1, bgcolor: "#945a61" }}>
           <CreateIcon />
         </Avatar>
@@ -264,7 +284,6 @@ const CarEdit = () => {
           <SubmitComponent
             onClick={handleBtnSubmitClick}
             disablebtn={btnDisable}
-            FromForm={"CarEdit"}
           />
         </Box>
       </Box>

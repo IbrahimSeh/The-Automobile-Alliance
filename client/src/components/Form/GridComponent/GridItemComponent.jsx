@@ -1,7 +1,7 @@
 import { Alert, TextField } from "@mui/material";
 import PropTypes from "prop-types";
-import { Fragment, useEffect, useState } from "react";
-import validateRegisterSchema from "../../../validation/signupValidation";
+import { Fragment, useState } from "react";
+import { validateRegisterSchema } from "../../../validation/signupValidation";
 import validateCarSchema from "../../../validation/CreateCarValidation";
 import getLabel from "./helper/getLabel";
 import getType from "./helper/getType";
@@ -60,15 +60,17 @@ const GridItemComponent = ({
     } else {
       if (schema === "user") {
         joiResponse = validateRegisterSchema(prevState);
-        if (joiResponse !== null && joiResponse.hasOwnProperty("password")) {
-          delete joiResponse.password;
-          if (Object.keys(joiResponse).length === 0) {
-            joiResponse = null;
-          }
-        }
-      } else {
-        joiResponse = validateRegisterSchema(prevState);
+        console.log("joiResponse = ", joiResponse);
+        // if (joiResponse !== null && joiResponse.hasOwnProperty("password")) {
+        //   delete joiResponse.password;
+        //   if (Object.keys(joiResponse).length === 0) {
+        //     joiResponse = null;
+        //   }
+        // }
       }
+      // else {
+      //   joiResponse = validateRegisterSchema(prevState);
+      // }
     }
     setInputsErrorsState(joiResponse);
     if (!joiResponse) {

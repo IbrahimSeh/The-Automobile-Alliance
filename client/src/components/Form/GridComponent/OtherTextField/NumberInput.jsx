@@ -1,7 +1,7 @@
 import { Alert, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
-import getLabel from "./helper/getLabel";
-import { validateOwnersAndKm } from "../../Car/CreateCar/validateSelectedField";
+import getLabel from "../helper/getLabel";
+import { validateOwnersAndKm } from "../../../Car/CreateCar/validateSelectedField";
 
 const NumberInput = ({
   passSelectedFromChildToParent,

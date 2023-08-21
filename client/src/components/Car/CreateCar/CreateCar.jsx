@@ -9,17 +9,17 @@ import carManufacturerSelection from "../../Form/GridComponent/helper/carManufac
 import fuelTypeSelection from "../../Form/GridComponent/helper/fuelTypeSelection";
 import typeSelection from "../../Form/GridComponent/helper/typeSelection";
 import ROUTES from "../../../routes/ROUTES";
-import SubmitComponent from "../../Form/SubmitComponent";
-import CRComponent from "../../Form/CRComponent";
+import SubmitComponent from "../../Form/FormButtons/SubmitComponent";
+import CRComponent from "../../Form/FormButtons/CRComponent";
 import GridItemComponent from "../../Form/GridComponent/GridItemComponent";
-import TextFieldSelect from "../../Form/GridComponent/TextFieldSelect";
-import DatePickerOpenTo from "../../Form/GridComponent/DatePicker";
-import NumberInput from "../../Form/GridComponent/NumberInput";
-import TexFieldSelectForType from "../../Form/GridComponent/TexFieldSelectForType";
-import TextFieldSelectForFuel from "../../Form/GridComponent/TextFieldSelectForFuel";
+import TextFieldSelect from "../../Form/GridComponent/OtherTextField/TextFieldSelect";
+import DatePickerOpenTo from "../../Form/GridComponent/OtherTextField/DatePicker";
+import NumberInput from "../../Form/GridComponent/OtherTextField/NumberInput";
+import TexFieldSelectForType from "../../Form/GridComponent/OtherTextField/TexFieldSelectForType";
+import TextFieldSelectForFuel from "../../Form/GridComponent/OtherTextField/TextFieldSelectForFuel";
 import UploadImage from "../../Form/GridComponent/UploadImage/UploadImage";
 import { validateSelectedField } from "./validateSelectedField";
-import AlertDialogSlide from "./AlertDialogSlide";
+import AlertDialogSlide from "../../Dialog(Popup)/AlertDialogSlide";
 
 const CreateCar = () => {
   const [inputState] = useState({

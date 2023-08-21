@@ -1,7 +1,7 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
-import getLabel from "./helper/getLabel";
-import typeSelection from "./helper/typeSelection";
+import getLabel from "../helper/getLabel";
+import typeSelection from "../helper/typeSelection";
 
 const TexFieldSelectForType = ({
   passSelectedFromChildToParent,

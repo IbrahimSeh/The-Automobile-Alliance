@@ -11,16 +11,20 @@ import axios from "axios";
 import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 import GridItemComponent from "../components/Form/GridComponent/GridItemComponent";
-import CRComponent from "../components/Form/CRComponent";
-import SubmitComponent from "../components/Form/SubmitComponent";
-import CheckboxComponent from "../components/Form/CheckboxComponent";
+import CRComponent from "../components/Form/FormButtons/CRComponent";
+import SubmitComponent from "../components/Form/FormButtons/SubmitComponent";
+import CheckboxComponent from "../components/Form/GridComponent/CheckBox/CheckboxComponent";
 import { useDispatch } from "react-redux";
 import { authActions } from "../redux/auth";
+import LockResetIcon from "@mui/icons-material/LockReset";
+import { Button, Fade, Tooltip } from "@mui/material";
+import PasswordFormDialog from "../components/Dialog(Popup)/PasswordFormDialog";
 
 const UserProfilePage = () => {
   const [inputstate] = useState({});
+  const [password, setPassword] = useState("");
   const userId = jwt_decode(localStorage.getItem("token"))._id;
-  const [value, setValue] = useState(0);
+  const [openDialog, setOpenDialog] = useState(false);
   const [checked, setChecked] = useState(false);
   const [flagIfCheckBoxUpdated, setFlagIfCheckBoxUpdated] = useState(false);
   const [btnDisable, setbtnDisable] = useState(false);
@@ -41,6 +45,16 @@ const UserProfilePage = () => {
         inputstate.middleName = inputstate.name.middle;
         inputstate.lastName = inputstate.name.last;
         delete inputstate.name;
+        inputstate.phone1 = inputstate.phone;
+        inputstate.email1 = inputstate.email;
+        delete inputstate.phone;
+        delete inputstate.email;
+        setPassword(inputstate.password);
+        delete inputstate.password;
+        inputstate.phone = inputstate.phone1;
+        inputstate.email = inputstate.email1;
+        delete inputstate.phone1;
+        delete inputstate.email1;
         inputstate.state = inputstate.address.state;
         inputstate.country = inputstate.address.country;
         inputstate.city = inputstate.address.city;
@@ -51,9 +65,6 @@ const UserProfilePage = () => {
         inputstate.url = inputstate.image.url;
         inputstate.alt = inputstate.image.alt;
         delete inputstate.image;
-        // inputstate.phone = inputstate.phone + "";
-        // inputstate.email = inputstate.email + "";
-        // inputstate.password = inputstate.password + "";
         delete inputstate.isAdmin;
         delete inputstate.isSubscription;
         delete inputstate._id;
@@ -65,7 +76,7 @@ const UserProfilePage = () => {
         toast.error("Oops");
       });
   }, [inputstate, userId]);
-  console.log("inputstate = ", inputstate);
+
   const handleBtnSubmitClick = async (ev) => {
     try {
       await axios.put("/users/" + userId, {
@@ -105,24 +116,26 @@ const UserProfilePage = () => {
     }
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setValue(1);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [inputstate, setValue]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setValue(1);
+  //   }, 100);
+  //   return () => clearTimeout(timer);
+  // }, [inputstate, setValue]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setValue(2);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [inputstate, setValue]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setValue(2);
+  //   }, 1000);
+  //   return () => clearTimeout(timer);
+  // }, [inputstate, setValue]);
 
   const handleBtnCancelClick = () => navigate(ROUTES.HOME);
   const handleBtnResetClick = () => window.location.reload();
   const updateState = (key, value) => (inputstate[key] = value);
   const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
+  const handelOpenDialog = () => setOpenDialog(true);
+  const handelClose = () => setOpenDialog(false);
   const updatecheckBoxState = (value) => {
     setFlagIfCheckBoxUpdated(!flagIfCheckBoxUpdated);
     setChecked(value);
@@ -138,6 +151,10 @@ const UserProfilePage = () => {
           alignItems: "center",
         }}
       >
+        <PasswordFormDialog
+          falgToOpen={openDialog}
+          closeFromUserProfilePage={handelClose}
+        />
         <Avatar sx={{ m: 1, bgcolor: "#945a61" }}>
           <AppRegistrationIcon />
         </Avatar>
@@ -160,15 +177,31 @@ const UserProfilePage = () => {
               </Grid>
             ))}
 
-            <CheckboxComponent
-              isChecked={checked}
-              passCheckBoxFromChildToParent={updatecheckBoxState}
-            />
+            <Grid item xs={12} sm={11}>
+              <CheckboxComponent
+                isChecked={checked}
+                passCheckBoxFromChildToParent={updatecheckBoxState}
+              />
+            </Grid>
+            <Grid item xs={12} sm={1} sx={{ mt: -1 }}>
+              <Tooltip
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 600 }}
+                title="Reset Password"
+                placement="bottom-end"
+              >
+                <Button onClick={handelOpenDialog}>
+                  <LockResetIcon fontSize="large" />
+                </Button>
+              </Tooltip>
+            </Grid>
+
             <CRComponent
               cancelBtn={handleBtnCancelClick}
               resetBtn={handleBtnResetClick}
             />
           </Grid>
+
           <SubmitComponent
             onClick={handleBtnSubmitClick}
             disablebtn={btnDisable}

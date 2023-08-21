@@ -11,9 +11,9 @@ import axios from "axios";
 import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 import GridItemComponent from "../components/Form/GridComponent/GridItemComponent";
-import CRComponent from "../components/Form/CRComponent";
-import SubmitComponent from "../components/Form/SubmitComponent";
-import CheckboxComponent from "../components/Form/CheckboxComponent";
+import CRComponent from "../components/Form/FormButtons/CRComponent";
+import SubmitComponent from "../components/Form/FormButtons/SubmitComponent";
+import CheckboxComponent from "../components/Form/GridComponent/CheckBox/CheckboxComponent";
 
 const SignUpPage = () => {
   const [inputstate] = useState({
