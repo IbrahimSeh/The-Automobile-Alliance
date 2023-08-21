@@ -125,7 +125,7 @@ const Navbar = () => {
       axios
         .get("/users/" + jwt_decode(token)._id)
         .then(({ data }) => {
-          setimgUser(data.imageUrl);
+          setimgUser(data.image.url);
         })
         .catch((err) => {
           console.log("err from axioas", err);

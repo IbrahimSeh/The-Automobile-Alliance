@@ -17,19 +17,21 @@ const CheckboxComponent = ({ isChecked, passCheckBoxFromChildToParent }) => {
   };
   return (
     <Fragment>
-      <FormControlLabel
-        control={
-          <Checkbox
-            name="isSubscription"
-            id="isSubscription"
-            checked={checked}
-            onChange={handleCheckBoxChange}
-            inputProps={{ "aria-label": "controlled" }}
-            color="primary"
-          />
-        }
-        label="Sign Up as Subscription ?"
-      />
+      <Grid item xs={12}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              name="isSubscription"
+              id="isSubscription"
+              checked={checked}
+              onChange={handleCheckBoxChange}
+              inputProps={{ "aria-label": "controlled" }}
+              color="primary"
+            />
+          }
+          label="Sign Up as Subscription ?"
+        />
+      </Grid>
     </Fragment>
   );
 };

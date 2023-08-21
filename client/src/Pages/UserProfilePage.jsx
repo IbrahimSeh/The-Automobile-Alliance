@@ -36,7 +36,6 @@ const UserProfilePage = () => {
       .get("/users/" + userId)
       .then(({ data }) => {
         for (const key in JSON.parse(JSON.stringify(data))) {
-          console.log("key = ", key);
           inputstate[key] = data[key];
         }
 
@@ -60,7 +59,7 @@ const UserProfilePage = () => {
         inputstate.city = inputstate.address.city;
         inputstate.street = inputstate.address.street;
         inputstate.houseNumber = inputstate.address.houseNumber;
-        inputstate.zipCode = inputstate.address.zip;
+        inputstate.zip = inputstate.address.zip;
         delete inputstate.address;
         inputstate.url = inputstate.image.url;
         inputstate.alt = inputstate.image.alt;
@@ -87,10 +86,10 @@ const UserProfilePage = () => {
         },
         phone: inputstate.phone,
         email: inputstate.email,
-        password: inputstate.password,
+        //password: password,
         image: {
-          url: inputstate.imageUrl,
-          alt: inputstate.imageAlt,
+          url: inputstate.url,
+          alt: inputstate.alt,
         },
         address: {
           state: inputstate.state,
@@ -98,7 +97,7 @@ const UserProfilePage = () => {
           city: inputstate.city,
           street: inputstate.street,
           houseNumber: inputstate.houseNumber,
-          zip: +inputstate.zipCode,
+          zip: +inputstate.zip,
         },
         isSubscription: checked,
       });
@@ -201,7 +200,6 @@ const UserProfilePage = () => {
               resetBtn={handleBtnResetClick}
             />
           </Grid>
-
           <SubmitComponent
             onClick={handleBtnSubmitClick}
             disablebtn={btnDisable}
