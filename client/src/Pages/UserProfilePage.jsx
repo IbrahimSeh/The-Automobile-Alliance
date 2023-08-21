@@ -22,7 +22,7 @@ import PasswordFormDialog from "../components/Dialog(Popup)/PasswordFormDialog";
 
 const UserProfilePage = () => {
   const [inputstate] = useState({});
-  const [password, setPassword] = useState("");
+  //const [password, setPassword] = useState("");
   const userId = jwt_decode(localStorage.getItem("token"))._id;
   const [openDialog, setOpenDialog] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -48,7 +48,7 @@ const UserProfilePage = () => {
         inputstate.email1 = inputstate.email;
         delete inputstate.phone;
         delete inputstate.email;
-        setPassword(inputstate.password);
+        //setPassword(inputstate.password);
         delete inputstate.password;
         inputstate.phone = inputstate.phone1;
         inputstate.email = inputstate.email1;
@@ -153,6 +153,7 @@ const UserProfilePage = () => {
         <PasswordFormDialog
           falgToOpen={openDialog}
           closeFromUserProfilePage={handelClose}
+          userId={userId}
         />
         <Avatar sx={{ m: 1, bgcolor: "#945a61" }}>
           <AppRegistrationIcon />

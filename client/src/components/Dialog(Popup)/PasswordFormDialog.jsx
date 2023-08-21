@@ -1,45 +1,72 @@
 import * as React from "react";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { Alert, Divider, List, ListItem, ListItemText } from "@mui/material";
+import { validateRegisterPasswordSchema } from "../../validation/signupValidation";
+import { toast } from "react-toastify";
 
 const information = [
-  "password is: At least 12 characters long but 14 or more is better.",
+  "A strong password is: At least 12 characters long but 14 or more is better.",
   "A combination of uppercase letters, lowercase letters, numbers, and symbols.",
   "Not a word that can be found in a dictionary or the name of a person, character, product, or organization. Significantly different from your previous passwords.",
   "Easy for you to remember but difficult for others to guess.",
   "Consider using a memorable phrase like 6MonkeysRLooking^.",
 ];
 
-const PasswordFormDialog = ({ falgToOpen, closeFromUserProfilePage }) => {
+const PasswordFormDialog = ({
+  falgToOpen,
+  closeFromUserProfilePage,
+  userId,
+}) => {
   const [password, setPassword] = React.useState("");
+  const [inputsErrorsState, setInputsErrorsState] = React.useState(null);
+  let joiResponse;
 
-  const handleClose = () => {
-    console.log("password = ", password);
+  const handleClose = () => closeFromUserProfilePage();
+  const handleSave = async () => {
+    try {
+      await axios.put("/users/setpassword/" + userId, {
+        password: password,
+      });
+      toast.success("password has been updated");
+    } catch (err) {
+      console.log("error from axios", err.response.data);
+      toast.error("password has been not updated");
+    }
+
+    console.log("in save");
+
     closeFromUserProfilePage();
   };
+  const handleInputChange = (ev) => setPassword(ev.target.value);
 
-  const handleInputChange = (ev) => {
-    setPassword(ev.target.value);
-    //onChange(ev.target.id, ev.target.value);
+  const handelBlurChange = () => {
+    console.log("on blur dialog");
+    joiResponse = validateRegisterPasswordSchema({ password: password });
+    setInputsErrorsState(joiResponse);
   };
-
-  const handelBlurChange = () => {};
 
   return (
     <div>
       <Dialog open={falgToOpen} onClose={handleClose}>
-        <DialogTitle>Reset Password</DialogTitle>
         <DialogTitle>
-          Password security starts with creating a strong password. A strong
+          Reset Password <Divider />
+          Password security starts with creating a strong password.
+          <Divider />
         </DialogTitle>
+        <DialogTitle></DialogTitle>
         <DialogContent>
           <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            sx={{
+              width: "100%",
+              maxWidth: 360,
+              bgcolor: "background.paper",
+            }}
           >
             {information &&
               information.map((value, index) => (
@@ -60,9 +87,21 @@ const PasswordFormDialog = ({ falgToOpen, closeFromUserProfilePage }) => {
             onChange={handleInputChange}
             onBlur={handelBlurChange}
           />
+          {inputsErrorsState && inputsErrorsState["password"] && (
+            <Alert severity="warning">
+              {inputsErrorsState["password"].map((item) => (
+                <div key={`${"password"}-errors` + item}>
+                  {item.includes("pattern:")
+                    ? item.split("pattern:")[0] + "pattern"
+                    : item}
+                </div>
+              ))}
+            </Alert>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Save</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
         </DialogActions>
       </Dialog>
     </div>

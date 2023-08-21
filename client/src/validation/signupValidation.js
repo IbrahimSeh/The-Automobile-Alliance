@@ -35,4 +35,7 @@ const registerPasswordSchema = Joi.object({
 const validateRegisterSchema = (userInput) =>
     validation(registerSchema, userInput);
 
-export { validateRegisterSchema, registerPasswordSchema };
+const validateRegisterPasswordSchema = (userInput) =>
+    validation(registerPasswordSchema, userInput);
+
+export { validateRegisterSchema, validateRegisterPasswordSchema };
