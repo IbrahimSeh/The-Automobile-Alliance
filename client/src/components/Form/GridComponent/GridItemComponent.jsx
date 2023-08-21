@@ -55,6 +55,7 @@ const GridItemComponent = ({
     //console.log("on blur");
     if (schema === "car") {
       joiResponse = validateCarSchema(prevState);
+      console.log("prevState = ", prevState);
       console.log("joiResponse = ", joiResponse);
     } else {
       if (schema === "user") {
@@ -81,6 +82,7 @@ const GridItemComponent = ({
         onBlur(true);
       }
     }
+    console.log("inputsErrorsState = ", inputsErrorsState);
   };
 
   return (

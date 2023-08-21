@@ -8,26 +8,31 @@ const NumberInput = ({
   passSelectedFromChildToParent,
   inputKey,
   inputValue,
-  previousOwners,
-  kilometers,
+  prevState,
 }) => {
-  const [selectedValue, setSelectedValue] = useState(0);
+  // const [selectedValue, setSelectedValue] = useState(0);
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
-  //const [dialogErrMsg, setDialogErrMsg] = useState([]);
   const [inputState, setInputState] = useState({
     previousOwners: "",
     kilometers: "",
   });
+  let joiResponse;
+
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+    console.log("handleChange");
+    let newInputState = JSON.parse(JSON.stringify(inputState));
+    newInputState[event.target.id] = event.target.value;
+    setInputState(newInputState);
     passSelectedFromChildToParent(event.target.value);
   };
 
   const handelBlurChange = () => {
+    console.log("handelBlurChange");
     //validate Owners And Km
-    console.log("previousOwners = ", previousOwners);
-    console.log("kilometers = ", kilometers);
-    setInputsErrorsState(validateOwnersAndKm(previousOwners, kilometers));
+    joiResponse = validateOwnersAndKm(prevState);
+    console.log("joiResponse = ", joiResponse);
+    setInputsErrorsState(joiResponse);
+    console.log("inputsErrorsState = ", inputsErrorsState);
   };
 
   return (
@@ -38,7 +43,7 @@ const NumberInput = ({
         required
         fullWidth
         label={getLabel(inputKey)}
-        value={inputValue !== undefined ? inputValue : selectedValue}
+        value={inputValue !== undefined ? inputState[inputKey] : inputValue}
         onChange={handleChange}
         type="number"
         onBlur={handelBlurChange}
@@ -47,25 +52,18 @@ const NumberInput = ({
             ? { inputProps: { min: 0, max: 300 } }
             : { inputProps: { min: 0, max: 2000000 } }
         }
-      >
-        {/* {inputsErrorsState && inputsErrorsState[inputKey] && (
-          <Alert severity="warning">
-            {inputsErrorsState[inputKey].map((item) => (
-              <div key={`${inputKey}-errors` + item}>
-                {item.includes("pattern:")
-                  ? item.split("pattern:")[0] + "pattern"
-                  : item}
-              </div>
-            ))}
-          </Alert>
-        )} */}
-
-        {carManufacturer.map((option) => (
-          <MenuItem key={option.label} value={option.label}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
+      />
+      {inputsErrorsState !== null && inputsErrorsState[inputKey] && (
+        <Alert severity="warning">
+          {inputsErrorsState[inputKey].map((item) => (
+            <div key={`${inputKey}-errors` + item}>
+              {item.includes("pattern:")
+                ? item.split("pattern:")[0] + "pattern"
+                : item}
+            </div>
+          ))}
+        </Alert>
+      )}
     </Fragment>
   );
 };
