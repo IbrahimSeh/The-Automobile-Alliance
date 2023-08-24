@@ -95,13 +95,13 @@ const userAsSubscription2Logo = [
         <FavoriteBorderTwoToneIcon fontSize="large" />
       </Tooltip>
     ),
-    url: ROUTES.FAVCARDS,
+    url: ROUTES.FAVCARS,
   },
 ];
 const userAsSubscription2 = [
   {
     label: "FAVORITE CAR",
-    url: ROUTES.FAVCARDS,
+    url: ROUTES.FAVCARS,
   },
 ];
 const userAsAdmin = [

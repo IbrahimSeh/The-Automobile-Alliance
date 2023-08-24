@@ -43,7 +43,6 @@ const PasswordFormDialog = ({
   const handleInputChange = (ev) => setPassword(ev.target.value);
 
   const handelBlurChange = () => {
-    console.log("on blur dialog");
     joiResponse = validateRegisterPasswordSchema({ password: password });
     setInputsErrorsState(joiResponse);
   };

@@ -26,6 +26,7 @@ const HomePage = () => {
 
   //first useEffect when page load
   useEffect(() => {
+    console.log("useEffect 1");
     axios
       .get("/cars")
       .then(({ data }) => {
@@ -39,9 +40,10 @@ const HomePage = () => {
 
   //second useEffect evry time we make change on search
   useEffect(() => {
+    console.log("useEffect 2");
     filterFunc();
   }, [qparams.filter]);
-
+  console.log("qparams.filter = ", qparams.filter);
   const filterFunc = (data) => {
     if (!originalCarsArr && !data) {
       return;
@@ -49,7 +51,7 @@ const HomePage = () => {
 
     let filter = "";
     if (qparams.filter) {
-      filter = qparams.filter;
+      filter = qparams.filter.toLowerCase();
     }
 
     if (!originalCarsArr && data) {
@@ -60,7 +62,10 @@ const HomePage = () => {
       setCarsArr(
         data.filter(
           (car) =>
-            car.manufacturerData.manufacturer.startsWith(filter) ||
+            car.manufacturerData.manufacturer
+              .toLowerCase()
+              .startsWith(filter) ||
+            car.manufacturerData.type.toLowerCase().startsWith(filter) ||
             car._id.startsWith(filter)
         )
       );
@@ -74,7 +79,10 @@ const HomePage = () => {
       setCarsArr(
         newOriginalCarsArr.filter(
           (car) =>
-            car.manufacturerData.manufacturer.startsWith(filter) ||
+            car.manufacturerData.manufacturer
+              .toLowerCase()
+              .startsWith(filter) ||
+            car.manufacturerData.type.toLowerCase().startsWith(filter) ||
             car._id.startsWith(filter)
         )
       );

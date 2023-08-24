@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { Fade, Tooltip } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,12 +67,19 @@ const SearchNavBar = () => {
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
-        <StyledInputBase
-          placeholder="Search…"
-          inputProps={{ "aria-label": "search" }}
-          onChange={handleSearchChange}
-          value={searchInput}
-        />
+        <Tooltip
+          TransitionComponent={Fade}
+          TransitionProps={{ timeout: 600 }}
+          title="Search by manufacturer name or type"
+          placement="bottom-end"
+        >
+          <StyledInputBase
+            placeholder="Search..."
+            inputProps={{ "aria-label": "search" }}
+            onChange={handleSearchChange}
+            value={searchInput}
+          />
+        </Tooltip>
       </Search>
     </form>
   );
