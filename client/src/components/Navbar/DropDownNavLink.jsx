@@ -10,11 +10,11 @@ import { useSelector } from "react-redux";
 
 const servicesPages = [
   {
-    label: "purchasecar",
+    label: "specific search",
     url: ROUTES.PURCHASECAR,
   },
   {
-    label: "salecar",
+    label: "Offered a car for sale",
     url: ROUTES.SALECAR,
   },
   {

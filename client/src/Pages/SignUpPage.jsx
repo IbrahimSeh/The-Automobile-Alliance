@@ -14,6 +14,7 @@ import GridItemComponent from "../components/Form/GridComponent/GridItemComponen
 import CRComponent from "../components/Form/FormButtons/CRComponent";
 import SubmitComponent from "../components/Form/FormButtons/SubmitComponent";
 import CheckboxComponent from "../components/Form/GridComponent/CheckBox/CheckboxComponent";
+import CountrySelect from "../components/Form/GridComponent/OtherTextField/CountrySelect";
 
 const SignUpPage = () => {
   const [inputstate] = useState({
@@ -97,6 +98,7 @@ const SignUpPage = () => {
         </Typography>
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            <CountrySelect />
             {Object.entries(inputstate).map(([key, value]) => (
               <Grid item xs={12} sm={6} key={key + Date.now()}>
                 <GridItemComponent
