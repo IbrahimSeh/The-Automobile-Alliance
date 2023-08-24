@@ -98,7 +98,7 @@ const SignUpPage = () => {
         </Typography>
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <CountrySelect />
+            {/* <CountrySelect /> */}
             {Object.entries(inputstate).map(([key, value]) => (
               <Grid item xs={12} sm={6} key={key + Date.now()}>
                 <GridItemComponent
