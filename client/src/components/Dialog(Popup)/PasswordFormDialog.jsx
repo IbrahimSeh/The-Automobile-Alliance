@@ -38,9 +38,6 @@ const PasswordFormDialog = ({
       console.log("error from axios", err.response.data);
       toast.error("password has been not updated");
     }
-
-    console.log("in save");
-
     closeFromUserProfilePage();
   };
   const handleInputChange = (ev) => setPassword(ev.target.value);
