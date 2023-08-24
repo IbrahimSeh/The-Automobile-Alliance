@@ -26,7 +26,6 @@ const HomePage = () => {
 
   //first useEffect when page load
   useEffect(() => {
-    console.log("useEffect 1");
     axios
       .get("/cars")
       .then(({ data }) => {
@@ -40,10 +39,8 @@ const HomePage = () => {
 
   //second useEffect evry time we make change on search
   useEffect(() => {
-    console.log("useEffect 2");
     filterFunc();
   }, [qparams.filter]);
-  console.log("qparams.filter = ", qparams.filter);
   const filterFunc = (data) => {
     if (!originalCarsArr && !data) {
       return;

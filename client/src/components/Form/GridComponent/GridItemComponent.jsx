@@ -55,22 +55,11 @@ const GridItemComponent = ({
   const handelBlurChange = () => {
     if (schema === "car") {
       joiResponse = validateCarSchema(prevState);
-      // console.log("prevState = ", prevState);
-      // console.log("joiResponse = ", joiResponse);
     } else {
       if (schema === "user") {
         joiResponse = validateRegisterSchema(prevState);
         console.log("joiResponse = ", joiResponse);
-        // if (joiResponse !== null && joiResponse.hasOwnProperty("password")) {
-        //   delete joiResponse.password;
-        //   if (Object.keys(joiResponse).length === 0) {
-        //     joiResponse = null;
-        //   }
-        // }
       }
-      // else {
-      //   joiResponse = validateRegisterSchema(prevState);
-      // }
     }
     setInputsErrorsState(joiResponse);
     if (!joiResponse) {
@@ -86,13 +75,6 @@ const GridItemComponent = ({
     }
   };
 
-  // useEffect(() => {
-  //   console.log("here");
-  //   const timer = setTimeout(() => {
-  //     setValue(1);
-  //   }, 500);
-  //   return () => clearTimeout(timer);
-  // }, [setValue]);
   return (
     <Fragment>
       <TextField

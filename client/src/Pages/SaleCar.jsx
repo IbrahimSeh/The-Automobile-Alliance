@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
-import PaginationLink from "../components/Pagination/PaginationLink";
+import PaginationComponent from "../components/Pagination/PaginationComponent";
 
 const SaleCar = () => {
   return (
     <div>
-      <Typography variant="h3" color="initial">
-        SaleCar Page
+      <Typography mb={3} variant="h3" align="center" color="blue">
+        OFFERED A CAR FOR SALE
       </Typography>
-      <PaginationLink />
+      <PaginationComponent />
     </div>
   );
 };
