@@ -1,12 +1,18 @@
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
-const Communications = () => {
+const Communications = ({ passData }) => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleChangePhone = (event) => setPhone(event.target.value);
-  const handleChangeEmail = (event) => setEmail(event.target.value);
+  const handleChangePhone = (event) => {
+    setPhone(event.target.value);
+    passData("phone", event.target.value);
+  };
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
+    passData("email", event.target.value);
+  };
 
   return (
     <Box

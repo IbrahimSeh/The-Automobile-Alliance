@@ -2,18 +2,24 @@ import { Box, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import carManufacturer from "../Form/GridComponent/helper/carManufacturerSelection";
 import typeSelection from "../Form/GridComponent/helper/typeSelection";
 import { useState } from "react";
-const ManufacturerData = () => {
+const ManufacturerData = ({ passData }) => {
   const [manufacturer, setManufacturer] = useState("ALL");
   const [type, setType] = useState("");
   const [subType, setSubType] = useState("");
-
   const handleChangeManufacturer = (event) => {
     if (manufacturer !== "ALL" && type !== "") setType("");
     setManufacturer(event.target.value);
+    passData("manufacturer", event.target.value);
   };
 
-  const handleChangeType = (event) => setType(event.target.value);
-  const handleChangeSubType = (event) => setSubType(event.target.value);
+  const handleChangeType = (event) => {
+    setType(event.target.value);
+    passData("type", event.target.value);
+  };
+  const handleChangeSubType = (event) => {
+    setSubType(event.target.value);
+    passData("subType", event.target.value);
+  };
   const getDisable = () => {
     if (manufacturer === "ALL") return true;
     return false;

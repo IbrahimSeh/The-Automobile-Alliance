@@ -2,12 +2,18 @@ import { Box, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import listOfFuelType from "../Form/GridComponent/helper/fuelTypeSelection";
 
-const Engine = () => {
+const Engine = ({ passData }) => {
   const [engineType, setEngineType] = useState("");
   const [fuelType, setFuelType] = useState("");
 
-  const handleChangeEngineType = (event) => setEngineType(event.target.value);
-  const handleChangeFuelType = (event) => setFuelType(event.target.value);
+  const handleChangeEngineType = (event) => {
+    setEngineType(event.target.value);
+    passData("engineType", event.target.value);
+  };
+  const handleChangeFuelType = (event) => {
+    setFuelType(event.target.value);
+    passData("fuelType", event.target.value);
+  };
 
   return (
     <Box

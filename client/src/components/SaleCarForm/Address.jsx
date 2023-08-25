@@ -26,7 +26,7 @@ const Address = () => {
           ADDRESS DATA
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name={"state"}
               required
@@ -38,7 +38,7 @@ const Address = () => {
               onChange={handleChangeState}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name={"country"}
               required
@@ -51,7 +51,7 @@ const Address = () => {
               onChange={handleChangeCountry}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name={"city"}
               required
@@ -63,7 +63,7 @@ const Address = () => {
               onChange={handleChangeCity}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name={"street"}
               required

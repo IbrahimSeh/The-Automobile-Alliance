@@ -2,7 +2,7 @@ import * as React from "react";
 import Pagination from "@mui/material/Pagination";
 import { Box } from "@mui/material";
 import { Fragment } from "react";
-import arrPaginationComponent from "./arrayOfPages";
+import { arrPaginationComponent } from "./arrayOfPages";
 
 const PaginationComponent = () => {
   const [page, setPage] = React.useState(1);
@@ -10,7 +10,7 @@ const PaginationComponent = () => {
 
   return (
     <Fragment>
-        {arrPaginationComponent[page - 1]}
+      {arrPaginationComponent[page - 1]}
       <Box
         sx={{
           margin: "auto",
