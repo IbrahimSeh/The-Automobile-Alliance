@@ -16,24 +16,26 @@ const Communications = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
           <TextField
-            name={"phone"}
+            name="phone"
             required
             fullWidth
             helperText=""
-            id={"phone"}
-            label={"phone"}
+            id="phone"
+            label="phone"
+            autoComplete="Currect Phone"
             value={phone}
             onChange={handleChangePhone}
           />
         </Grid>
         <Grid item xs={12} sm={12}>
           <TextField
-            name={"email"}
+            name="email"
             required
             fullWidth
             helperText=""
-            id={"email"}
-            label={"email"}
+            id="email"
+            label="email"
+            autoComplete="Currect Email"
             value={email}
             onChange={handleChangeEmail}
           />

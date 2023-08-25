@@ -29,15 +29,14 @@ const Engine = () => {
         </Grid>
         <Grid item xs={12} sm={12}>
           <TextField
-            autoComplete={"given-"}
-            name={"fuelType"}
-            required
+            id="fueltype"
+            name="given-fueltype"
+            select
+            //label="fuel type"
             fullWidth
-            id={"fuelType"}
-            label={"fuelType"}
+            required
             value={fuelType}
             onChange={handleChangeFuelType}
-            select
           >
             {listOfFuelType.map((option) => (
               <MenuItem key={option.label} value={option.label}>

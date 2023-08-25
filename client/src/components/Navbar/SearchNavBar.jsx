@@ -74,6 +74,8 @@ const SearchNavBar = () => {
           placement="bottom-end"
         >
           <StyledInputBase
+            id="search"
+            name="given-search"
             placeholder="Search..."
             inputProps={{ "aria-label": "search" }}
             onChange={handleSearchChange}

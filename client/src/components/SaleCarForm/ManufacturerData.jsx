@@ -27,15 +27,14 @@ const ManufacturerData = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
           <TextField
-            autoComplete={"given-"}
-            name={"manufacturer"}
+            id="manufacturer"
+            //label="manufacturer"
+            name="given-manufacturer"
+            select
             required
             fullWidth
-            id={"manufacturer"}
-            label={"manufacturer"}
             value={manufacturer === "ALL" ? "" : manufacturer}
             onChange={handleChangeManufacturer}
-            select
           >
             {carManufacturer.map((option) => (
               <MenuItem key={option.label} value={option.label}>
@@ -44,19 +43,17 @@ const ManufacturerData = () => {
             ))}
           </TextField>
         </Grid>
-
         <Grid item xs={12} sm={12}>
           <TextField
-            autoComplete={"given-"}
-            name={"type"}
-            required
+            id="type"
+            name="given-type"
+            select
+            //label="type"
             fullWidth
-            id={"type"}
-            label={"type"}
+            required
             value={type}
             onChange={handleChangeType}
             disabled={getDisable()}
-            select
           >
             {typeSelection[manufacturer].map((option) => (
               <MenuItem key={option.label} value={option.label}>
@@ -68,12 +65,11 @@ const ManufacturerData = () => {
 
         <Grid item xs={12} sm={12}>
           <TextField
-            name={"subType"}
+            id="subType"
+            name="given-subtype"
+            label="sub type"
             required
             fullWidth
-            helperText=""
-            id={"subType"}
-            label={"sub type"}
             value={subType}
             onChange={handleChangeSubType}
           />

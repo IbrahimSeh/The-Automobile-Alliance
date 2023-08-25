@@ -12,12 +12,21 @@ const PaginationComponent = () => {
     <Fragment>
       <Box
         sx={{
+          marginTop: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        {arrPaginationComponent[page - 1]}
+      </Box>
+      <Box
+        sx={{
           margin: "auto",
           width: "fit-content",
           alignItems: "center",
         }}
       >
-        {arrPaginationComponent[page - 1]}
         <Pagination
           sx={{ mt: 3 }}
           count={arrPaginationComponent.length}

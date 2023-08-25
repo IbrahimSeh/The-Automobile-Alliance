@@ -12,6 +12,6 @@ arrPaginationComponent[1] = <Communications />
 arrPaginationComponent[2] = <Engine />
 arrPaginationComponent[3] = <Address />
 arrPaginationComponent[4] = <Image />
-arrPaginationComponent[5] = <Rest />
+// arrPaginationComponent[5] = <Rest />
 
 export default arrPaginationComponent;
