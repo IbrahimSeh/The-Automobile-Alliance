@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from "@mui/material";
+import { Box, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
 const Address = () => {
@@ -13,62 +13,71 @@ const Address = () => {
   const handleChangestreet = (event) => setStreet(event.target.value);
 
   return (
-    <div>
-      <Typography mb={3} variant="h3" align="center" color="blue">
-        ADDRESS DATA
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            name={"state"}
-            required
-            fullWidth
-            helperText=""
-            id={"state"}
-            label={"state"}
-            value={state}
-            onChange={handleChangeState}
-          />
+    <Box
+      sx={{
+        marginTop: 4,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <div>
+        <Typography mb={3} variant="h3" align="center" color="blue">
+          ADDRESS DATA
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              name={"state"}
+              required
+              fullWidth
+              helperText=""
+              id={"state"}
+              label={"state"}
+              value={state}
+              onChange={handleChangeState}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              name={"country"}
+              required
+              fullWidth
+              helperText=""
+              id={"country"}
+              label={"country"}
+              autoComplete="Currect Country"
+              value={country}
+              onChange={handleChangeCountry}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              name={"city"}
+              required
+              fullWidth
+              helperText=""
+              id={"city"}
+              label={"city"}
+              value={city}
+              onChange={handleChangeCity}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              name={"street"}
+              required
+              fullWidth
+              helperText=""
+              id={"street"}
+              label={"street"}
+              value={street}
+              onChange={handleChangestreet}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            name={"country"}
-            required
-            fullWidth
-            helperText=""
-            id={"country"}
-            label={"country"}
-            autoComplete="Currect Country"
-            value={country}
-            onChange={handleChangeCountry}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            name={"city"}
-            required
-            fullWidth
-            helperText=""
-            id={"city"}
-            label={"city"}
-            value={city}
-            onChange={handleChangeCity}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            name={"street"}
-            required
-            fullWidth
-            helperText=""
-            id={"street"}
-            label={"street"}
-            value={street}
-            onChange={handleChangestreet}
-          />
-        </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Box>
   );
 };
 

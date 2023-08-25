@@ -1,12 +1,21 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const Rest = () => {
   return (
-    <div>
-      <Typography mb={3} variant="h3" align="center" color="blue">
-        REST OF DATA
-      </Typography>
-    </div>
+    <Box
+      sx={{
+        marginTop: 4,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <div>
+        <Typography mb={3} variant="h3" align="center" color="blue">
+          REST OF DATA
+        </Typography>
+      </div>
+    </Box>
   );
 };
 export default Rest;

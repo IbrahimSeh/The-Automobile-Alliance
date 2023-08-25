@@ -1,4 +1,4 @@
-import { Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import carManufacturer from "../Form/GridComponent/helper/carManufacturerSelection";
 import typeSelection from "../Form/GridComponent/helper/typeSelection";
 import { useState } from "react";
@@ -20,62 +20,71 @@ const ManufacturerData = () => {
   };
 
   return (
-    <div>
-      <Typography mb={3} variant="h3" align="center" color="blue">
-        MANUFACTURER DATA
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            id="manufacturer"
-            //label="manufacturer"
-            name="given-manufacturer"
-            select
-            required
-            fullWidth
-            value={manufacturer === "ALL" ? "" : manufacturer}
-            onChange={handleChangeManufacturer}
-          >
-            {carManufacturer.map((option) => (
-              <MenuItem key={option.label} value={option.label}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            id="type"
-            name="given-type"
-            select
-            //label="type"
-            fullWidth
-            required
-            value={type}
-            onChange={handleChangeType}
-            disabled={getDisable()}
-          >
-            {typeSelection[manufacturer].map((option) => (
-              <MenuItem key={option.label} value={option.label}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
+    <Box
+      sx={{
+        marginTop: 4,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <div>
+        <Typography mb={3} variant="h3" align="center" color="blue">
+          MANUFACTURER DATA
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              id="manufacturer"
+              //label="manufacturer"
+              name="given-manufacturer"
+              select
+              required
+              fullWidth
+              value={manufacturer === "ALL" ? "" : manufacturer}
+              onChange={handleChangeManufacturer}
+            >
+              {carManufacturer.map((option) => (
+                <MenuItem key={option.label} value={option.label}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              id="type"
+              name="given-type"
+              select
+              //label="type"
+              fullWidth
+              required
+              value={type}
+              onChange={handleChangeType}
+              disabled={getDisable()}
+            >
+              {typeSelection[manufacturer].map((option) => (
+                <MenuItem key={option.label} value={option.label}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
 
-        <Grid item xs={12} sm={12}>
-          <TextField
-            id="subType"
-            name="given-subtype"
-            label="sub type"
-            required
-            fullWidth
-            value={subType}
-            onChange={handleChangeSubType}
-          />
+          <Grid item xs={12} sm={12}>
+            <TextField
+              id="subType"
+              name="given-subtype"
+              label="sub type"
+              required
+              fullWidth
+              value={subType}
+              onChange={handleChangeSubType}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Box>
   );
 };
 
