@@ -9,7 +9,7 @@ const ROUTES = {
     LOGOUT: "logout",
     FAVCARS: "/favcars",
     ADDCAR: "/addcar",
-    SANDBOX: "/sandbox",
+    REQUESTS: "/Requests",
     CREATECAR: "/createcar",
     CARSPECIFICATION: "/carspecification",
     CAREDIT: "/caredit",

@@ -22,7 +22,7 @@ const AboutPage = () => {
             registered as normal user - he has Profile Page and FavCards Page
             registered as bussiness user - he has in addition to normal user
             MyCards Page registered as admin user - he has in addition to
-            bussiness user Sandbox Page. the site own page for edit card that
+            bussiness user Requests Page. the site own page for edit card that
             just the owner of the card can edit it, and page for edit user
             information that all user can edit his information.
           </Typography>

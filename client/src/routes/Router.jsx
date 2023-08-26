@@ -8,7 +8,7 @@ import SignUpPage from "../Pages/SignUpPage";
 import UserProfilePage from "../Pages/UserProfilePage";
 import FavCarsPage from "../Pages/FavCarsPage";
 import MyCarsPage from "../Pages/MyCarsPage";
-import SandBoxPage from "../Pages/SandBoxPage";
+import RequestsPage from "../Pages/RequestsPage";
 import CreateCar from "../components/Car/CreateCar/CreateCar";
 import PageNotFound from "../Pages/PageNotFound";
 import IsLoginPR from "../components/ProtectedRoute/IsLoginPR";
@@ -53,11 +53,11 @@ const Router = () => {
       ></Route>
       <Route path={ROUTES.CREATECAR} element={<CreateCar />} />
       <Route
-        path={ROUTES.SANDBOX}
+        path={ROUTES.REQUESTS}
         element={
           <IsLoginPR
             element={
-              <IsBizPR element={<IsAdminPR element={<SandBoxPage />} />} />
+              <IsBizPR element={<IsAdminPR element={<RequestsPage />} />} />
             }
           />
         }

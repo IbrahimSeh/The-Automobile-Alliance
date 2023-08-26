@@ -24,14 +24,14 @@ const SignUpPage = () => {
     phone: "",
     email: "",
     password: "",
-    // url: "",
-    // alt: "",
-    // state: "",
-    // country: "",
-    // city: "",
-    // street: "",
-    // houseNumber: "",
-    // zipCode: 0,
+    url: "",
+    alt: "",
+    state: "",
+    country: "",
+    city: "",
+    street: "",
+    houseNumber: "",
+    zipCode: 0,
   });
 
   const [btnDisable, setbtnDisable] = useState(true);

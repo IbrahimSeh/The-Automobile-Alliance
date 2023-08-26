@@ -106,8 +106,8 @@ const userAsSubscription2 = [
 ];
 const userAsAdmin = [
   {
-    label: "SANDBOX",
-    url: ROUTES.SANDBOX,
+    label: "Requests",
+    url: ROUTES.REQUESTS,
   },
 ];
 
