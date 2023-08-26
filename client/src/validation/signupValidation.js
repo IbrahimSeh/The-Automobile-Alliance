@@ -22,7 +22,7 @@ const registerSchema = Joi.object({
     city: Joi.string().min(2).max(256).required(),
     street: Joi.string().min(2).max(256).required(),
     houseNumber: Joi.string().pattern(new RegExp("^[1-9]\\d*(?:[ -]?(?:[a-zA-Z]+|[1-9]\\d*))?$")).min(1).max(256).required(),
-    zipCode: Joi.number().min(1).max(99999999),
+    zipCode: Joi.number().min(0).max(99999999),
     isSubscription: Joi.boolean(),
 });
 const registerPasswordSchema = Joi.object({

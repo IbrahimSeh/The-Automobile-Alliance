@@ -5,7 +5,7 @@ const getType = (inputKey) => {
         case "password":
             return "password";
         default:
-            return;
+            return "text";
     }
 };
 export default getType;

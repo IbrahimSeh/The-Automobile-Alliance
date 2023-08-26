@@ -1,7 +1,10 @@
 import { Alert, TextField } from "@mui/material";
 import PropTypes from "prop-types";
-import { Fragment, useState } from "react";
-import { validateRegisterSchema } from "../../../validation/signupValidation";
+import { Fragment, useEffect, useState } from "react";
+import {
+  validateRegisterPasswordSchema,
+  validateRegisterSchema,
+} from "../../../validation/signupValidation";
 import validateCarSchema from "../../../validation/CreateCarValidation";
 import getLabel from "./helper/getLabel";
 import getType from "./helper/getType";
@@ -15,7 +18,6 @@ const GridItemComponent = ({
   prevState,
   schema,
 }) => {
-  // const [value, setValue] = useState(0);
   const [inputState, setInputState] = useState({
     firstName: "",
     middleName: "",
@@ -30,7 +32,7 @@ const GridItemComponent = ({
     city: "",
     street: "",
     houseNumber: "",
-    zipCode: "",
+    zipCode: 0,
     title: "",
     subTitle: "",
     description: "",
@@ -45,6 +47,7 @@ const GridItemComponent = ({
   });
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   let joiResponse;
+
   const handleInputChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
@@ -58,7 +61,11 @@ const GridItemComponent = ({
     } else {
       if (schema === "user") {
         joiResponse = validateRegisterSchema(prevState);
-        console.log("joiResponse = ", joiResponse);
+        if (joiResponse.hasOwnProperty("password")) {
+          joiResponse = validateRegisterPasswordSchema({
+            password: prevState.password,
+          });
+        }
       }
     }
     setInputsErrorsState(joiResponse);
@@ -78,7 +85,7 @@ const GridItemComponent = ({
   return (
     <Fragment>
       <TextField
-        autoComplete={"given-" + inputKey}
+        autoComplete={inputKey === "password" ? "new-password" : "given-"}
         name={inputKey}
         required={checkIfRequired(inputKey)}
         fullWidth

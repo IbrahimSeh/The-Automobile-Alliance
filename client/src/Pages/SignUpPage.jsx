@@ -14,7 +14,7 @@ import GridItemComponent from "../components/Form/GridComponent/GridItemComponen
 import CRComponent from "../components/Form/FormButtons/CRComponent";
 import SubmitComponent from "../components/Form/FormButtons/SubmitComponent";
 import CheckboxComponent from "../components/Form/GridComponent/CheckBox/CheckboxComponent";
-import CountrySelect from "../components/Form/GridComponent/OtherTextField/CountrySelect";
+//import CountrySelect from "../components/Form/GridComponent/OtherTextField/CountrySelect";
 
 const SignUpPage = () => {
   const [inputstate] = useState({
@@ -24,14 +24,14 @@ const SignUpPage = () => {
     phone: "",
     email: "",
     password: "",
-    url: "",
-    alt: "",
-    state: "",
-    country: "",
-    city: "",
-    street: "",
-    houseNumber: "",
-    zipCode: "",
+    // url: "",
+    // alt: "",
+    // state: "",
+    // country: "",
+    // city: "",
+    // street: "",
+    // houseNumber: "",
+    // zipCode: 0,
   });
 
   const [btnDisable, setbtnDisable] = useState(true);
@@ -107,7 +107,7 @@ const SignUpPage = () => {
                   onChange={updateState}
                   onBlur={onBlurHandel}
                   prevState={inputstate}
-                  schema={""}
+                  schema={"user"}
                 />
               </Grid>
             ))}
