@@ -2,40 +2,50 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import SliderImages from "../Car/ExtendedCarComponent/SliderImages";
 import { useState } from "react";
 
-const Image = () => {
+const Image = ({ passSrcData, passAltData }) => {
   let tempItemData = [];
+  let tempSrcData = [];
+  let tempAltData = [];
   const [itemData, setItemData] = useState([]);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
+    if (file) tempAltData[0] = file.name;
     const file1 = event.target.files[1];
+    if (file1) tempAltData[1] = file1.name;
     const file2 = event.target.files[2];
+    if (file2) tempAltData[2] = file2.name;
     const reader = new FileReader();
     const reader1 = new FileReader();
     const reader2 = new FileReader();
 
     reader.onloadend = () => {
       tempItemData[0] = reader.result;
+      tempSrcData[0] = reader.result;
       setItemData(tempItemData);
     };
 
     reader1.onloadend = () => {
       tempItemData[1] = reader1.result;
+      tempSrcData[1] = reader.result;
       setItemData(tempItemData);
     };
 
     reader2.onloadend = () => {
       tempItemData[2] = reader2.result;
+      tempSrcData[2] = reader.result;
       setItemData(tempItemData);
     };
 
     if (file !== undefined) reader.readAsDataURL(file);
     if (file1 !== undefined) reader1.readAsDataURL(file1);
     if (file2 !== undefined) reader2.readAsDataURL(file2);
+
+    passSrcData("src", tempSrcData);
+    passAltData("alt", tempAltData);
   };
 
   const handelClickClearPhotos = () => setItemData([]);
-
   const getStyle = () => {
     if (itemData.length !== 0) return {};
 

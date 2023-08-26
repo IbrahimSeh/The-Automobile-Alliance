@@ -1,16 +1,28 @@
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
-const Address = () => {
+const Address = ({ passData }) => {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
 
-  const handleChangeState = (event) => setState(event.target.value);
-  const handleChangeCountry = (event) => setCountry(event.target.value);
-  const handleChangeCity = (event) => setCity(event.target.value);
-  const handleChangestreet = (event) => setStreet(event.target.value);
+  const handleChangeState = (event) => {
+    setState(event.target.value);
+    passData("state", event.target.value);
+  };
+  const handleChangeCountry = (event) => {
+    setCountry(event.target.value);
+    passData("country", event.target.value);
+  };
+  const handleChangeCity = (event) => {
+    setCity(event.target.value);
+    passData("city", event.target.value);
+  };
+  const handleChangestreet = (event) => {
+    setStreet(event.target.value);
+    passData("street", event.target.value);
+  };
 
   return (
     <Box

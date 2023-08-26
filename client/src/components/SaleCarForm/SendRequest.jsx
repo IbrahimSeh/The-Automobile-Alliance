@@ -2,20 +2,63 @@ import { Box, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 import { useState } from "react";
+import axios from "axios";
 import {
   manufacturerData,
   communicationsData,
   engineData,
+  addressData,
+  imageData,
+  restData,
 } from "../Pagination/arrayOfPages";
+import { toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
+import ROUTES from "../../routes/ROUTES";
 const SendRequest = () => {
   const [save, setSave] = useState(false);
-  const handelClickSaveData = () => {
+  const handelClickSaveData = async () => {
+    try {
+      await axios.post("/VAR/", {
+        // VAR = VehicleAdvertisingRequests
+        manufacturerData: {
+          manufacturer: manufacturerData.manufacturer,
+          type: manufacturerData.type,
+          subType: manufacturerData.subType,
+        },
+        yearOfProduction: restData.yearOfProduction,
+        previousOwners: restData.previousOwners,
+        kilometers: restData.kilometers,
+        engine: {
+          engineType: engineData.engineType,
+          fuelType: engineData.fuelType,
+        },
+        image: { url: imageData.src, alt: imageData.alt },
+        address: {
+          state: addressData.state,
+          country: addressData.country,
+          city: addressData.city,
+          street: addressData.street,
+        },
+        communications: {
+          phone: communicationsData.phone,
+          email: communicationsData.email,
+        },
+      });
+
+      toast.success("A new vehicle advertising requests has been created");
+      Navigate(ROUTES.ADDCAR);
+    } catch (err) {
+      console.log("error from axios", err.response.data);
+      toast.error("the card has been not created");
+    }
     setSave(true);
-    console.log("in save data");
   };
-  console.log("manufacturerData in SendReq = ", manufacturerData);
-  console.log("communicationsData in SenReq", communicationsData);
-  console.log("engineData in SenReq", engineData);
+  // console.log("manufacturerData in SendReq = ", manufacturerData);
+  // console.log("communicationsData in SenReq", communicationsData);
+  // console.log("engineData in SenReq", engineData);
+  // console.log("returnAddressData in SenReq = ", addressData);
+  // console.log("imageData in SenReq = ", imageData);
+  // console.log("restData in SenReq = ", restData);
   return (
     <Box
       sx={{

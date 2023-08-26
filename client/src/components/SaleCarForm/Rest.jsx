@@ -5,15 +5,23 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 
-const Rest = () => {
+const Rest = ({ passData }) => {
   const [previousOwners, setPreviousOwners] = useState(0);
   const [kilometers, setKilometers] = useState(0);
   const [yearOfProduction, setYearOfProduction] = useState(dayjs("2022-04-17"));
 
-  const handleChangePreviousOwners = (event) =>
+  const handleChangePreviousOwners = (event) => {
     setPreviousOwners(event.target.value);
-  const handleChangeKilometers = (event) => setKilometers(event.target.value);
-  const handleChangeYearOfProduction = (event) => setYearOfProduction(event);
+    passData("previousOwners", event.target.value);
+  };
+  const handleChangeKilometers = (event) => {
+    setKilometers(event.target.value);
+    passData("kilometers", event.target.value);
+  };
+  const handleChangeYearOfProduction = (event) => {
+    setYearOfProduction(event);
+    passData("yearOfProduction", event.$y);
+  };
   return (
     <Box
       sx={{
