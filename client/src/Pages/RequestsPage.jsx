@@ -1,17 +1,18 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import axios from "axios";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Fragment, useEffect, useState } from "react";
 import useQueryParams from "../hooks/useQueryParams";
-import CarComponent from "../components/Car/CarComponent/CarComponent";
+import ROUTES from "../routes/ROUTES";
+import RequestsComponent from "../components/Requests/RequestsComponent";
 
 const RequestsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   let userID = "";
@@ -103,9 +104,9 @@ const RequestsPage = () => {
   //     console.log("error when liking car", err.response.data);
   //   }
   // };
-  // const handleOnClick = (id) => {
-  //   navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
-  // };
+  const handleOnClick = (id) => {
+    navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
+  };
 
   if (!carsArr) {
     return (
@@ -127,7 +128,7 @@ const RequestsPage = () => {
       <Grid container spacing={2}>
         {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
-            <CarComponent
+            <RequestsComponent
               img={item.image ? item.image.url[0] : ""}
               manufacturer={
                 item.manufacturerData ? item.manufacturerData.manufacturer : ""
@@ -150,7 +151,7 @@ const RequestsPage = () => {
                   : ""
               }
               id={item._id}
-              //clickOnCar={handleOnClick}
+              clickOnCar={handleOnClick}
               bizNumber={item.bizNumber}
               userId={item.user_id}
               //onDelete={handleDeleteFromInitialCarsArr}

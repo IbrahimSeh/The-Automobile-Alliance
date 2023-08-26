@@ -55,7 +55,7 @@ const DropDownNavLink = ({ onCloseNavMenw }) => {
             display: "block",
             p: 2,
           }}
-          variant="h5"
+          variant="h6"
           color={"#9453a6"}
         >
           Services

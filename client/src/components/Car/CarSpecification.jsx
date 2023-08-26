@@ -7,13 +7,19 @@ import ExtendedCardComponent from "./ExtendedCarComponent/ExtendedCarComponent";
 
 const CarSpecification = () => {
   let qparams = useQueryParams();
+  let CollectionName = "cars";
+  let id = "carId";
   const [inputState] = useState({});
   const [userlikeId, setuserlikeId] = useState([]);
-  const [value, setValue] = useState(0);
-  //console.log("qparams.carId = ", qparams.carId);
+
+  if (qparams.hasOwnProperty("VARId")) {
+    CollectionName = "VAR";
+    id = "VARId";
+  }
+
   useEffect(() => {
     axios
-      .get("/cars/" + qparams.carId)
+      .get("/" + CollectionName + "/" + qparams[id])
       .then(({ data }) => {
         for (const key in JSON.parse(JSON.stringify(data))) {
           inputState[key] = data[key];
@@ -24,15 +30,7 @@ const CarSpecification = () => {
         console.log("err from axioas", err);
         toast.error("Oops");
       });
-  }, [inputState, qparams.carId]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      inputState.zipCode += "";
-      setValue(1);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [setValue, inputState]);
+  }, [inputState, qparams.carId, CollectionName, id]);
 
   return (
     <Box mt={3}>
@@ -75,4 +73,5 @@ const CarSpecification = () => {
     </Box>
   );
 };
+
 export default CarSpecification;
