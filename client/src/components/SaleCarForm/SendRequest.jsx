@@ -12,10 +12,13 @@ import {
   restData,
 } from "../Pagination/arrayOfPages";
 import { toast } from "react-toastify";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
+
 const SendRequest = () => {
   const [save, setSave] = useState(false);
+  const navigate = useNavigate();
+
   const handelClickSaveData = async () => {
     try {
       await axios.post("/VAR/", {
@@ -46,12 +49,12 @@ const SendRequest = () => {
       });
 
       toast.success("A new vehicle advertising requests has been created");
-      Navigate(ROUTES.ADDCAR);
+      navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("error from axios", err.response.data);
+      console.log("error from axios", err.response);
       toast.error("the card has been not created");
     }
-    setSave(true);
+    //setSave(true);
   };
   // console.log("manufacturerData in SendReq = ", manufacturerData);
   // console.log("communicationsData in SenReq", communicationsData);
