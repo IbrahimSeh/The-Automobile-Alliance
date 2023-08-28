@@ -11,10 +11,12 @@ import {
   Divider,
   Box,
 } from "@mui/material";
+import axios from "axios";
 import PropTypes from "prop-types";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import DEFAULTCARIMAGE from "../Car/CarComponent/helpers/DefaultCarImage";
+import { toast } from "react-toastify";
 
 const RequestsComponent = ({
   img,
@@ -28,12 +30,21 @@ const RequestsComponent = ({
   clickOnCar,
   bizNumber,
 }) => {
-  const handelThumpUpClick = (event) => {
+  const handelThumpUpClick = async (event) => {
     event.stopPropagation();
+    console.log("handelThumpUpClick");
+    try {
+      await axios.patch("/VAR/" + id);
+      toast.success("car toPublish is patched");
+      //window.location.reload();
+    } catch (err) {
+      console.log("error when liking card", err.response.data);
+    }
   };
 
   const handelThumpDownClick = (event) => {
     event.stopPropagation();
+    console.log("handelThumpDownClick");
   };
 
   const handleClickCar = () => {
