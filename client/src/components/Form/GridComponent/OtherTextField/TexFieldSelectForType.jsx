@@ -30,20 +30,15 @@ const TexFieldSelectForType = ({
     return "";
   };
 
-  // const getDisable = () => {
-  //   if (selectedTypeRelatedToManufacturer === "ALL") return true;
-  //   return false;
-  // };
+  const getDisable = () => {
+    if (selectedTypeRelatedToManufacturer === "ALL") return true;
+    return false;
+  };
 
   const getValue = () => {
-    if (inputValue !== undefined) {
-      return inputValue;
-    }
-    if (selectedTypeRelatedToManufacturer === "") {
-      return selectedValue;
-    } else {
-      return selectedTypeRelatedToManufacturer;
-    }
+    if (inputValue !== undefined) return inputValue;
+    if (selectedTypeRelatedToManufacturer === "0") return "";
+    else return selectedValue;
   };
 
   return (
@@ -54,9 +49,10 @@ const TexFieldSelectForType = ({
         required
         fullWidth
         id={inputKey}
-        label={getLabel(inputKey)}
-        //value={inputValue !== undefined ? inputValue : selectedValue}
-        value={getValue}
+        //label={getLabel(inputKey)}
+        label=""
+        helperText="Please select your type"
+        value={getValue()}
         onChange={handleChange}
         select
         //disabled={getDisable()}

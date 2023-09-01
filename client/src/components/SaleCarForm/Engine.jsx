@@ -46,7 +46,8 @@ const Engine = ({ passData }) => {
               id="fueltype"
               name="given-fueltype"
               select
-              //label="fuel type"
+              label=""
+              helperText="Please select your fuel type"
               fullWidth
               required
               value={fuelType}

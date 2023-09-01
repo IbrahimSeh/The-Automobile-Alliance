@@ -19,7 +19,7 @@ const servicesPages = [
   },
   {
     label: "add car",
-    url: ROUTES.ADDCAR,
+    url: ROUTES.CREATECAR,
   },
 ];
 

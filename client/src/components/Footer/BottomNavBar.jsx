@@ -29,8 +29,8 @@ const anyUserConnected = [
 //logged in as biz user
 const bizUserConnected = [
   {
-    label: "MY CARS",
-    url: ROUTES.ADDCAR,
+    label: "Sellers From Outside",
+    url: ROUTES.SELLERSFROMOUTSIDE,
     icon: <PortraitRoundedIcon />,
   },
 ];

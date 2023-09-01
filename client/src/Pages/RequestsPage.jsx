@@ -1,4 +1,10 @@
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  LinearProgress,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 //import jwt_decode from "jwt-decode";
@@ -14,17 +20,10 @@ const RequestsPage = () => {
   const [carsArr, setCarsArr] = useState(null);
   const navigate = useNavigate();
   let qparams = useQueryParams();
-  //const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-  //let userID = "";
 
-  // if (localStorage.getItem("token")) {
-  //   userID = jwt_decode(localStorage.getItem("token"))._id;
-  // }
-
-  //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/VAR")
+      .get("/VAR/false")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -38,6 +37,7 @@ const RequestsPage = () => {
   useEffect(() => {
     filterFunc();
   }, [qparams.filter]);
+
   const filterFunc = (data) => {
     if (!originalCarsArr && !data) {
       return;
@@ -87,35 +87,31 @@ const RequestsPage = () => {
     try {
       await axios.delete("/VAR/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
-      //toast.success("car toPublish is deleted");
     } catch (err) {
       toast.error("error when deleting car to publish", err.response.data);
     }
   };
-
-  // const handleEditFromInitialCarsArr = (id) => {
-  //   navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
-  // };
 
   const handleLikesFromInitialCarsArr = async (id) => {
     try {
       await axios.patch("/VAR/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
-      console.log("error when liking car", err.response.data);
+      toast.error("error when liking car", err.response.data);
     }
   };
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
+    navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
-
-  if (!carsArr) {
+  if (!carsArr || carsArr.length === 0) {
     return (
       <Fragment>
         <Typography variant="h5" color="initial" m={3}>
           The requests folder is empty
         </Typography>
-        <CircularProgress />
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress />
+        </Box>
       </Fragment>
     );
   }
@@ -155,18 +151,6 @@ const RequestsPage = () => {
               bizNumber={item.bizNumber}
               onDelete={handleDeleteFromInitialCarsArr}
               onLike={handleLikesFromInitialCarsArr}
-              // userId={item.user_id}
-              // candelete={
-              //   (payload && payload.isAdmin) ||
-              //   (item.user_id === userID && payload && payload.isSubscription)
-              // }
-              //onEdit={handleEditFromInitialCarsArr}
-              // canEdit={
-              //   item.user_id === userID && payload && payload.isSubscription
-              // }
-              // disLike={
-              //   item.likes.includes(payload && payload._id) ? false : true
-              // }
             />
           </Grid>
         ))}

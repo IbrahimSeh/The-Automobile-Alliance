@@ -15,7 +15,7 @@ const TextFieldSelect = ({
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
     passSelectedFromChildToParent(event.target.value);
-    returnTypeRelatedToSelectedManufacturer("");
+    returnTypeRelatedToSelectedManufacturer("0");
   };
 
   const getValue = () => {
@@ -31,12 +31,14 @@ const TextFieldSelect = ({
   return (
     <Fragment>
       <TextField
+        id={"manufacturer"}
         autoComplete={"given-"}
-        name={inputKey}
+        name={"manufacturer"}
         required
         fullWidth
-        id={inputKey}
-        label={getLabel(inputKey)}
+        //label={getLabel(inputKey)}
+        label=""
+        helperText="Please select your manufacturer"
         value={getValue()}
         onChange={handleChange}
         select

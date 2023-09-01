@@ -23,7 +23,9 @@ const TextFieldSelectForFuel = ({
         required
         fullWidth
         id={inputKey}
-        label={getLabel(inputKey)}
+        //label={getLabel(inputKey)}
+        label=""
+        helperText="Please select your fuel"
         value={inputValue !== undefined ? inputValue : selectedValue}
         onChange={handleChange}
         select

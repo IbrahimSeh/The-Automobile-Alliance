@@ -1,26 +1,25 @@
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Box, Grid, LinearProgress, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import ROUTES from "../routes/ROUTES";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useQueryParams from "../hooks/useQueryParams";
 import { toast } from "react-toastify";
 import CardComponent from "../components/Car/CarComponent/CarComponent";
+import DviderLine from "../components/Home/DviderLine";
 
-const MyCarsPage = () => {
+const SellersFromOutside = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
+  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   const navigate = useNavigate();
   let qparams = useQueryParams();
-  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
 
-  //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cars/my-cars")
+      .get("/VAR/true")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -42,7 +41,7 @@ const MyCarsPage = () => {
 
     let filter = "";
     if (qparams.filter) {
-      filter = qparams.filter;
+      filter = qparams.filter.toLowerCase();
     }
 
     if (!originalCarsArr && data) {
@@ -53,7 +52,10 @@ const MyCarsPage = () => {
       setCarsArr(
         data.filter(
           (car) =>
-            car.manufacturerData.manufacturer.startsWith(filter) ||
+            car.manufacturerData.manufacturer
+              .toLowerCase()
+              .startsWith(filter) ||
+            car.manufacturerData.type.toLowerCase().startsWith(filter) ||
             car._id.startsWith(filter)
         )
       );
@@ -63,79 +65,59 @@ const MyCarsPage = () => {
       /*
         when all loaded and states loaded
       */
-      let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCarsArr));
+      let newOriginalCarsArr = JSON.parse(JSON.stringify(originalCarsArr));
       setCarsArr(
-        newOriginalCardsArr.filter(
+        newOriginalCarsArr.filter(
           (car) =>
-            car.manufacturerData.manufacturer.startsWith(filter) ||
+            car.manufacturerData.manufacturer
+              .toLowerCase()
+              .startsWith(filter) ||
+            car.manufacturerData.type.toLowerCase().startsWith(filter) ||
             car._id.startsWith(filter)
         )
       );
     }
   };
 
-  const handleDeleteFromInitialCardsArr = async (id) => {
+  const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axios.delete("/cars/" + id); // /cards/:id
-      setCarsArr((newCardsArr) => newCardsArr.filter((item) => item._id != id));
+      await axios.delete("/VAR/" + id);
+      setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
-      console.log("error when deleting", err.response.data);
+      toast.error("error when deleting car to publish", err.response.data);
     }
   };
 
-  const handleLikesFromInitialCardsArr = async (id) => {
-    try {
-      await axios.patch("/cars/car-like/" + id); // /cards/:id
-      window.location.reload();
-    } catch (err) {
-      console.log("error when liking car", err.response.data);
-    }
-  };
-
-  const handleEditFromInitialCardsArr = (id) => {
+  const handleEditFromInitialCarsArr = (id) => {
     navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
   };
 
+  const handleLikesFromInitialCarsArr = async (id) => {
+    try {
+      await axios.patch("/VAR/" + id);
+      setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
+    } catch (err) {
+      toast.error("error when liking car", err.response.data);
+    }
+  };
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
-
-  if (!carsArr) {
-    return <CircularProgress />;
-  }
-
-  if (carsArr.length === 0) {
+  if (!carsArr || carsArr.length === 0) {
     return (
-      <Box className="myCardBox" mt={3}>
-        <Typography m={3} variant="h3" color="blue">
-          sorry ! ,you'r Collection cars is empty.
+      <Fragment>
+        <Typography variant="h5" color="initial" m={3}>
+          The requests folder is empty
         </Typography>
-        <Grid
-          container
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-        >
-          <NavLink mt={3} to={ROUTES.CREATECAR}>
-            <AddCircleIcon
-              sx={{
-                color: "blue",
-                borderRadius: "50%",
-                "&:hover": { color: "#673ab7" },
-                fontSize: "80px",
-              }}
-            />
-          </NavLink>
-        </Grid>
-      </Box>
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress />
+        </Box>
+      </Fragment>
     );
   }
-
   return (
     <Box className="myCardBox" mt={3}>
-      <Typography mb={3} variant="h3" color="blue">
-        Collection of my cars
-      </Typography>
+      <DviderLine text={"Offers for selling cars from outside the showroom"} />
       <Grid container spacing={2}>
         {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
@@ -165,12 +147,12 @@ const MyCarsPage = () => {
               clickOnCar={handleOnClick}
               bizNumber={item.bizNumber}
               userId={item.user_id}
-              onDelete={handleDeleteFromInitialCardsArr}
+              onDelete={handleDeleteFromInitialCarsArr}
               candelete={payload && payload.isAdmin}
               // payload.isAdmin
-              onEdit={handleEditFromInitialCardsArr}
+              onEdit={handleEditFromInitialCarsArr}
               canEdit={payload && payload.isAdmin}
-              onLike={handleLikesFromInitialCardsArr}
+              onLike={handleLikesFromInitialCarsArr}
               disLike={
                 item.likes.includes(payload && payload._id) ? false : true
               }
@@ -178,25 +160,7 @@ const MyCarsPage = () => {
           </Grid>
         ))}
       </Grid>
-
-      <Grid
-        container
-        direction="row"
-        justifyContent="flex-end"
-        alignItems="flex-end"
-      >
-        <NavLink mt={3} to={ROUTES.CREATECAR}>
-          <AddCircleIcon
-            sx={{
-              color: "blue",
-              borderRadius: "50%",
-              "&:hover": { color: "#673ab7" },
-              fontSize: "80px",
-            }}
-          />
-        </NavLink>
-      </Grid>
     </Box>
   );
 };
-export default MyCarsPage;
+export default SellersFromOutside;

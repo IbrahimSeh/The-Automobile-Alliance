@@ -7,7 +7,7 @@ import LogInPage from "../Pages/LogInPage";
 import SignUpPage from "../Pages/SignUpPage";
 import UserProfilePage from "../Pages/UserProfilePage";
 import FavCarsPage from "../Pages/FavCarsPage";
-import MyCarsPage from "../Pages/MyCarsPage";
+import SellersFromOutside from "../Pages/SellersFromOutside";
 import RequestsPage from "../Pages/RequestsPage";
 import CreateCar from "../components/Car/CreateCar/CreateCar";
 import PageNotFound from "../Pages/PageNotFound";
@@ -48,8 +48,10 @@ const Router = () => {
         element={<IsLoginPR element={<FavCarsPage />} />}
       />
       <Route
-        path={ROUTES.ADDCAR}
-        element={<IsLoginPR element={<IsAdminPR element={<MyCarsPage />} />} />}
+        path={ROUTES.SELLERSFROMOUTSIDE}
+        element={
+          <IsLoginPR element={<IsAdminPR element={<SellersFromOutside />} />} />
+        }
       ></Route>
       <Route path={ROUTES.CREATECAR} element={<CreateCar />} />
       <Route
