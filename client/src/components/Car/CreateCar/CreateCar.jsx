@@ -151,19 +151,19 @@ const CreateCar = () => {
                 passSelectedFromChildToParent={updateSelectedManufacturer}
                 listOfSelection={carManufacturerSelection}
                 inputKey={"manufacturer"}
+                returnTypeRelatedToSelectedManufacturer={updateSelectedType}
                 selectedManufacturerRelatedToType={manufacturerSelected}
-                onBlur={onBlurHandel}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TexFieldSelectForType
                 passSelectedFromChildToParent={updateSelectedType}
+                listOfSelection={typeSelection[manufacturerSelected]}
+                inputKey={"type"}
                 returnManufacturerRelatedToSelectedType={
                   updateSelectedManufacturer
                 }
-                listOfSelection={typeSelection[manufacturerSelected]}
-                inputKey={"type"}
-                selectedManufacturer={manufacturerSelected}
+                selectedTypeRelatedToManufacturer={type}
               />
             </Grid>
             <Grid item xs={12} sm={6}>

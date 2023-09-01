@@ -8,17 +8,15 @@ const TexFieldSelectForType = ({
   returnManufacturerRelatedToSelectedType,
   listOfSelection,
   inputKey,
-  selectedManufacturer,
+  selectedTypeRelatedToManufacturer,
   inputValue,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
 
   const handleChange = (event) => {
-    if (selectedManufacturer === "ALL") {
-      returnManufacturerRelatedToSelectedType(
-        getManufacturerRelatedToSelectedType(event.target.value)
-      );
-    }
+    returnManufacturerRelatedToSelectedType(
+      getManufacturerRelatedToSelectedType(event.target.value)
+    );
     setSelectedValue(event.target.value);
     passSelectedFromChildToParent(event.target.value);
   };
@@ -32,6 +30,22 @@ const TexFieldSelectForType = ({
     return "";
   };
 
+  // const getDisable = () => {
+  //   if (selectedTypeRelatedToManufacturer === "ALL") return true;
+  //   return false;
+  // };
+
+  const getValue = () => {
+    if (inputValue !== undefined) {
+      return inputValue;
+    }
+    if (selectedTypeRelatedToManufacturer === "") {
+      return selectedValue;
+    } else {
+      return selectedTypeRelatedToManufacturer;
+    }
+  };
+
   return (
     <Fragment>
       <TextField
@@ -41,9 +55,11 @@ const TexFieldSelectForType = ({
         fullWidth
         id={inputKey}
         label={getLabel(inputKey)}
-        value={inputValue !== undefined ? inputValue : selectedValue}
+        //value={inputValue !== undefined ? inputValue : selectedValue}
+        value={getValue}
         onChange={handleChange}
         select
+        //disabled={getDisable()}
       >
         {listOfSelection.map((option) => (
           <MenuItem key={option.label} value={option.label}>

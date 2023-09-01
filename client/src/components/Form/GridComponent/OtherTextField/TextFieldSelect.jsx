@@ -8,11 +8,14 @@ const TextFieldSelect = ({
   inputKey,
   selectedManufacturerRelatedToType,
   inputValue,
+  returnTypeRelatedToSelectedManufacturer,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
+
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
     passSelectedFromChildToParent(event.target.value);
+    returnTypeRelatedToSelectedManufacturer("");
   };
 
   const getValue = () => {

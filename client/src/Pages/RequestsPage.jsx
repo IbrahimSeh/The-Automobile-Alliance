@@ -1,9 +1,9 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+//import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 import { Fragment, useEffect, useState } from "react";
 import useQueryParams from "../hooks/useQueryParams";
 import ROUTES from "../routes/ROUTES";
@@ -14,12 +14,12 @@ const RequestsPage = () => {
   const [carsArr, setCarsArr] = useState(null);
   const navigate = useNavigate();
   let qparams = useQueryParams();
-  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-  let userID = "";
+  //const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+  //let userID = "";
 
-  if (localStorage.getItem("token")) {
-    userID = jwt_decode(localStorage.getItem("token"))._id;
-  }
+  // if (localStorage.getItem("token")) {
+  //   userID = jwt_decode(localStorage.getItem("token"))._id;
+  // }
 
   //first useEffect when page load
   useEffect(() => {
@@ -83,27 +83,28 @@ const RequestsPage = () => {
     }
   };
 
-  // const handleDeleteFromInitialCarsArr = async (id) => {
-  //   try {
-  //     await axios.delete("/cars/" + id);
-  //     setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
-  //   } catch (err) {
-  //     console.log("error when deleting", err.response.data);
-  //   }
-  // };
+  const handleDeleteFromInitialCarsArr = async (id) => {
+    try {
+      await axios.delete("/VAR/" + id);
+      setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
+      //toast.success("car toPublish is deleted");
+    } catch (err) {
+      toast.error("error when deleting car to publish", err.response.data);
+    }
+  };
 
   // const handleEditFromInitialCarsArr = (id) => {
   //   navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
   // };
 
-  // const handleLikesFromInitialCarsArr = async (id) => {
-  //   try {
-  //     await axios.patch("/cars/car-like/" + id); // /cards/:id
-  //     window.location.reload();
-  //   } catch (err) {
-  //     console.log("error when liking car", err.response.data);
-  //   }
-  // };
+  const handleLikesFromInitialCarsArr = async (id) => {
+    try {
+      await axios.patch("/VAR/" + id);
+      setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
+    } catch (err) {
+      console.log("error when liking car", err.response.data);
+    }
+  };
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
   };
@@ -124,7 +125,6 @@ const RequestsPage = () => {
       <Typography mb={3} variant="h3" align="center" color="blue">
         All Requests
       </Typography>
-      {/* <DviderLine text={"ALL THE CAR IN OUR ALLIANCE"} /> */}
       <Grid container spacing={2}>
         {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
@@ -153,20 +153,20 @@ const RequestsPage = () => {
               id={item._id}
               clickOnCar={handleOnClick}
               bizNumber={item.bizNumber}
-              userId={item.user_id}
-              //onDelete={handleDeleteFromInitialCarsArr}
-              candelete={
-                (payload && payload.isAdmin) ||
-                (item.user_id === userID && payload && payload.isSubscription)
-              }
+              onDelete={handleDeleteFromInitialCarsArr}
+              onLike={handleLikesFromInitialCarsArr}
+              // userId={item.user_id}
+              // candelete={
+              //   (payload && payload.isAdmin) ||
+              //   (item.user_id === userID && payload && payload.isSubscription)
+              // }
               //onEdit={handleEditFromInitialCarsArr}
-              canEdit={
-                item.user_id === userID && payload && payload.isSubscription
-              }
-              //onLike={handleLikesFromInitialCarsArr}
-              disLike={
-                item.likes.includes(payload && payload._id) ? false : true
-              }
+              // canEdit={
+              //   item.user_id === userID && payload && payload.isSubscription
+              // }
+              // disLike={
+              //   item.likes.includes(payload && payload._id) ? false : true
+              // }
             />
           </Grid>
         ))}

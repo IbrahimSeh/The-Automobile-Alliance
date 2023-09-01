@@ -29,22 +29,17 @@ const RequestsComponent = ({
   id,
   clickOnCar,
   bizNumber,
+  onDelete,
+  onLike,
 }) => {
   const handelThumpUpClick = async (event) => {
     event.stopPropagation();
-    console.log("handelThumpUpClick");
-    try {
-      await axios.patch("/VAR/" + id);
-      toast.success("car toPublish is patched");
-      //window.location.reload();
-    } catch (err) {
-      console.log("error when liking card", err.response.data);
-    }
+    onLike(id);
   };
 
-  const handelThumpDownClick = (event) => {
+  const handelThumpDownClick = async (event) => {
     event.stopPropagation();
-    console.log("handelThumpDownClick");
+    onDelete(id);
   };
 
   const handleClickCar = () => {

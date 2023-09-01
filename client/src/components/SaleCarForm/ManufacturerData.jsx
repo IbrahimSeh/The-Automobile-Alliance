@@ -6,6 +6,7 @@ const ManufacturerData = ({ passData }) => {
   const [manufacturer, setManufacturer] = useState("ALL");
   const [type, setType] = useState("");
   const [subType, setSubType] = useState("");
+
   const handleChangeManufacturer = (event) => {
     if (manufacturer !== "ALL" && type !== "") setType("");
     setManufacturer(event.target.value);
