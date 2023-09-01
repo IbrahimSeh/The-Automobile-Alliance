@@ -7,7 +7,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useQueryParams from "../hooks/useQueryParams";
 import { toast } from "react-toastify";
-import CardComponent from "../components/Car/CarComponent/CarComponent";
+import CarComponent from "../components/Car/CarComponent/CarComponent";
 import DviderLine from "../components/Home/DviderLine";
 
 const SellersFromOutside = () => {
@@ -94,8 +94,8 @@ const SellersFromOutside = () => {
 
   const handleLikesFromInitialCarsArr = async (id) => {
     try {
-      await axios.patch("/VAR/car-like/" + id); // /cars/:id
-      window.location.reload();
+      await axios.patch("/VAR/VAR-like/" + id); // /cars/:id
+      //window.location.reload();
     } catch (err) {
       console.log("error when liking car", err.response.data);
     }
@@ -121,7 +121,7 @@ const SellersFromOutside = () => {
       <Grid container spacing={2}>
         {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
-            <CardComponent
+            <CarComponent
               img={item.image ? item.image.url[0] : ""}
               manufacturer={
                 item.manufacturerData ? item.manufacturerData.manufacturer : ""

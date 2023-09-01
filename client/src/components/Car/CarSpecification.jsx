@@ -3,7 +3,7 @@ import useQueryParams from "../../hooks/useQueryParams";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import ExtendedCardComponent from "./ExtendedCarComponent/ExtendedCarComponent";
+import ExtendedCarComponent from "./ExtendedCarComponent/ExtendedCarComponent";
 
 const CarSpecification = () => {
   let qparams = useQueryParams();
@@ -37,7 +37,7 @@ const CarSpecification = () => {
       <Typography mb={3} variant="h3" color="blue">
         Car Specification Page
       </Typography>
-      <ExtendedCardComponent
+      <ExtendedCarComponent
         manufacturer={
           inputState.manufacturerData
             ? inputState.manufacturerData.manufacturer
