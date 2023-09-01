@@ -17,14 +17,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 // css
 import "./css/App.css";
-import "./css/BCardFooter.css";
+import "./css/BCarFooter.css";
 
 import useLoggedIn from "./hooks/useLoggedIn";
 import Router from "./routes/Router";
 
 // components
 import NavBar from "./components/Navbar/Navbar";
-import BCardFooter from "./components/Footer/BCardFooter";
+import BCarFooter from "./components/Footer/BCarFooter";
 
 const light = {
   palette: {
@@ -106,7 +106,7 @@ function App() {
         </header>
         <main>{isLoading ? <CircularProgress /> : <Router />}</main>
         <footer>
-          <BCardFooter />
+          <BCarFooter />
         </footer>
       </Container>
     </ThemeProvider>

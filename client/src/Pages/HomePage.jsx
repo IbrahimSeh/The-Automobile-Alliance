@@ -101,7 +101,7 @@ const HomePage = () => {
 
   const handleLikesFromInitialCarsArr = async (id) => {
     try {
-      await axios.patch("/cars/car-like/" + id); // /cards/:id
+      await axios.patch("/cars/car-like/" + id); // /cars/:id
       window.location.reload();
     } catch (err) {
       console.log("error when liking car", err.response.data);

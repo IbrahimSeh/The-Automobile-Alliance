@@ -10,9 +10,9 @@ import ROUTES from "../routes/ROUTES";
 import CarComponent from "../components/Car/CarComponent/CarComponent";
 import useQueryParams from "../hooks/useQueryParams";
 
-const FavCardsPage = () => {
-  const [originalCardsArr, setOriginalCardsArr] = useState(null);
-  const [cardsArr, setCardsArr] = useState(null);
+const FavCarsPage = () => {
+  const [originalCarsArr, setOriginalCarsArr] = useState(null);
+  const [carsArr, setCarsArr] = useState(null);
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
@@ -25,7 +25,7 @@ const FavCardsPage = () => {
   //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cards/my-cards")
+      .get("/cars/my-cars")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -41,7 +41,7 @@ const FavCardsPage = () => {
   }, [qparams.filter]);
 
   const filterFunc = (data) => {
-    if (!originalCardsArr && !data) {
+    if (!originalCarsArr && !data) {
       return;
     }
 
@@ -50,78 +50,86 @@ const FavCardsPage = () => {
       filter = qparams.filter;
     }
 
-    if (!originalCardsArr && data) {
+    if (!originalCarsArr && data) {
       /*
         when component loaded and states not loaded
       */
-      setOriginalCardsArr(data);
-      setCardsArr(
+      setOriginalCarsArr(data);
+      setCarsArr(
         data.filter(
-          (card) => card.title.startsWith(filter) || card._id.startsWith(filter)
+          (car) =>
+            car.manufacturerData.manufacturer
+              .toLowerCase()
+              .startsWith(filter) ||
+            car.manufacturerData.type.toLowerCase().startsWith(filter) ||
+            car._id.startsWith(filter)
         )
       );
       return;
     }
-    if (originalCardsArr) {
+    if (originalCarsArr) {
       /*
         when all loaded and states loaded
       */
-      let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCardsArr));
-      setCardsArr(
-        newOriginalCardsArr.filter(
-          (card) => card.title.startsWith(filter) || card._id.startsWith(filter)
+      let newOriginalCarsArr = JSON.parse(JSON.stringify(originalCarsArr));
+      setCarsArr(
+        newOriginalCarsArr.filter(
+          (car) =>
+            car.manufacturerData.manufacturer
+              .toLowerCase()
+              .startsWith(filter) ||
+            car.manufacturerData.type.toLowerCase().startsWith(filter) ||
+            car._id.startsWith(filter)
         )
       );
     }
   };
 
-  const handleDeleteFromInitialCardsArr = async (id) => {
+  const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axios.delete("/cards/" + id); // /cards/:id
-      setCardsArr((newCardsArr) =>
-        newCardsArr.filter((item) => item._id != id)
-      );
+      await axios.delete("/cars/" + id); // /cars/:id
+      setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
       console.log("error when deleting", err.response.data);
     }
   };
 
-  const handleLikesFromInitialCardsArr = async (id) => {
+  const handleLikesFromInitialCarsArr = async (id) => {
     try {
-      await axios.patch("/cards/card-like/" + id); // /cards/:id
+      await axios.patch("/cars/car-like/" + id); // /cars/:id
       window.location.reload();
     } catch (err) {
-      console.log("error when liking card", err.response.data);
+      console.log("error when liking car", err.response.data);
     }
   };
 
-  const handleEditFromInitialCardsArr = (id) => {
-    navigate(`${ROUTES.CAREDIT}/?cardId=${id}`);
+  const handleEditFromInitialCarsArr = (id) => {
+    navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
   };
 
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARSPECIFICATION}/?cardId=${id}`);
+    navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
 
-  if (!cardsArr) {
+  if (!carsArr) {
     return <CircularProgress />;
   }
 
-  if (cardsArr.length === 0) {
+  if (carsArr.length === 0) {
     return (
       <Typography m={3} variant="h3" color="blue">
-        sorry ! ,you'r Collection of favorite cards is empty.
+        sorry ! ,you'r Collection of favorite cars is empty.
       </Typography>
     );
   }
 
   return (
-    <Box className="myCardBox" mt={3}>
+    <Box mt={3}>
       <Typography mb={3} variant="h3" color="blue">
-        Collection of my favorite cards
+        Collection of my favorite cars
       </Typography>
       <Grid container spacing={2}>
-        {cardsArr.map((item) => (
+        {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
             <CarComponent
               img={item.image ? item.image.url : ""}
@@ -146,16 +154,16 @@ const FavCardsPage = () => {
               clickOnCar={handleOnClick}
               bizNumber={item.bizNumber}
               userId={item.user_id}
-              onDelete={handleDeleteFromInitialCardsArr}
+              onDelete={handleDeleteFromInitialCarsArr}
               candelete={
                 (payload && payload.isAdmin) ||
                 (item.user_id === userID && payload && payload.isSubscription)
               }
-              onEdit={handleEditFromInitialCardsArr}
+              onEdit={handleEditFromInitialCarsArr}
               canEdit={
                 item.user_id === userID && payload && payload.isSubscription
               }
-              onLike={handleLikesFromInitialCardsArr}
+              onLike={handleLikesFromInitialCarsArr}
               disLike={false}
             />
           </Grid>
@@ -164,4 +172,4 @@ const FavCardsPage = () => {
     </Box>
   );
 };
-export default FavCardsPage;
+export default FavCarsPage;

@@ -52,7 +52,7 @@ const SendRequest = () => {
       navigate(ROUTES.HOME);
     } catch (err) {
       console.log("error from axios", err.response);
-      toast.error("the card has been not created");
+      toast.error("the car has been not created");
     }
     //setSave(true);
   };

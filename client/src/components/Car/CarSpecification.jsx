@@ -35,7 +35,7 @@ const CarSpecification = () => {
   return (
     <Box mt={3}>
       <Typography mb={3} variant="h3" color="blue">
-        Card Specification Page
+        Car Specification Page
       </Typography>
       <ExtendedCardComponent
         manufacturer={
@@ -68,7 +68,7 @@ const CarSpecification = () => {
         userCreated={inputState.user_id}
         favoritUsers={userlikeId}
         bizNumber={inputState.bizNumber}
-        CardCreationDate={inputState.createdAt}
+        CarCreationDate={inputState.createdAt}
       />
     </Box>
   );

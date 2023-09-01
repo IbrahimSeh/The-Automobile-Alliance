@@ -116,7 +116,7 @@ const SellersFromOutside = () => {
     );
   }
   return (
-    <Box className="myCardBox" mt={3}>
+    <Box className="myCarBox" mt={3}>
       <DviderLine text={"Offers for selling cars from outside the showroom"} />
       <Grid container spacing={2}>
         {carsArr.map((item) => (

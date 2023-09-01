@@ -9,7 +9,7 @@ const styles = {
 // display: "flex",
 // justifyContent: "center",
 
-const BCardFooter = () => {
+const BCarFooter = () => {
   return (
     <div className="the-footer">
       <BottomNavBar />
@@ -37,4 +37,4 @@ const BCardFooter = () => {
   );
 };
 
-export default BCardFooter;
+export default BCarFooter;

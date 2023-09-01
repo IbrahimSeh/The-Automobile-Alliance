@@ -87,7 +87,7 @@ const CreateCar = () => {
       navigate(ROUTES.ADDCAR);
     } catch (err) {
       console.log("error from axios", err.response.data);
-      toast.error("the card has been not created");
+      toast.error("the car has been not created");
     }
   };
 
