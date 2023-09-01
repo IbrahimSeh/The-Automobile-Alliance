@@ -10,6 +10,8 @@ import {
   Grid,
   Divider,
   Box,
+  Tooltip,
+  Fade,
 } from "@mui/material";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -79,18 +81,33 @@ const RequestsComponent = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={handelThumpDownClick}>
-          <ThumbDownAltIcon />
-        </Button>
+        <Tooltip
+          TransitionComponent={Fade}
+          TransitionProps={{ timeout: 600 }}
+          title="Disagree"
+          placement="bottom-end"
+        >
+          <Button onClick={handelThumpDownClick}>
+            <ThumbDownAltIcon />
+          </Button>
+        </Tooltip>
+
         <Grid
           container
           direction="row"
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <Button onClick={handelThumpUpClick}>
-            <ThumbUpAltIcon />
-          </Button>
+          <Tooltip
+            TransitionComponent={Fade}
+            TransitionProps={{ timeout: 600 }}
+            title="Agree"
+            placement="bottom-end"
+          >
+            <Button onClick={handelThumpUpClick}>
+              <ThumbUpAltIcon />
+            </Button>
+          </Tooltip>
         </Grid>
       </CardActions>
     </Card>

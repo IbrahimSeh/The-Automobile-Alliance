@@ -25,7 +25,7 @@ const FavCarsPage = () => {
   //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cars/my-cars")
+      .get("/cars/get-my-fav-cars")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -110,7 +110,7 @@ const FavCarsPage = () => {
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
-
+  //console.log("carsArr = ", carsArr);
   if (!carsArr) {
     return <CircularProgress />;
   }

@@ -43,7 +43,7 @@ const CarEdit = () => {
   //get data for specific car for update
   useEffect(() => {
     axios
-      .get("/cars/" + qparams.carId)
+      .get("/cars/" + qparams.id)
       .then(({ data }) => {
         for (const key in JSON.parse(JSON.stringify(data))) {
           inputState[key] = data[key];
@@ -83,7 +83,7 @@ const CarEdit = () => {
         console.log("err from axioas", err);
         toast.error("Oops");
       });
-  }, [inputState, qparams.carId]);
+  }, [inputState, qparams.id]);
   let tempItemData = [
     {
       img: url[0],
@@ -116,7 +116,7 @@ const CarEdit = () => {
       return;
     }
     try {
-      await axios.put("/cars/" + qparams.carId, {
+      await axios.put("/cars/" + qparams.id, {
         manufacturerData: {
           manufacturer: manufacturerSelected,
           type: type,

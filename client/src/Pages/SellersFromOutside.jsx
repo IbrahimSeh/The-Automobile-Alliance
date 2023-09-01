@@ -94,10 +94,10 @@ const SellersFromOutside = () => {
 
   const handleLikesFromInitialCarsArr = async (id) => {
     try {
-      await axios.patch("/VAR/" + id);
-      setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
+      await axios.patch("/VAR/car-like/" + id); // /cars/:id
+      window.location.reload();
     } catch (err) {
-      toast.error("error when liking car", err.response.data);
+      console.log("error when liking car", err.response.data);
     }
   };
   const handleOnClick = (id) => {
