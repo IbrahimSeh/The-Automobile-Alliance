@@ -23,7 +23,7 @@ import useLoggedIn from "./hooks/useLoggedIn";
 import Router from "./routes/Router";
 
 // components
-import NavBar from "./components/Navbar/Navbar";
+import NavBar from "./components/Navbar/Navbar/Navbar";
 import BCarFooter from "./components/Footer/BCarFooter";
 
 const light = {

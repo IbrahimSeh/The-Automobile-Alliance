@@ -8,24 +8,26 @@ import {
   Container,
   Avatar,
   Tooltip,
+  Badge,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import ROUTES from "../../routes/ROUTES";
-import NavLinkComponent from "./NavLinkComponent";
-import { authActions } from "../../redux/auth";
-import logoutAvatar from "../../assets/images/logout.png";
+import ROUTES from "../../../routes/ROUTES";
+import NavLinkComponent from "../NavLinkComponent";
+import { authActions } from "../../../redux/auth";
+import logoutAvatar from "../../../assets/images/logout.png";
 import Fade from "@mui/material/Fade";
 import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
-import HumborgerNavbar from "./HumborgerNavbar";
-import ToggleColorMode from "./ToggleColorMode";
-import SearchNavBar from "./SearchNavBar";
-import logo from "../../assets/images/car-showroom.png";
-import DropDownNavLink from "./DropDownNavLink";
+import HumborgerNavbar from "../HumborgerNavbar";
+import ToggleColorMode from "../ToggleColorMode";
+import SearchNavBar from "../SearchNavBar";
+import logo from "../../../assets/images/car-showroom.png";
+import DropDownNavLink from "../DropDownNavLink";
 
-import "../../css/Navbar.css";
+import "../../../css/Navbar.css";
+import GetNumberOfRequest from "./helpers/getNumberOfRequest";
 // access to all
 const pages = [
   {
@@ -106,7 +108,11 @@ const userAsSubscription2 = [
 ];
 const userAsAdmin = [
   {
-    label: "Requests",
+    label: (
+      <Badge color="secondary" badgeContent={0} max={10} showZero>
+        Requests
+      </Badge>
+    ),
     url: ROUTES.REQUESTS,
   },
 ];
@@ -115,6 +121,7 @@ const Navbar = () => {
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
+  const [badge, setBadge] = React.useState(0);
   const [imgUser, setimgUser] = React.useState("");
   useEffect(() => {
     if (isLoggedIn) {
@@ -132,6 +139,7 @@ const Navbar = () => {
           toast.error("Oops");
         });
     }
+    setBadge(GetNumberOfRequest());
   }, [isLoggedIn]);
 
   authedPages[1].label = (
@@ -144,6 +152,8 @@ const Navbar = () => {
       <Avatar alt="user Avatar" src={imgUser} />
     </Tooltip>
   );
+
+  console.log("len = ", badge);
   const payload = useSelector((bigState) => bigState.authSlice.payload);
   const dispatch = useDispatch();
 

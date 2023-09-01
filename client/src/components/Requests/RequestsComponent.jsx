@@ -13,12 +13,10 @@ import {
   Tooltip,
   Fade,
 } from "@mui/material";
-import axios from "axios";
 import PropTypes from "prop-types";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import DEFAULTCARIMAGE from "../Car/CarComponent/helpers/DefaultCarImage";
-import { toast } from "react-toastify";
 
 const RequestsComponent = ({
   img,
