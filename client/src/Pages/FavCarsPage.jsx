@@ -95,12 +95,7 @@ const FavCarsPage = () => {
   };
 
   const handleLikesFromInitialCarsArr = async (id) => {
-    try {
-      await axios.patch("/cars/car-like/" + id); // /cars/:id
-      window.location.reload();
-    } catch (err) {
-      console.log("error when liking car", err.response.data);
-    }
+    setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
   };
 
   const handleEditFromInitialCarsArr = (id) => {
@@ -167,7 +162,7 @@ const FavCarsPage = () => {
                 item.user_id === userID && payload && payload.isSubscription
               }
               onLike={handleLikesFromInitialCarsArr}
-              disLike={false}
+              disLike={true}
             />
           </Grid>
         ))}

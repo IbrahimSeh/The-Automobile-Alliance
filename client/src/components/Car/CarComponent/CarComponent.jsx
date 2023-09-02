@@ -10,7 +10,10 @@ import {
   Grid,
   Divider,
   Box,
+  Tooltip,
+  Fade,
 } from "@mui/material";
+import axios from "axios";
 import PropTypes from "prop-types";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
@@ -19,6 +22,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { useSelector } from "react-redux";
 import DEFAULTCARIMAGE from "./helpers/DefaultCarImage";
+import { useState } from "react";
 
 const CarComponent = ({
   img,
@@ -41,6 +45,7 @@ const CarComponent = ({
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
+  const [likeFlag, setLikeFlag] = useState(disLike);
 
   const handleDeleteBtnClick = (event) => {
     event.stopPropagation();
@@ -52,8 +57,14 @@ const CarComponent = ({
     onEdit(id);
   };
 
-  const handleLikeBtnClick = (event) => {
+  const handleLikeBtnClick = async (event) => {
     event.stopPropagation();
+    try {
+      await axios.patch("/cars/car-like/" + id); // /cars/:id
+      setLikeFlag(!likeFlag);
+    } catch (err) {
+      console.log("error when liking car", err.response.data);
+    }
     onLike(id);
   };
 
@@ -95,16 +106,30 @@ const CarComponent = ({
       </CardContent>
       <CardActions>
         {candelete ? (
-          <Button sx={{ color: "#1b1b00" }} onClick={handleDeleteBtnClick}>
-            <DeleteRoundedIcon />
-          </Button>
+          <Tooltip
+            TransitionComponent={Fade}
+            TransitionProps={{ timeout: 600 }}
+            title="Delete car"
+            placement="bottom-end"
+          >
+            <Button sx={{ color: "#1b1b00" }} onClick={handleDeleteBtnClick}>
+              <DeleteRoundedIcon />
+            </Button>
+          </Tooltip>
         ) : (
           ""
         )}
         {canEdit ? (
-          <Button sx={{ color: "#008e24" }} onClick={handleEditBtnClick}>
-            <EditRoundedIcon />
-          </Button>
+          <Tooltip
+            TransitionComponent={Fade}
+            TransitionProps={{ timeout: 600 }}
+            title="Edit car"
+            placement="bottom-end"
+          >
+            <Button sx={{ color: "#008e24" }} onClick={handleEditBtnClick}>
+              <EditRoundedIcon />
+            </Button>
+          </Tooltip>
         ) : (
           ""
         )}
@@ -114,22 +139,43 @@ const CarComponent = ({
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <Button sx={{ color: "#2196f3" }}>
-            <LocalPhoneRoundedIcon />
-          </Button>
+          <Tooltip
+            TransitionComponent={Fade}
+            TransitionProps={{ timeout: 600 }}
+            title="Call seller"
+            placement="bottom-end"
+          >
+            <Button sx={{ color: "#2196f3" }}>
+              <LocalPhoneRoundedIcon />
+            </Button>
+          </Tooltip>
           {isLoggedIn ? (
-            disLike ? (
-              <Button sx={{ color: "#e91616" }} onClick={handleLikeBtnClick}>
-                <FavoriteRoundedIcon />
-              </Button>
+            likeFlag ? (
+              <Tooltip
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 600 }}
+                title="Dislike"
+                placement="bottom-end"
+              >
+                <Button>
+                  {" "}
+                  <ThumbDownIcon
+                    sx={{ color: "#606060" }}
+                    onClick={handleLikeBtnClick}
+                  />
+                </Button>
+              </Tooltip>
             ) : (
-              <Button>
-                {" "}
-                <ThumbDownIcon
-                  sx={{ color: "#606060" }}
-                  onClick={handleLikeBtnClick}
-                />
-              </Button>
+              <Tooltip
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 600 }}
+                title="Like"
+                placement="bottom-end"
+              >
+                <Button sx={{ color: "#e91616" }} onClick={handleLikeBtnClick}>
+                  <FavoriteRoundedIcon />
+                </Button>
+              </Tooltip>
             )
           ) : (
             ""

@@ -92,14 +92,7 @@ const SellersFromOutside = () => {
     navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
   };
 
-  const handleLikesFromInitialCarsArr = async (id) => {
-    try {
-      await axios.patch("/VAR/VAR-like/" + id); // /cars/:id
-      //window.location.reload();
-    } catch (err) {
-      console.log("error when liking car", err.response.data);
-    }
-  };
+  const handelOnLike = (id) => {};
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
@@ -152,9 +145,9 @@ const SellersFromOutside = () => {
               // payload.isAdmin
               onEdit={handleEditFromInitialCarsArr}
               canEdit={payload && payload.isAdmin}
-              onLike={handleLikesFromInitialCarsArr}
+              onLike={handelOnLike}
               disLike={
-                item.likes.includes(payload && payload._id) ? false : true
+                item.likes.includes(payload && payload._id) ? true : false
               }
             />
           </Grid>

@@ -15,7 +15,7 @@ import DviderLine from "../components/Home/DviderLine";
 const HomePage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
-  const [likeFlag, setLikeFlag] = useState(false);
+
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
@@ -100,18 +100,10 @@ const HomePage = () => {
     navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
   };
 
-  const handleLikesFromInitialCarsArr = async (id) => {
-    try {
-      await axios.patch("/cars/car-like/" + id); // /cars/:id
-      window.location.reload();
-    } catch (err) {
-      console.log("error when liking car", err.response.data);
-    }
-  };
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
-
+  const handelOnLike = (id) => {};
   if (!carsArr) {
     return <CircularProgress />;
   }
@@ -167,9 +159,9 @@ const HomePage = () => {
               canEdit={
                 item.user_id === userID && payload && payload.isSubscription
               }
-              onLike={handleLikesFromInitialCarsArr}
+              onLike={handelOnLike}
               disLike={
-                item.likes.includes(payload && payload._id) ? false : true
+                item.likes.includes(payload && payload._id) ? true : false
               }
             />
           </Grid>
