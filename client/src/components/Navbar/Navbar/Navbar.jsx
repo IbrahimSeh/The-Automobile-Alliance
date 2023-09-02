@@ -118,11 +118,13 @@ const userAsAdmin = [
 ];
 
 const Navbar = () => {
+  console.log("navbar");
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
   const [badge, setBadge] = React.useState(0);
   const [imgUser, setimgUser] = React.useState("");
+
   useEffect(() => {
     if (isLoggedIn) {
       const token = localStorage.getItem("token");
@@ -139,7 +141,9 @@ const Navbar = () => {
           toast.error("Oops");
         });
     }
-    setBadge(GetNumberOfRequest());
+    // let x = GetNumberOfRequest();
+    // console.log("x = ", x);
+    //setBadge(GetNumberOfRequest());
   }, [isLoggedIn]);
 
   authedPages[1].label = (
@@ -153,7 +157,7 @@ const Navbar = () => {
     </Tooltip>
   );
 
-  console.log("len = ", badge);
+  // console.log("len = ", badge);
   const payload = useSelector((bigState) => bigState.authSlice.payload);
   const dispatch = useDispatch();
 

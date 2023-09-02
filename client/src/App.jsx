@@ -38,6 +38,7 @@ const dark = {
   },
 };
 function App() {
+  console.log("app,jsx");
   const [isLoading, setIsLoading] = useState(false);
   const loggedIn = useLoggedIn();
   const [scrollPostion, setState] = useState(0);
