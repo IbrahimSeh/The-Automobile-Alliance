@@ -27,7 +27,6 @@ import logo from "../../../assets/images/car-showroom.png";
 import DropDownNavLink from "../DropDownNavLink";
 
 import "../../../css/Navbar.css";
-import GetNumberOfRequest from "./helpers/getNumberOfRequest";
 // access to all
 const pages = [
   {

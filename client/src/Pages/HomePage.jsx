@@ -15,6 +15,7 @@ import DviderLine from "../components/Home/DviderLine";
 const HomePage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
+  const [likeFlag, setLikeFlag] = useState(false);
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
