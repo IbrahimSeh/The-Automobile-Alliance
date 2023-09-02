@@ -1,23 +1,17 @@
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  LinearProgress,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, LinearProgress, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-//import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
-//import { useSelector } from "react-redux";
 import { Fragment, useEffect, useState } from "react";
 import useQueryParams from "../hooks/useQueryParams";
 import ROUTES from "../routes/ROUTES";
 import RequestsComponent from "../components/Requests/RequestsComponent";
+import useNumberOfRequest from "../hooks/useNumberOfRequest";
 
 const RequestsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
+  const numberOfRequest = useNumberOfRequest();
   const navigate = useNavigate();
   let qparams = useQueryParams();
 
@@ -87,6 +81,7 @@ const RequestsPage = () => {
     try {
       await axios.delete("/VAR/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
+      numberOfRequest();
     } catch (err) {
       toast.error("error when deleting car to publish", err.response.data);
     }
@@ -96,6 +91,7 @@ const RequestsPage = () => {
     try {
       await axios.patch("/VAR/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
+      numberOfRequest();
     } catch (err) {
       toast.error("error when liking car", err.response.data);
     }
