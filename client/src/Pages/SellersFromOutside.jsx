@@ -149,6 +149,7 @@ const SellersFromOutside = () => {
               disLike={
                 item.likes.includes(payload && payload._id) ? true : false
               }
+              collection={"VAR"}
             />
           </Grid>
         ))}

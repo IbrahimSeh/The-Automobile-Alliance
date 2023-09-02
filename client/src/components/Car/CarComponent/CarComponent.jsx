@@ -41,12 +41,15 @@ const CarComponent = ({
   canEdit,
   onLike,
   disLike,
+  collection,
 }) => {
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
   const [likeFlag, setLikeFlag] = useState(disLike);
-
+  let apiCollection;
+  if (collection === undefined) apiCollection = "cars/car";
+  if (collection === "VAR") apiCollection = "VAR/VAR";
   const handleDeleteBtnClick = (event) => {
     event.stopPropagation();
     onDelete(id);
@@ -60,7 +63,7 @@ const CarComponent = ({
   const handleLikeBtnClick = async (event) => {
     event.stopPropagation();
     try {
-      await axios.patch("/cars/car-like/" + id); // /cars/:id
+      await axios.patch("/" + apiCollection + "-like/" + id); // /cars/:id
       setLikeFlag(!likeFlag);
     } catch (err) {
       console.log("error when liking car", err.response.data);

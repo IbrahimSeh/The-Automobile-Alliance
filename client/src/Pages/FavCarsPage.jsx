@@ -105,7 +105,6 @@ const FavCarsPage = () => {
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
-  //console.log("carsArr = ", carsArr);
   if (!carsArr) {
     return <CircularProgress />;
   }
