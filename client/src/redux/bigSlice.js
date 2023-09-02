@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-// import counterReducer from "./counter";
+import sliceReducer from "./requests";
 import darkThemeReducer from "./darkTheme";
 import authReducer from "./auth";
 
@@ -8,6 +8,7 @@ const store = configureStore({
     reducer: {
         darkThemeSlice: darkThemeReducer,
         authSlice: authReducer,
+        requestSlice: sliceReducer,
     },
 });
 

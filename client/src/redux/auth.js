@@ -10,7 +10,6 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         login(state, action) {
-            console.log('in redux login');
             if (!action || !action.payload) {
                 return;
             }

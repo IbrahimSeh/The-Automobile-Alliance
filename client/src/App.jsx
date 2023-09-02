@@ -25,6 +25,7 @@ import Router from "./routes/Router";
 // components
 import NavBar from "./components/Navbar/Navbar/Navbar";
 import BCarFooter from "./components/Footer/BCarFooter";
+import useNumberOfRequest from "./hooks/useNumberOfRequest";
 
 const light = {
   palette: {
@@ -38,9 +39,9 @@ const dark = {
   },
 };
 function App() {
-  console.log("app,jsx");
   const [isLoading, setIsLoading] = useState(false);
   const loggedIn = useLoggedIn();
+  const numberOfRequest = useNumberOfRequest();
   const [scrollPostion, setState] = useState(0);
   const isDarkTheme = useSelector(
     (bigPie) => bigPie.darkThemeSlice.isDarkTheme
@@ -49,6 +50,7 @@ function App() {
   useEffect(() => {
     (async () => {
       await loggedIn();
+      await numberOfRequest();
       setIsLoading(false);
     })();
   }, []);

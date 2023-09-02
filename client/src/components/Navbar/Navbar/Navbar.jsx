@@ -108,21 +108,24 @@ const userAsSubscription2 = [
 ];
 const userAsAdmin = [
   {
-    label: (
-      <Badge color="secondary" badgeContent={0} max={10} showZero>
-        Requests
-      </Badge>
-    ),
+    label: "",
     url: ROUTES.REQUESTS,
   },
 ];
 
 const Navbar = () => {
-  console.log("navbar");
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
-  const [badge, setBadge] = React.useState(0);
+  const numOfRequest = useSelector(
+    (bigPieBigState) => bigPieBigState.requestSlice.numOfRequest
+  );
+
+  userAsAdmin[0].label = (
+    <Badge color="secondary" badgeContent={numOfRequest} max={10} showZero>
+      Requests
+    </Badge>
+  );
   const [imgUser, setimgUser] = React.useState("");
 
   useEffect(() => {
@@ -141,9 +144,6 @@ const Navbar = () => {
           toast.error("Oops");
         });
     }
-    // let x = GetNumberOfRequest();
-    // console.log("x = ", x);
-    //setBadge(GetNumberOfRequest());
   }, [isLoggedIn]);
 
   authedPages[1].label = (
