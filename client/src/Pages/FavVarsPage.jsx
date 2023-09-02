@@ -9,9 +9,8 @@ import { toast } from "react-toastify";
 import ROUTES from "../routes/ROUTES";
 import CarComponent from "../components/Car/CarComponent/CarComponent";
 import useQueryParams from "../hooks/useQueryParams";
-import FavVarsPage from "./FavVarsPage";
 
-const FavCarsPage = () => {
+const FavVarsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ const FavCarsPage = () => {
   //first useEffect when page load
   useEffect(() => {
     axios
-      .get("/cars/get-my-fav-cars")
+      .get("/VAR/get-my-fav-vars")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -88,7 +87,7 @@ const FavCarsPage = () => {
 
   const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axios.delete("/cars/" + id); // /cars/:id
+      await axios.delete("/VAR/" + id); // /cars/:id
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
       console.log("error when deleting", err.response.data);
@@ -113,7 +112,8 @@ const FavCarsPage = () => {
   if (carsArr.length === 0) {
     return (
       <Typography m={3} variant="h3" color="blue">
-        sorry ! ,you'r Collection of favorite cars is empty.
+        sorry ! ,you'r Collection of favorite Vehicle from other sellers is
+        empty.
       </Typography>
     );
   }
@@ -121,7 +121,7 @@ const FavCarsPage = () => {
   return (
     <Box mt={3}>
       <Typography mb={3} variant="h3" color="blue">
-        Collection of you'r favorite cars
+        Collection of you'r favorite Vehicle from other sellers
       </Typography>
       <Grid container spacing={2}>
         {carsArr.map((item) => (
@@ -163,12 +163,12 @@ const FavCarsPage = () => {
               }
               onLike={handleLikesFromInitialCarsArr}
               disLike={true}
+              collection={"VAR"}
             />
           </Grid>
         ))}
       </Grid>
-      <FavVarsPage />
     </Box>
   );
 };
-export default FavCarsPage;
+export default FavVarsPage;

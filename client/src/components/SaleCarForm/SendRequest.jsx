@@ -14,10 +14,12 @@ import {
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
+import useNumberOfRequest from "../../hooks/useNumberOfRequest";
 
 const SendRequest = () => {
   const [save, setSave] = useState(false);
   const navigate = useNavigate();
+  const numberOfRequest = useNumberOfRequest();
 
   const handelClickSaveData = async () => {
     try {
@@ -47,7 +49,7 @@ const SendRequest = () => {
           email: communicationsData.email,
         },
       });
-
+      numberOfRequest();
       toast.success("A new vehicle advertising requests has been created");
       navigate(ROUTES.HOME);
     } catch (err) {
