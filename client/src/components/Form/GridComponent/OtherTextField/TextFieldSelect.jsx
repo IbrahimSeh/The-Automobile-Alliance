@@ -1,6 +1,5 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
-import getLabel from "../helper/getLabel";
 
 const TextFieldSelect = ({
   passSelectedFromChildToParent,
@@ -36,9 +35,8 @@ const TextFieldSelect = ({
         name={"manufacturer"}
         required
         fullWidth
-        //label={getLabel(inputKey)}
         label=""
-        helperText="Please select your manufacturer"
+        helperText="Please select your manufacturer *"
         value={getValue()}
         onChange={handleChange}
         select
@@ -52,8 +50,4 @@ const TextFieldSelect = ({
     </Fragment>
   );
 };
-
-// TextFieldSelect.propTypes = {
-//   listOfSelection: PropTypes.array,
-// };
 export default TextFieldSelect;

@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { Fragment } from "react";
 
 const SubmitComponent = ({ onClick, disablebtn }) => {
-  // console.log("FromForm = ", FromForm);
+  console.log("disablebtn = ", disablebtn);
   const handleBtnSubmitClick = (ev) => {
     onClick(ev);
   };
@@ -13,7 +13,7 @@ const SubmitComponent = ({ onClick, disablebtn }) => {
         variant="contained"
         sx={{ mt: 3, mb: 2, bgcolor: "#673ab7" }}
         onClick={handleBtnSubmitClick}
-        disabled={disablebtn}
+        disabled={!disablebtn}
       >
         SUBMIT
       </Button>

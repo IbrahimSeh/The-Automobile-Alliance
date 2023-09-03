@@ -1,6 +1,5 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
-import getLabel from "../helper/getLabel";
 
 const TextFieldSelectForFuel = ({
   passSelectedFromChildToParent,
@@ -23,9 +22,8 @@ const TextFieldSelectForFuel = ({
         required
         fullWidth
         id={inputKey}
-        //label={getLabel(inputKey)}
         label=""
-        helperText="Please select your fuel"
+        helperText="Please select your fuel type *"
         value={inputValue !== undefined ? inputValue : selectedValue}
         onChange={handleChange}
         select
