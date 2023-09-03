@@ -2,7 +2,7 @@ import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -10,6 +10,7 @@ import ROUTES from "../routes/ROUTES";
 import CarComponent from "../components/Car/CarComponent/CarComponent";
 import useQueryParams from "../hooks/useQueryParams";
 import FavVarsPage from "./FavVarsPage";
+import DviderLine from "../components/Home/DviderLine";
 
 const FavCarsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
@@ -110,63 +111,87 @@ const FavCarsPage = () => {
     return <CircularProgress />;
   }
 
-  if (carsArr.length === 0) {
-    return (
-      <Typography m={3} variant="h3" color="blue">
-        sorry ! ,you'r Collection of favorite cars is empty.
-      </Typography>
-    );
-  }
+  const commonStyles = {
+    bgcolor: "#b39ddb",
+    m: 1,
+    p: 1,
+    border: 3,
+    borderColor: "secondary.main",
+    borderRadius: 1,
+  };
 
   return (
     <Box mt={3}>
-      <Typography mb={3} variant="h3" color="blue">
+      <Typography
+        sx={{ ...commonStyles }}
+        mb={3}
+        variant="h3"
+        align="center"
+        color="blue"
+      >
         Collection of you'r favorite cars
       </Typography>
-      <Grid container spacing={2}>
-        {carsArr.map((item) => (
-          <Grid item xs={4} key={item._id + Date.now()}>
-            <CarComponent
-              img={item.image ? item.image.url[0] : ""}
-              manufacturer={
-                item.manufacturerData ? item.manufacturerData.manufacturer : ""
-              }
-              type={item.manufacturerData ? item.manufacturerData.type : ""}
-              subType={
-                item.manufacturerData ? item.manufacturerData.subType : ""
-              }
-              yearOfProduction={
-                item.yearOfProduction ? item.yearOfProduction : ""
-              }
-              phone={item.phone}
-              address={
-                item.address
-                  ? item.address.country +
-                    ", " +
-                    item.address.city +
-                    ", " +
-                    item.address.street
-                  : ""
-              }
-              id={item._id}
-              clickOnCar={handleOnClick}
-              bizNumber={item.bizNumber}
-              userId={item.user_id}
-              onDelete={handleDeleteFromInitialCarsArr}
-              candelete={
-                (payload && payload.isAdmin) ||
-                (item.user_id === userID && payload && payload.isSubscription)
-              }
-              onEdit={handleEditFromInitialCarsArr}
-              canEdit={
-                item.user_id === userID && payload && payload.isSubscription
-              }
-              onLike={handleLikesFromInitialCarsArr}
-              disLike={true}
-            />
+      {carsArr.length === 0 ? (
+        <DviderLine
+          text={
+            "Collection of favorite cars from Automobile Alliance is empty."
+          }
+        />
+      ) : (
+        <Fragment>
+          <Typography mb={3} variant="h3" color="blue">
+            Collection of you'r favorite Vehicle from Automobile Alliance
+          </Typography>
+          <Grid container spacing={2}>
+            {carsArr.map((item) => (
+              <Grid item xs={4} key={item._id + Date.now()}>
+                <CarComponent
+                  img={item.image ? item.image.url[0] : ""}
+                  manufacturer={
+                    item.manufacturerData
+                      ? item.manufacturerData.manufacturer
+                      : ""
+                  }
+                  type={item.manufacturerData ? item.manufacturerData.type : ""}
+                  subType={
+                    item.manufacturerData ? item.manufacturerData.subType : ""
+                  }
+                  yearOfProduction={
+                    item.yearOfProduction ? item.yearOfProduction : ""
+                  }
+                  phone={item.phone}
+                  address={
+                    item.address
+                      ? item.address.country +
+                        ", " +
+                        item.address.city +
+                        ", " +
+                        item.address.street
+                      : ""
+                  }
+                  id={item._id}
+                  clickOnCar={handleOnClick}
+                  bizNumber={item.bizNumber}
+                  userId={item.user_id}
+                  onDelete={handleDeleteFromInitialCarsArr}
+                  candelete={
+                    (payload && payload.isAdmin) ||
+                    (item.user_id === userID &&
+                      payload &&
+                      payload.isSubscription)
+                  }
+                  onEdit={handleEditFromInitialCarsArr}
+                  canEdit={
+                    item.user_id === userID && payload && payload.isSubscription
+                  }
+                  onLike={handleLikesFromInitialCarsArr}
+                  disLike={true}
+                />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </Fragment>
+      )}
       <FavVarsPage />
     </Box>
   );
