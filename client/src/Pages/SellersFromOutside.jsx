@@ -144,7 +144,9 @@ const SellersFromOutside = () => {
               candelete={payload && payload.isAdmin}
               // payload.isAdmin
               onEdit={handleEditFromInitialCarsArr}
-              canEdit={payload && payload.isAdmin}
+              //Anyone can edit a car sales form from outside advertisers.
+              //The site administrator can agree or reject the publication request
+              canEdit={false}
               onLike={handelOnLike}
               disLike={
                 item.likes.includes(payload && payload._id) ? true : false

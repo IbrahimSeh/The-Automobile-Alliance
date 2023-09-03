@@ -158,9 +158,7 @@ const FavVarsPage = () => {
                 (item.user_id === userID && payload && payload.isSubscription)
               }
               onEdit={handleEditFromInitialCarsArr}
-              canEdit={
-                item.user_id === userID && payload && payload.isSubscription
-              }
+              canEdit={false}
               onLike={handleLikesFromInitialCarsArr}
               disLike={true}
               collection={"VAR"}
