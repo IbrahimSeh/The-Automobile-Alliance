@@ -50,13 +50,15 @@ const SendRequest = () => {
         },
       });
       numberOfRequest();
-      toast.success("A new vehicle advertising requests has been created");
-      navigate(ROUTES.HOME);
+      setTimeout(() => {
+        toast.success("A new vehicle advertising requests has been created");
+        navigate(ROUTES.HOME);
+      }, "3000");
+      setSave(true);
     } catch (err) {
       console.log("error from axios", err.response);
       toast.error("the car has been not created");
     }
-    //setSave(true);
   };
   // console.log("manufacturerData in SendReq = ", manufacturerData);
   // console.log("communicationsData in SenReq", communicationsData);

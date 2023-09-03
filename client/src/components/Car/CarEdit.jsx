@@ -8,7 +8,6 @@ import dayjs from "dayjs";
 import carManufacturerSelection from "../Form/GridComponent/helper/carManufacturerSelection";
 import fuelTypeSelection from "../Form/GridComponent/helper/fuelTypeSelection";
 import typeSelection from "../Form/GridComponent/helper/typeSelection";
-import ROUTES from "../../routes/ROUTES";
 import SubmitComponent from "../Form/FormButtons/SubmitComponent";
 import CRComponent from "../Form/FormButtons/CRComponent";
 import GridItemComponent from "../Form/GridComponent/GridItemComponent";
@@ -40,10 +39,9 @@ const CarEdit = () => {
   const [dialogErrMsg, setDialogErrMsg] = useState([]);
   const navigate = useNavigate();
 
-  //get data for specific car for update
   useEffect(() => {
     axios
-      .get("/cars/" + qparams.id)
+      .get("/cars/" + qparams.carId)
       .then(({ data }) => {
         for (const key in JSON.parse(JSON.stringify(data))) {
           inputState[key] = data[key];
@@ -68,7 +66,7 @@ const CarEdit = () => {
         delete inputState.address;
         setPreviousOwners(inputState.previousOwners);
         setKilometers(inputState.kilometers);
-        setYearOfProduction(inputState.yearOfProduction);
+        setYearOfProduction(dayjs(`${inputState.yearOfProduction}-04-17`));
         delete inputState.previousOwners;
         delete inputState.kilometers;
         delete inputState.yearOfProduction;
@@ -83,7 +81,8 @@ const CarEdit = () => {
         console.log("err from axioas", err);
         toast.error("Oops");
       });
-  }, [inputState, qparams.id]);
+  }, [inputState, qparams.carId]);
+
   let tempItemData = [
     {
       img: url[0],
@@ -140,14 +139,14 @@ const CarEdit = () => {
       });
 
       toast.success("the car has been edited");
-      navigate(ROUTES.ADDCAR);
+      navigate(-1);
     } catch (err) {
       console.log("error from axios", err.response.data);
       toast.error("the car has been not edited");
     }
   };
 
-  const handleBtnCancelClick = () => navigate(ROUTES.ADDCAR);
+  const handleBtnCancelClick = () => navigate(-1);
   const handleBtnResetClick = () => window.location.reload();
   const updateState = (key, value) => (inputState[key] = value);
   const onBlurHandel = (submitLock) => setbtnDisable(submitLock);

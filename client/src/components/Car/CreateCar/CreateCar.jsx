@@ -84,14 +84,14 @@ const CreateCar = () => {
       });
 
       toast.success("A new car has been created");
-      navigate(ROUTES.ADDCAR);
+      navigate(-1);
     } catch (err) {
       console.log("error from axios", err.response.data);
       toast.error("the car has been not created");
     }
   };
 
-  const handleBtnCancelClick = () => navigate(ROUTES.ADDCAR);
+  const handleBtnCancelClick = () => navigate(-1);
   const handleBtnResetClick = () => window.location.reload();
   const updateState = (key, value) => (inputState[key] = value);
   const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
