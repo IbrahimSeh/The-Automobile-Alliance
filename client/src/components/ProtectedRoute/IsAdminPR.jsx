@@ -4,15 +4,8 @@ import ROUTES from "../../routes/ROUTES";
 import jwt_decode from "jwt-decode";
 
 const IsAdminPR = ({ element }) => {
-  //* html section
   const token = localStorage.getItem("token");
   const decodeToken = jwt_decode(token);
-  // console.log("token = ", decodeToken.isAdmin);
-  // const isAdmin =
-  //   String(
-  //     JSON.stringify(decodeToken).split(":")[3].split(",")[0]
-  //   ).toLowerCase() === "true";
-
   if (decodeToken.isAdmin) {
     return element;
   } else {

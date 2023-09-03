@@ -1,12 +1,12 @@
 import { Typography } from "@mui/material";
 
-const PurchaseCar = () => {
+const SpecificSearch = () => {
   return (
     <div>
       <Typography variant="h3" color="initial">
-        PurchaseCar Page
+        Specific Search
       </Typography>
     </div>
   );
 };
-export default PurchaseCar;
+export default SpecificSearch;

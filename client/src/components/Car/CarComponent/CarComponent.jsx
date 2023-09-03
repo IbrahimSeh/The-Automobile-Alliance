@@ -23,6 +23,7 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { useSelector } from "react-redux";
 import DEFAULTCARIMAGE from "./helpers/DefaultCarImage";
 import { useState } from "react";
+//import ControlledOpenSpeedDial from "./ControlledOpenSpeedDial";
 
 const CarComponent = ({
   img,
@@ -68,7 +69,7 @@ const CarComponent = ({
     } catch (err) {
       console.log("error when liking car", err.response.data);
     }
-    onLike(id);
+    onLike(id, likeFlag);
   };
 
   const handleClickCar = () => {
@@ -102,7 +103,7 @@ const CarComponent = ({
         </Typography>
         <Typography component="div">
           <Box fontWeight="fontWeightMedium" display="inline">
-            Card Number :
+            Car Number :
           </Box>{" "}
           {bizNumber}
         </Typography>
@@ -148,7 +149,12 @@ const CarComponent = ({
             title="Call seller"
             placement="bottom-end"
           >
-            <Button sx={{ color: "#2196f3" }}>
+            <Button
+              sx={{ color: "#2196f3" }}
+              onClick={(ev) => {
+                ev.stopPropagation();
+              }}
+            >
               <LocalPhoneRoundedIcon />
             </Button>
           </Tooltip>
@@ -183,6 +189,7 @@ const CarComponent = ({
           ) : (
             ""
           )}
+          {/* <ControlledOpenSpeedDial /> */}
         </Grid>
       </CardActions>
     </Card>

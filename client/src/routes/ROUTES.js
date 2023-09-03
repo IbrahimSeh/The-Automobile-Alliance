@@ -13,8 +13,8 @@ const ROUTES = {
     CREATECAR: "/createcar",
     CARSPECIFICATION: "/carspecification",
     CAREDIT: "/caredit",
-    PURCHASECAR: "/purchasecar",
-    SALECAR: "salecar",
+    SPECIFICSEARCH: "/specificsearch",
+    SALECAR: "/salecar",
 };
 
 export default ROUTES;

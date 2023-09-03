@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import ROUTES from "../../routes/ROUTES";
 
 const IsNotLoginPR = ({ element }) => {
-  //* html section
   const token = localStorage.getItem("token");
   if (!token) {
     return element;

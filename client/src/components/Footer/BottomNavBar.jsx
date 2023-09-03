@@ -6,7 +6,7 @@ import ROUTES from "../../routes/ROUTES";
 import FooterNavLink from "../Footer/FooterNavLink";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import PortraitRoundedIcon from "@mui/icons-material/PortraitRounded";
+import FaceIcon from "@mui/icons-material/Face";
 
 // access to all
 const pages = [
@@ -26,12 +26,12 @@ const anyUserConnected = [
   },
 ];
 
-//logged in as biz user
-const bizUserConnected = [
+// access to all
+const pages2 = [
   {
     label: "Sellers From Outside",
     url: ROUTES.SELLERSFROMOUTSIDE,
-    icon: <PortraitRoundedIcon />,
+    icon: <FaceIcon />,
   },
 ];
 
@@ -60,11 +60,9 @@ const BottomNavBar = () => {
                   <FooterNavLink key={page.url} {...page} />
                 ))
               : ""}
-            {payload && payload.isSubscription
-              ? bizUserConnected.map((page) => (
-                  <FooterNavLink key={page.url} {...page} />
-                ))
-              : ""}
+            {pages2.map((page) => (
+              <FooterNavLink key={page.url} {...page} />
+            ))}
           </Box>
         </Toolbar>
       </Container>

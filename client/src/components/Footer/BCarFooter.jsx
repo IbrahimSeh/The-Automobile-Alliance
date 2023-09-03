@@ -5,9 +5,6 @@ const styles = {
     color: "#9453a6",
   },
 };
-// textAlign: "center",
-// display: "flex",
-// justifyContent: "center",
 
 const BCarFooter = () => {
   return (

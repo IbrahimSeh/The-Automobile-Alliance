@@ -15,7 +15,7 @@ import DviderLine from "../components/Home/DviderLine";
 const HomePage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
-
+  const [arrLikeToUser, setArrLikeToUser] = useState([]);
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
@@ -30,6 +30,12 @@ const HomePage = () => {
     axios
       .get("/cars")
       .then(({ data }) => {
+        for (const [i, carItem] of data.entries()) {
+          arrLikeToUser[i] = {
+            carId: carItem._id,
+            Like: carItem.likes.includes(userID) ? true : false,
+          };
+        }
         filterFunc(data);
       })
       .catch((err) => {
@@ -37,6 +43,8 @@ const HomePage = () => {
         toast.error("Oops");
       });
   }, []);
+
+  //console.log("arrLikeToUser = ", arrLikeToUser);
 
   //second useEffect evry time we make change on search
   useEffect(() => {
@@ -103,7 +111,15 @@ const HomePage = () => {
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
-  const handelOnLike = (id) => {};
+  const handelOnLike = (id, likeFlag) => {
+    let tempArrLikeToUser = arrLikeToUser;
+    for (const carItem of tempArrLikeToUser) {
+      if (carItem.carId === id) {
+        carItem.Like = likeFlag;
+      }
+    }
+    setArrLikeToUser(tempArrLikeToUser);
+  };
   if (!carsArr) {
     return <CircularProgress />;
   }
@@ -122,7 +138,7 @@ const HomePage = () => {
       <InterfaceImage />
       <DviderLine text={"ALL THE CAR IN OUR ALLIANCE"} />
       <Grid container spacing={2}>
-        {carsArr.map((item) => (
+        {carsArr.map((item, i) => (
           <Grid item xs={4} key={item._id + Date.now()}>
             <CarComponent
               img={item.image ? item.image.url[0] : ""}
@@ -160,9 +176,7 @@ const HomePage = () => {
                 item.user_id === userID && payload && payload.isSubscription
               }
               onLike={handelOnLike}
-              disLike={
-                item.likes.includes(payload && payload._id) ? true : false
-              }
+              disLike={arrLikeToUser[i].Like}
             />
           </Grid>
         ))}

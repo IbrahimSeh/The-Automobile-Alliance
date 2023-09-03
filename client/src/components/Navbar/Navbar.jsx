@@ -14,19 +14,18 @@ import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import ROUTES from "../../../routes/ROUTES";
-import NavLinkComponent from "../NavLinkComponent";
-import { authActions } from "../../../redux/auth";
-import logoutAvatar from "../../../assets/images/logout.png";
+import ROUTES from "../../routes/ROUTES";
+import NavLinkComponent from "./NavLinkComponent";
+import { authActions } from "../../redux/auth";
+import logoutAvatar from "../../assets/images/logout.png";
 import Fade from "@mui/material/Fade";
 import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
-import HumborgerNavbar from "../HumborgerNavbar";
-import ToggleColorMode from "../ToggleColorMode";
-import SearchNavBar from "../SearchNavBar";
-import logo from "../../../assets/images/car-showroom.png";
-import DropDownNavLink from "../DropDownNavLink";
-
-import "../../../css/Navbar.css";
+import HumborgerNavbar from "./HumborgerNavbar";
+import ToggleColorMode from "./ToggleColorMode";
+import SearchNavBar from "./SearchNavBar";
+import logo from "../../assets/images/car-showroom.png";
+import DropDownNavLink from "./DropDownNavLink";
+import "../../css/Navbar.css";
 // access to all
 const pages = [
   {
@@ -84,7 +83,7 @@ const authedPagesHumborger = [
   },
 ];
 
-const userAsSubscription2Logo = [
+const userLoggedInLogo = [
   {
     label: (
       <Tooltip
@@ -99,9 +98,10 @@ const userAsSubscription2Logo = [
     url: ROUTES.FAVCARS,
   },
 ];
-const userAsSubscription2 = [
+
+const userLoggedIn = [
   {
-    label: "FAVORITE CAR",
+    label: "Favorite Cars",
     url: ROUTES.FAVCARS,
   },
 ];
@@ -178,8 +178,8 @@ const Navbar = () => {
     humgorgerItem = humgorgerItem.concat(notAuthPages);
   }
 
-  if (payload && payload.isSubscription) {
-    humgorgerItem = humgorgerItem.concat(userAsSubscription2);
+  if (isLoggedIn) {
+    humgorgerItem = humgorgerItem.concat(userLoggedIn);
   }
   if (payload && payload.isAdmin) {
     humgorgerItem = humgorgerItem.concat(userAsAdmin);
@@ -232,9 +232,8 @@ const Navbar = () => {
               : notAuthPages.map((page) => (
                   <NavLinkComponent key={page.url} {...page} />
                 ))}
-            {/* user as Subscription */}
-            {payload && payload.isSubscription
-              ? userAsSubscription2Logo.map((page) => (
+            {isLoggedIn
+              ? userLoggedInLogo.map((page) => (
                   <NavLinkComponent key={page.url} {...page} />
                 ))
               : ""}

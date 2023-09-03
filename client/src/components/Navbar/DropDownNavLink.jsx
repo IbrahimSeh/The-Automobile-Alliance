@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 const servicesPages = [
   {
     label: "specific search",
-    url: ROUTES.PURCHASECAR,
+    url: ROUTES.SPECIFICSEARCH,
   },
   {
     label: "Offered a car for sale",
@@ -76,11 +76,16 @@ const DropDownNavLink = ({ onCloseNavMenw }) => {
           onClose={handleClose}
           {...servicesPages[0]}
         />
-        <NavLinkComponent
-          key={servicesPages[1].url}
-          onClose={handleClose}
-          {...servicesPages[1]}
-        />
+        {payload && payload.isSubscription ? (
+          <NavLinkComponent
+            key={servicesPages[1].url}
+            onClose={handleClose}
+            {...servicesPages[1]}
+          />
+        ) : (
+          ""
+        )}
+
         {payload && payload.isAdmin ? (
           <NavLinkComponent
             key={servicesPages[2].url}
