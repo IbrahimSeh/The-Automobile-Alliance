@@ -95,20 +95,8 @@ const CreateCar = () => {
   const handleBtnCancelClick = () => navigate(-1);
   const handleBtnResetClick = () => window.location.reload();
   const updateState = (key, value) => (inputState[key] = value);
-  const onBlurHandel1 = (submitLock1) => {
-    setbtnDisable1(submitLock1);
-    // if (!btnDisable1 && !btnDisable2) {
-    //   setbtnDisable(false);
-    //   console.log("1-btnDisable = ", btnDisable);
-    // }
-  };
-  const onBlurHandel2 = (submitLock2) => {
-    setbtnDisable2(submitLock2);
-    // if (!btnDisable1 && !btnDisable2) {
-    //   setbtnDisable(false);
-    //   console.log("2-btnDisable = ", btnDisable);
-    // }
-  };
+  const onBlurHandel1 = (submitLock1) => setbtnDisable1(submitLock1);
+  const onBlurHandel2 = (submitLock2) => setbtnDisable2(submitLock2);
   const updateSelectedManufacturer = (value) => setManufacturerSelected(value);
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
   const updateSelectedType = (type) => setType(type);

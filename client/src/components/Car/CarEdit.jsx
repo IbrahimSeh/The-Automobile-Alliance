@@ -29,7 +29,8 @@ const CarEdit = () => {
   const [kilometers, setKilometers] = useState(0);
   const [fuelType, setFuelType] = useState("");
   const [type, setType] = useState("");
-  const [btnDisable, setbtnDisable] = useState(false);
+  const [btnDisable1, setbtnDisable1] = useState(false);
+  const [btnDisable2, setbtnDisable2] = useState(false);
   const [yearOfProductionSelected, setYearOfProduction] = useState(
     dayjs("2022-04-17")
   );
@@ -149,7 +150,8 @@ const CarEdit = () => {
   const handleBtnCancelClick = () => navigate(-1);
   const handleBtnResetClick = () => window.location.reload();
   const updateState = (key, value) => (inputState[key] = value);
-  const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
+  const onBlurHandel1 = (submitLock1) => setbtnDisable1(submitLock1);
+  const onBlurHandel2 = (submitLock2) => setbtnDisable2(submitLock2);
   const updateSelectedManufacturer = (value) => setManufacturerSelected(value);
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
   const updateSelectedType = (type) => setType(type);
@@ -239,6 +241,7 @@ const CarEdit = () => {
                   previousOwners: previousOwners,
                   kilometers: kilometers,
                 }}
+                onBlur={onBlurHandel2}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -256,6 +259,7 @@ const CarEdit = () => {
                   previousOwners: previousOwners,
                   kilometers: kilometers,
                 }}
+                onBlur={onBlurHandel2}
               />
             </Grid>
             {Object.entries(inputState).map(([key, value]) => (
@@ -264,7 +268,7 @@ const CarEdit = () => {
                   inputKey={key}
                   inputValue={value}
                   onChange={updateState}
-                  onBlur={onBlurHandel}
+                  onBlur={onBlurHandel1}
                   prevState={inputState}
                   schema={"car"}
                 />
@@ -282,7 +286,7 @@ const CarEdit = () => {
 
           <SubmitComponent
             onClick={handleBtnSubmitClick}
-            disablebtn={btnDisable}
+            disablebtn={!btnDisable1 && !btnDisable2}
           />
         </Box>
       </Box>

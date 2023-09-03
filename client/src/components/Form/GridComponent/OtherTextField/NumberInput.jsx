@@ -27,8 +27,8 @@ const NumberInput = ({
   const handelBlurChange = () => {
     joiResponse = validateCarSchemaGroup2(prevState);
     setInputsErrorsState(joiResponse);
-    console.log("num joiResponse = ", joiResponse);
     if (!joiResponse) onBlur(false);
+    else onBlur(true);
   };
 
   return (
