@@ -19,7 +19,7 @@ const SellersFromOutside = () => {
 
   useEffect(() => {
     axios
-      .get("/VAR/true")
+      .get("/VAR/From-Outside/true")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -88,13 +88,11 @@ const SellersFromOutside = () => {
     }
   };
 
-  const handleEditFromInitialCarsArr = (id) => {
-    navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
-  };
+  const handleEditFromInitialCarsArr = (id) => {};
 
   const handelOnLike = (id) => {};
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
+    navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
   };
   if (!carsArr || carsArr.length === 0) {
     return (
@@ -142,7 +140,6 @@ const SellersFromOutside = () => {
               userId={item.user_id}
               onDelete={handleDeleteFromInitialCarsArr}
               candelete={payload && payload.isAdmin}
-              // payload.isAdmin
               onEdit={handleEditFromInitialCarsArr}
               //Anyone can edit a car sales form from outside advertisers.
               //The site administrator can agree or reject the publication request

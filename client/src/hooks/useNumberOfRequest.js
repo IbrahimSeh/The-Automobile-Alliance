@@ -7,7 +7,7 @@ const useNumberOfRequest = () => {
     const dispatch = useDispatch();
     return async () => {
         axios
-            .get("/VAR/false")
+            .get("/VAR/From-Outside/false")
             .then(({ data }) => {
                 dispatch(requestActions.setNumOfReq(data.length));
                 return data.length;

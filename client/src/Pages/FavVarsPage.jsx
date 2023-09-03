@@ -99,12 +99,10 @@ const FavVarsPage = () => {
     setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
   };
 
-  const handleEditFromInitialCarsArr = (id) => {
-    navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
-  };
+  const handleEditFromInitialCarsArr = (id) => {};
 
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
+    navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
   };
   if (!carsArr) {
     return <CircularProgress />;

@@ -17,7 +17,7 @@ const RequestsPage = () => {
 
   useEffect(() => {
     axios
-      .get("/VAR/false")
+      .get("/VAR/From-Outside/false")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -97,7 +97,7 @@ const RequestsPage = () => {
     }
   };
   const handleOnClick = (id) => {
-    navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
+    navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
   };
   if (!carsArr || carsArr.length === 0) {
     return (
