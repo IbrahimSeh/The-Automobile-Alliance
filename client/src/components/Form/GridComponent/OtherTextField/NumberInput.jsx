@@ -1,13 +1,14 @@
 import { Alert, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
 import getLabel from "../helper/getLabel";
-import { validateOwnersAndKm } from "../../../Car/CreateCar/validateSelectedField";
+import validateCarSchemaGroup2 from "../../../../validation/CreateCarValidation/Group2";
 
 const NumberInput = ({
   passSelectedFromChildToParent,
   inputKey,
   inputValue,
   prevState,
+  onBlur,
 }) => {
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const [inputState, setInputState] = useState({
@@ -24,8 +25,10 @@ const NumberInput = ({
   };
 
   const handelBlurChange = () => {
-    joiResponse = validateOwnersAndKm(prevState);
+    console.log("in blur num");
+    joiResponse = validateCarSchemaGroup2(prevState);
     setInputsErrorsState(joiResponse);
+    if (!joiResponse) onBlur(false);
   };
 
   return (

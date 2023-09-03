@@ -1,8 +1,8 @@
 import Joi from "joi";
 
-import validation from "./validation";
+import validation from "../validation";
 
-const createCarSchema = Joi.object({
+const createCarSchemaGroup1 = Joi.object({
     // manufacturer: Joi.string().pattern(new RegExp("^[A-Z][a-z0-9-\\s]{0,}$", "i")).min(2).max(256).required(),
     // type: Joi.string().pattern(new RegExp("^[A-Z][a-z0-9-\\s]{0,}$", "i")).min(2).max(256).required(),
     subType: Joi.string().max(256).allow(null, ''),
@@ -26,8 +26,8 @@ const createCarSchema = Joi.object({
 
 });
 
-const CreateCarValidation = (userInput) => {
-    return validation(createCarSchema, userInput);
+const Group1 = (userInput) => {
+    return validation(createCarSchemaGroup1, userInput);
 }
 
-export default CreateCarValidation;
+export default Group1;

@@ -5,21 +5,21 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-import carManufacturerSelection from "../../Form/GridComponent/helper/carManufacturerSelection";
-import fuelTypeSelection from "../../Form/GridComponent/helper/fuelTypeSelection";
-import typeSelection from "../../Form/GridComponent/helper/typeSelection";
-import ROUTES from "../../../routes/ROUTES";
-import SubmitComponent from "../../Form/FormButtons/SubmitComponent";
-import CRComponent from "../../Form/FormButtons/CRComponent";
-import GridItemComponent from "../../Form/GridComponent/GridItemComponent";
-import TextFieldSelect from "../../Form/GridComponent/OtherTextField/TextFieldSelect";
-import DatePickerOpenTo from "../../Form/GridComponent/OtherTextField/DatePicker";
-import NumberInput from "../../Form/GridComponent/OtherTextField/NumberInput";
-import TexFieldSelectForType from "../../Form/GridComponent/OtherTextField/TexFieldSelectForType";
-import TextFieldSelectForFuel from "../../Form/GridComponent/OtherTextField/TextFieldSelectForFuel";
-import UploadImage from "../../Form/GridComponent/UploadImage/UploadImage";
-import { validateSelectedField } from "./validateSelectedField";
-import AlertDialogSlide from "../../Dialog(Popup)/AlertDialogSlide";
+import carManufacturerSelection from "../Form/GridComponent/helper/carManufacturerSelection";
+import fuelTypeSelection from "../Form/GridComponent/helper/fuelTypeSelection";
+import typeSelection from "../Form/GridComponent/helper/typeSelection";
+import SubmitComponent from "../Form/FormButtons/SubmitComponent";
+import CRComponent from "../Form/FormButtons/CRComponent";
+import GridItemComponent from "../Form/GridComponent/GridItemComponent";
+import TextFieldSelect from "../Form/GridComponent/OtherTextField/TextFieldSelect";
+import DatePickerOpenTo from "../Form/GridComponent/OtherTextField/DatePicker";
+import NumberInput from "../Form/GridComponent/OtherTextField/NumberInput";
+import TexFieldSelectForType from "../Form/GridComponent/OtherTextField/TexFieldSelectForType";
+import TextFieldSelectForFuel from "../Form/GridComponent/OtherTextField/TextFieldSelectForFuel";
+import UploadImage from "../Form/GridComponent/UploadImage/UploadImage";
+import validateCarSchemaGroup3 from "../../validation/CreateCarValidation/Group1";
+import AlertDialogSlide from "../Dialog(Popup)/AlertDialogSlide";
+import ROUTES from "../../routes/ROUTES";
 
 const CreateCar = () => {
   const [inputState] = useState({
@@ -34,11 +34,13 @@ const CreateCar = () => {
   });
 
   const [manufacturerSelected, setManufacturerSelected] = useState("ALL");
-  const [previousOwners, setPreviousOwners] = useState(0);
-  const [kilometers, setKilometers] = useState(0);
+  const [previousOwners, setPreviousOwners] = useState("");
+  const [kilometers, setKilometers] = useState("");
   const [fuelType, setFuelType] = useState("");
   const [type, setType] = useState("");
   const [btnDisable, setbtnDisable] = useState(true);
+  const [btnDisable1, setbtnDisable1] = useState(true);
+  const [btnDisable2, setbtnDisable2] = useState(true);
   const [yearOfProductionSelected, setYearOfProduction] = useState(
     dayjs("2022-04-17")
   );
@@ -50,10 +52,10 @@ const CreateCar = () => {
   const handleBtnSubmitClick = async (ev) => {
     //validate manufacturer, type & fuelType
     if (
-      validateSelectedField(manufacturerSelected, type, fuelType).length !== 0
+      validateCarSchemaGroup3(manufacturerSelected, type, fuelType).length !== 0
     ) {
       setDialogErrMsg(
-        validateSelectedField(manufacturerSelected, type, fuelType)
+        validateCarSchemaGroup3(manufacturerSelected, type, fuelType)
       );
       setOpenDialog(true);
       return;
@@ -84,7 +86,7 @@ const CreateCar = () => {
       });
 
       toast.success("A new car has been created");
-      navigate(-1);
+      navigate(ROUTES.HOME);
     } catch (err) {
       console.log("error from axios", err.response.data);
       toast.error("the car has been not created");
@@ -94,7 +96,14 @@ const CreateCar = () => {
   const handleBtnCancelClick = () => navigate(-1);
   const handleBtnResetClick = () => window.location.reload();
   const updateState = (key, value) => (inputState[key] = value);
-  const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
+  const onBlurHandel1 = (submitLock1) => {
+    setbtnDisable1(submitLock1);
+    if (!btnDisable1 && !btnDisable2) setbtnDisable(false);
+  };
+  const onBlurHandel2 = (submitLock2) => {
+    setbtnDisable2(submitLock2);
+    if (!btnDisable1 && !btnDisable2) setbtnDisable(false);
+  };
   const updateSelectedManufacturer = (value) => setManufacturerSelected(value);
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
   const updateSelectedType = (type) => setType(type);
@@ -181,6 +190,7 @@ const CreateCar = () => {
                   previousOwners: previousOwners,
                   kilometers: kilometers,
                 }}
+                onBlur={onBlurHandel2}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -196,6 +206,7 @@ const CreateCar = () => {
                   previousOwners: previousOwners,
                   kilometers: kilometers,
                 }}
+                onBlur={onBlurHandel2}
               />
             </Grid>
             {Object.entries(inputState).map(([key, value]) => (
@@ -204,7 +215,7 @@ const CreateCar = () => {
                   inputKey={key}
                   inputValue={value}
                   onChange={updateState}
-                  onBlur={onBlurHandel}
+                  onBlur={onBlurHandel1}
                   prevState={inputState}
                   schema={"car"}
                 />

@@ -19,7 +19,7 @@ import TextFieldSelectForFuel from "../Form/GridComponent/OtherTextField/TextFie
 import useQueryParams from "../../hooks/useQueryParams";
 import UploadImage from "../Form/GridComponent/UploadImage/UploadImage";
 import AlertDialogSlide from "../Dialog(Popup)/AlertDialogSlide";
-import { validateSelectedField } from "./CreateCar/validateSelectedField";
+import validateCarSchemaGroup3 from "../../validation/CreateCarValidation/Group1";
 
 const CarEdit = () => {
   let qparams = useQueryParams();
@@ -106,10 +106,10 @@ const CarEdit = () => {
   const handleBtnSubmitClick = async (ev) => {
     //validate manufacturer, type & fuelType
     if (
-      validateSelectedField(manufacturerSelected, type, fuelType).length !== 0
+      validateCarSchemaGroup3(manufacturerSelected, type, fuelType).length !== 0
     ) {
       setDialogErrMsg(
-        validateSelectedField(manufacturerSelected, type, fuelType)
+        validateCarSchemaGroup3(manufacturerSelected, type, fuelType)
       );
       setOpenDialog(true);
       return;

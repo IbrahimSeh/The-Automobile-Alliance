@@ -1,11 +1,11 @@
 import { Alert, TextField } from "@mui/material";
 import PropTypes from "prop-types";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import {
   validateRegisterPasswordSchema,
   validateRegisterSchema,
 } from "../../../validation/signupValidation";
-import validateCarSchema from "../../../validation/CreateCarValidation";
+import validateCarSchemaGroup1 from "../../../validation/CreateCarValidation/Group1";
 import getLabel from "./helper/getLabel";
 import getType from "./helper/getType";
 import checkIfRequired from "./helper/checkIfRequired";
@@ -57,7 +57,7 @@ const GridItemComponent = ({
 
   const handelBlurChange = () => {
     if (schema === "car") {
-      joiResponse = validateCarSchema(prevState);
+      joiResponse = validateCarSchemaGroup1(prevState);
     } else {
       if (schema === "user") {
         joiResponse = validateRegisterSchema(prevState);
@@ -68,6 +68,7 @@ const GridItemComponent = ({
         }
       }
     }
+    console.log("joiResponse = ", joiResponse);
     setInputsErrorsState(joiResponse);
     if (!joiResponse) {
       if (schema === "user") {

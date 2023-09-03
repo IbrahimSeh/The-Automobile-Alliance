@@ -9,7 +9,7 @@ import UserProfilePage from "../Pages/UserProfilePage";
 import FavCarsPage from "../Pages/FavCarsPage";
 import SellersFromOutside from "../Pages/SellersFromOutside";
 import RequestsPage from "../Pages/RequestsPage";
-import CreateCar from "../components/Car/CreateCar/CreateCar";
+import CreateCar from "../components/Car/CreateCar";
 import PageNotFound from "../Pages/PageNotFound";
 import IsLoginPR from "../components/ProtectedRoute/IsLoginPR";
 import IsBizPR from "../components/ProtectedRoute/IsSubscriptionPR";
