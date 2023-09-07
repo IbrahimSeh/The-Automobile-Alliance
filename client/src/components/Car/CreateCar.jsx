@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-import carManufacturerSelection from "../Form/GridComponent/helper/carManufacturerSelection";
+import { carManufacturer } from "../Form/GridComponent/helper/carManufacturerSelection";
 import fuelTypeSelection from "../Form/GridComponent/helper/fuelTypeSelection";
 import typeSelection from "../Form/GridComponent/helper/typeSelection";
 import SubmitComponent from "../Form/FormButtons/SubmitComponent";
@@ -151,7 +151,7 @@ const CreateCar = () => {
             <Grid item xs={12} sm={6}>
               <TextFieldSelect
                 passSelectedFromChildToParent={updateSelectedManufacturer}
-                listOfSelection={carManufacturerSelection}
+                listOfSelection={carManufacturer}
                 inputKey={"manufacturer"}
                 returnTypeRelatedToSelectedManufacturer={updateSelectedType}
                 selectedManufacturerRelatedToType={manufacturerSelected}

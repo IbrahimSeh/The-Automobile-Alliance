@@ -1,5 +1,5 @@
 import { Box, Grid, MenuItem, TextField, Typography } from "@mui/material";
-import carManufacturer from "../Form/GridComponent/helper/carManufacturerSelection";
+import { carManufacturer } from "../Form/GridComponent/helper/carManufacturerSelection";
 import typeSelection from "../Form/GridComponent/helper/typeSelection";
 import { useState } from "react";
 const ManufacturerData = ({ passData }) => {

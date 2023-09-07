@@ -27,7 +27,8 @@ const typeSelection =
         { label: "x4", },
         { label: "x5", },
         { label: "x6", },
-        { label: "x7", }, { label: "xm", },
+        { label: "x7", },
+        { label: "xm", },
     ],
     MERCEDES: [
         { label: "A-Class", },
