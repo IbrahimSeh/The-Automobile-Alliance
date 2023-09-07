@@ -30,7 +30,9 @@ const Router = () => {
       <Route path={ROUTES.SPECIFICSEARCH} element={<SpecificSearch />} />
       <Route
         path={ROUTES.SALECAR}
-        element={<IsSubscriptionPR element={<SaleCar />} />}
+        element={
+          <IsLoginPR element={<IsSubscriptionPR element={<SaleCar />} />} />
+        }
       />
       <Route
         path={ROUTES.LOGIN}
@@ -59,7 +61,7 @@ const Router = () => {
       />
       <Route
         path={ROUTES.CREATECAR}
-        element={<IsAdminPR element={<CreateCar />} />}
+        element={<IsLoginPR element={<IsAdminPR element={<CreateCar />} />} />}
       />
       <Route
         path={ROUTES.REQUESTS}
@@ -68,7 +70,10 @@ const Router = () => {
         }
       />
       <Route path={ROUTES.CARSPECIFICATION} element={<CarSpecification />} />
-      <Route path={ROUTES.CAREDIT} element={<CarEdit />} />
+      <Route
+        path={ROUTES.CAREDIT}
+        element={<IsLoginPR element={<IsAdminPR element={<CarEdit />} />} />}
+      />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

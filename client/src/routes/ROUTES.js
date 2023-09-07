@@ -6,7 +6,7 @@ const ROUTES = {
     LOGIN: "/login",
     ADMINLOGIN: "/adminlogin",
     PROFILE: "/profile",
-    LOGOUT: "logout",
+    LOGOUT: "/logout",
     FAVCARS: "/favcars",
     SELLERSFROMOUTSIDE: "/sellersfromoutside",
     REQUESTS: "/Requests",

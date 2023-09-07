@@ -9,7 +9,7 @@ const IsSubscriptionPR = ({ element }) => {
   if (decodeToken.isSubscription) {
     return element;
   } else {
-    toast.warning("you must login as bussiness user first");
+    toast.warning("you must login as Subscription user first");
     return <Navigate to={ROUTES.HOME} />;
   }
 };
