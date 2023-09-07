@@ -22,7 +22,6 @@ import PasswordFormDialog from "../components/Dialog(Popup)/PasswordFormDialog";
 
 const UserProfilePage = () => {
   const [inputstate] = useState({});
-  //const [password, setPassword] = useState("");
   const userId = jwt_decode(localStorage.getItem("token"))._id;
   const [openDialog, setOpenDialog] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -48,7 +47,6 @@ const UserProfilePage = () => {
         inputstate.email1 = inputstate.email;
         delete inputstate.phone;
         delete inputstate.email;
-        //setPassword(inputstate.password);
         delete inputstate.password;
         inputstate.phone = inputstate.phone1;
         inputstate.email = inputstate.email1;
@@ -86,7 +84,6 @@ const UserProfilePage = () => {
         },
         phone: inputstate.phone,
         email: inputstate.email,
-        //password: password,
         image: {
           url: inputstate.url,
           alt: inputstate.alt,
@@ -115,24 +112,13 @@ const UserProfilePage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setValue(1);
-  //   }, 100);
-  //   return () => clearTimeout(timer);
-  // }, [inputstate, setValue]);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setValue(2);
-  //   }, 1000);
-  //   return () => clearTimeout(timer);
-  // }, [inputstate, setValue]);
-
   const handleBtnCancelClick = () => navigate(ROUTES.HOME);
   const handleBtnResetClick = () => window.location.reload();
   const updateState = (key, value) => (inputstate[key] = value);
-  const onBlurHandel = (submitLock) => setbtnDisable(submitLock);
+  const onBlurHandel = (submitLock) => {
+    console.log("submitLock = ", submitLock);
+    setbtnDisable(submitLock);
+  };
   const handelOpenDialog = () => setOpenDialog(true);
   const handelClose = () => setOpenDialog(false);
   const updatecheckBoxState = (value) => {

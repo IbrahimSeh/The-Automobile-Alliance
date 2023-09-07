@@ -31,7 +31,7 @@ const SignUpPage = () => {
     city: "",
     street: "",
     houseNumber: "",
-    zipCode: 0,
+    zip: 0,
   });
 
   const [btnDisable, setbtnDisable] = useState(true);
@@ -59,7 +59,7 @@ const SignUpPage = () => {
           city: inputstate.city,
           street: inputstate.street,
           houseNumber: inputstate.houseNumber,
-          zip: +inputstate.zipCode,
+          zip: +inputstate.zip,
         },
         isSubscription: checkBoxState,
       });
@@ -107,7 +107,7 @@ const SignUpPage = () => {
                   onChange={updateState}
                   onBlur={onBlurHandel}
                   prevState={inputstate}
-                  schema={"user"}
+                  schema={"new-user"}
                 />
               </Grid>
             ))}

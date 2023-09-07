@@ -1,11 +1,9 @@
 import { Alert, TextField } from "@mui/material";
 import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
-import {
-  validateRegisterPasswordSchema,
-  validateRegisterSchema,
-} from "../../../validation/signupValidation";
+import { validateUserSchema } from "../../../validation/userValidation";
 import validateCarSchemaGroup1 from "../../../validation/CreateCarValidation/Group1";
+import validateNewUserSchema from "../../../validation/newUserValidation";
 import getLabel from "./helper/getLabel";
 import getType from "./helper/getType";
 import checkIfRequired from "./helper/checkIfRequired";
@@ -32,7 +30,7 @@ const GridItemComponent = ({
     city: "",
     street: "",
     houseNumber: "",
-    zipCode: 0,
+    zip: 0,
     title: "",
     subTitle: "",
     description: "",
@@ -56,31 +54,22 @@ const GridItemComponent = ({
   };
 
   const handelBlurChange = () => {
-    if (schema === "car") {
-      joiResponse = validateCarSchemaGroup1(prevState);
-    } else {
-      if (schema === "user") {
-        joiResponse = validateRegisterSchema(prevState);
-        if (joiResponse.hasOwnProperty("password")) {
-          joiResponse = validateRegisterPasswordSchema({
-            password: prevState.password,
-          });
-        }
-      }
+    switch (schema) {
+      case "car":
+        joiResponse = validateCarSchemaGroup1(prevState);
+        break;
+      case "user":
+        joiResponse = validateUserSchema(prevState);
+        break;
+      case "new-user":
+        joiResponse = validateNewUserSchema(prevState);
+        break;
+      default:
+        break;
     }
-    console.log("joiResponse = ", joiResponse);
     setInputsErrorsState(joiResponse);
-    if (!joiResponse) {
-      if (schema === "user") {
-        onBlur(false);
-      } else {
-        onBlur(false);
-      }
-    } else {
-      if (schema === "user" || schema === "car") {
-        onBlur(true);
-      }
-    }
+    if (!joiResponse) onBlur(false);
+    else onBlur(true);
   };
 
   return (

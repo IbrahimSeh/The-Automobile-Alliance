@@ -7,7 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Alert, Divider, List, ListItem, ListItemText } from "@mui/material";
-import { validateRegisterPasswordSchema } from "../../validation/signupValidation";
+import { validateRegisterPasswordSchema } from "../../validation/userValidation";
 import { toast } from "react-toastify";
 
 const information = [

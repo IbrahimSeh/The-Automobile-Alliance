@@ -4,7 +4,7 @@ const checkIfRequired = (inputKey) => {
             return false;
         case "state":
             return false;
-        case "zipCode":
+        case "zip":
             return false;
         case "web":
             return false;
