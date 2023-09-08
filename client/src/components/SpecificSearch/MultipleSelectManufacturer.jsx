@@ -6,7 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
-import { carManufacturerStringArr } from "../Form/GridComponent/helper/carManufacturerSelection";
+import carManufacturerStringArr from "./helpers/manufacturerSelectionStringArr";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,36 +19,40 @@ const MenuProps = {
   },
 };
 
-const MultipleSelectManufacturer = () => {
-  const [personName, setPersonName] = React.useState([]);
+const MultipleSelectManufacturer = ({ passSelectedFromChildToParent }) => {
+  const [manufacturerArr, setManufacturerArr] = React.useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
+    setManufacturerArr(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    passSelectedFromChildToParent(event.target.value);
   };
-  console.log("personName = ", personName);
+
   return (
     <div>
       <FormControl sx={{ minWidth: 246, maxWidth: 300 }}>
-        <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+        <InputLabel id="demo-multiple-checkbox-label">
+          Car manufacturer
+        </InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
-          value={personName}
+          //value={manufacturerArr.length === 0 ? inputValue : manufacturerArr}
+          value={manufacturerArr}
           onChange={handleChange}
-          input={<OutlinedInput label="Tag" />}
+          input={<OutlinedInput label="Car manufacturer" />}
           renderValue={(selected) => selected.join(", ")}
           MenuProps={MenuProps}
         >
           {carManufacturerStringArr.map((name) => (
             <MenuItem key={name} value={name}>
-              <Checkbox checked={personName.indexOf(name) > -1} />
+              <Checkbox checked={manufacturerArr.indexOf(name) > -1} />
               <ListItemText primary={name} />
             </MenuItem>
           ))}

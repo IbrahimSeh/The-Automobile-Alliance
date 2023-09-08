@@ -189,6 +189,7 @@ const CreateCar = () => {
             <Grid item xs={12} sm={6}>
               <DatePickerOpenTo
                 passSelectedFromChildToParent={updateSelectedYear}
+                label={"Year Of Production *"}
               />
             </Grid>
             <Grid item xs={12} sm={6}>

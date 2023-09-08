@@ -1,6 +1,6 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
-import typeSelection from "../helper/typeSelection";
+import getManufacturerRelatedToSelectedType from "../helper/getManufacturerRelatedToSelectedType";
 
 const TexFieldSelectForType = ({
   passSelectedFromChildToParent,
@@ -18,15 +18,6 @@ const TexFieldSelectForType = ({
     );
     setSelectedValue(event.target.value);
     passSelectedFromChildToParent(event.target.value);
-  };
-
-  const getManufacturerRelatedToSelectedType = (type) => {
-    for (const [key, value] of Object.entries(typeSelection)) {
-      for (const element of value) {
-        if (element.label === type) return key;
-      }
-    }
-    return "";
   };
 
   const getValue = () => {

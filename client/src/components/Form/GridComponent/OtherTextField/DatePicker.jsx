@@ -6,9 +6,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Box } from "@mui/material";
 
-const DatePickerOpenTo = ({ passSelectedFromChildToParent, inputValue }) => {
+const DatePickerOpenTo = ({
+  passSelectedFromChildToParent,
+  inputValue,
+  label,
+  year = "2022",
+}) => {
   const [YearOfProduction, setYearOfProduction] = React.useState(
-    dayjs("2022-04-17")
+    dayjs(`${year}-04-17`)
   );
   const handleChange = (event) => {
     setYearOfProduction(event);
@@ -20,10 +25,9 @@ const DatePickerOpenTo = ({ passSelectedFromChildToParent, inputValue }) => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={["DatePicker"]}>
           <DatePicker
-            label={'"year of production *"'}
+            label={label}
             openTo="year"
             views={["year"]}
-            //value={YearOfProduction}
             value={
               inputValue !== undefined ? dayjs(inputValue) : YearOfProduction
             }

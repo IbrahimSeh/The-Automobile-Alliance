@@ -7,6 +7,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import getTypeSelectionStringArr from "./helpers/getTypeSelectionStringArr";
+import checkIfManufacturerExist from "./helpers/checkIfManufacturerExist";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,20 +21,6 @@ const MenuProps = {
   },
 };
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
-//typeSelectionStringArr;
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
@@ -42,31 +30,40 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const MultipleSelectType = () => {
+const MultipleSelectType = ({
+  passSelectedFromChildToParent,
+  manufacturerArr,
+}) => {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [typeArr, setTypeArr] = React.useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
+    setTypeArr(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    passSelectedFromChildToParent(event.target.value);
   };
 
+  const getValue = () => {
+    if (typeArr.length !== 0)
+      return checkIfManufacturerExist(manufacturerArr, typeArr);
+    else return typeArr;
+  };
   return (
     <div>
       <FormControl sx={{ minWidth: 246, maxWidth: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+        <InputLabel id="demo-multiple-Type-label">Type</InputLabel>
         <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
+          labelId="demo-multiple-Type-label"
+          id="demo-multiple-Type"
           multiple
-          value={personName}
+          value={getValue()}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          input={<OutlinedInput id="select-multiple-Type" label="Type" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
@@ -76,11 +73,11 @@ const MultipleSelectType = () => {
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {getTypeSelectionStringArr(manufacturerArr).map((name) => (
             <MenuItem
               key={name}
               value={name}
-              style={getStyles(name, personName, theme)}
+              style={getStyles(name, typeArr, theme)}
             >
               {name}
             </MenuItem>

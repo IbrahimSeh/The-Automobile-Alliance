@@ -248,6 +248,7 @@ const CarEdit = () => {
               <DatePickerOpenTo
                 passSelectedFromChildToParent={updateSelectedYear}
                 inputValue={yearOfProductionSelected}
+                label={"Year Of Production *"}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
