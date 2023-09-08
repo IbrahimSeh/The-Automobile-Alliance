@@ -15,6 +15,7 @@ const DatePickerOpenTo = ({
   const [YearOfProduction, setYearOfProduction] = React.useState(
     dayjs(`${year}-04-17`)
   );
+
   const handleChange = (event) => {
     setYearOfProduction(event);
     passSelectedFromChildToParent(event);

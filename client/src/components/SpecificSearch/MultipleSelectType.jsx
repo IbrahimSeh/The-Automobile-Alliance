@@ -56,7 +56,7 @@ const MultipleSelectType = ({
   return (
     <div>
       <FormControl sx={{ minWidth: 246, maxWidth: 300 }}>
-        <InputLabel id="demo-multiple-Type-label">Type</InputLabel>
+        <InputLabel id="demo-multiple-Type-label">Car Type</InputLabel>
         <Select
           labelId="demo-multiple-Type-label"
           id="demo-multiple-Type"

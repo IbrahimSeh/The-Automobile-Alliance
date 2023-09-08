@@ -32,12 +32,18 @@ const MultipleSelectManufacturer = ({ passSelectedFromChildToParent }) => {
     );
     passSelectedFromChildToParent(event.target.value);
   };
-
+  //820-600
   return (
     <div>
-      <FormControl sx={{ minWidth: 246, maxWidth: 300 }}>
+      <FormControl
+        sx={{
+          minWidth:
+            window.innerWidth < 820 && window.innerWidth > 600 ? 175 : 246,
+          maxWidth: 246,
+        }}
+      >
         <InputLabel id="demo-multiple-checkbox-label">
-          Car manufacturer
+          Car Manufacturer
         </InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
