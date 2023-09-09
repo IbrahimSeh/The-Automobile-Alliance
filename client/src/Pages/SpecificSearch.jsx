@@ -55,7 +55,6 @@ const SpecificSearch = () => {
   const updateToKm = (value) => setToKm(value);
   const updateFromPrvOwn = (value) => setFromPrvOwn(value);
   const updateToPrvOwn = (value) => setToPrvOwn(value);
-  //console.log("fromYear = ", fromYear.$y);
 
   const handelClickSendSearch = async () => {
     axios
@@ -243,7 +242,7 @@ const SpecificSearch = () => {
               variant="outlined"
               onClick={handelClickSendSearch}
             >
-              Save
+              Send
             </LoadingButton>
           </Box>
         </Box>
