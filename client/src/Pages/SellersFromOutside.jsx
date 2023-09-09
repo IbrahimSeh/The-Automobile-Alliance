@@ -89,7 +89,6 @@ const SellersFromOutside = () => {
   };
 
   const handleEditFromInitialCarsArr = (id) => {};
-
   const handelOnLike = (id) => {};
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);

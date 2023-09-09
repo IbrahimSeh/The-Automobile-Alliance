@@ -1,4 +1,11 @@
-import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Container,
+  Grid,
+  LinearProgress,
+  Typography,
+} from "@mui/material";
 import MultipleSelectManufacturer from "../components/SpecificSearch/MultipleSelectManufacturer";
 import MultipleSelectType from "../components/SpecificSearch/MultipleSelectType";
 import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
@@ -14,8 +21,15 @@ import useQueryParams from "../hooks/useQueryParams";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ROUTES from "../routes/ROUTES";
+import { useSelector } from "react-redux";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SendIcon from "@mui/icons-material/Send";
 
 const SpecificSearch = () => {
+  const navigate = useNavigate();
+  let qparams = useQueryParams();
+  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+
   const [manufacturerArr, setManufacturerArr] = useState([]);
   const [typeArr, setTypeArr] = useState([]);
   const [fromYear, setFromYear] = useState(dayjs("1900-04-17"));
@@ -26,22 +40,7 @@ const SpecificSearch = () => {
   const [toPrvOwn, setToPrvOwn] = useState(0);
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
-  let x = toKm + toPrvOwn + fromPrvOwn + typeArr + fromYear + toYear + FromKm;
-  //const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-  const navigate = useNavigate();
-  let qparams = useQueryParams();
-
-  useEffect(() => {
-    axios
-      .get("/VAR/From-Outside/true")
-      .then(({ data }) => {
-        filterFunc(data);
-      })
-      .catch((err) => {
-        console.log("err from axios", err);
-        toast.error("Oops");
-      });
-  }, []);
+  const [save, setSave] = useState(false);
 
   //second useEffect evry time we make change on search
   useEffect(() => {
@@ -57,6 +56,38 @@ const SpecificSearch = () => {
   const updateFromPrvOwn = (value) => setFromPrvOwn(value);
   const updateToPrvOwn = (value) => setToPrvOwn(value);
   //console.log("fromYear = ", fromYear.$y);
+
+  const handelClickSendSearch = async () => {
+    axios
+      .get("/cars/search/", {
+        params: {
+          manufacturerArr: manufacturerArr,
+          typeArr: typeArr,
+          fromYear: fromYear.$y,
+          toYear: toYear.$y,
+          FromKm: FromKm,
+          toKm: toKm,
+          fromPrvOwn: fromPrvOwn,
+          toPrvOwn: toPrvOwn,
+        },
+      })
+      .then(({ data }) => {
+        console.log("data = ", data);
+        filterFunc(data);
+        setTimeout(() => {
+          //toast.success("you'r search request has been sent");
+          //navigate(ROUTES.HOME);
+        }, "3000");
+        setSave(true);
+        setTimeout(() => {
+          setSave(false);
+        }, "3000");
+      })
+      .catch((err) => {
+        console.log("err from axios", err);
+        toast.error("Oops");
+      });
+  };
 
   const filterFunc = (data) => {
     if (!originalCarsArr && !data) {
@@ -102,9 +133,20 @@ const SpecificSearch = () => {
       );
     }
   };
+  const handleDeleteFromInitialCarsArr = async (id) => {
+    try {
+      await axios.delete("/VAR/" + id);
+      setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
+    } catch (err) {
+      toast.error("error when deleting car to publish", err.response.data);
+    }
+  };
+  const handelOnLike = (id) => {};
+  const handleEditFromInitialCarsArr = (id) => {};
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
   };
+
   return (
     <Container component="main" maxWidth="md">
       <Box
@@ -186,56 +228,80 @@ const SpecificSearch = () => {
               />
             </Grid>
           </Grid>
+          <Box
+            sx={{
+              margin: "auto",
+              mt: 3,
+              width: "fit-content",
+              alignItems: "center",
+            }}
+          >
+            <LoadingButton
+              loading={save}
+              loadingPosition="start"
+              startIcon={<SendIcon />}
+              variant="outlined"
+              onClick={handelClickSendSearch}
+            >
+              Save
+            </LoadingButton>
+          </Box>
         </Box>
       </Box>
       <Box className="myCarBox" mt={3}>
         <DviderLine text={"the result of specific search"} />
-        <Grid container spacing={2}>
-          {carsArr.map((item) => (
-            <Grid item xs={4} key={item._id + Date.now()}>
-              <CarComponent
-                img={item.image ? item.image.url[0] : ""}
-                manufacturer={
-                  item.manufacturerData
-                    ? item.manufacturerData.manufacturer
-                    : ""
-                }
-                type={item.manufacturerData ? item.manufacturerData.type : ""}
-                subType={
-                  item.manufacturerData ? item.manufacturerData.subType : ""
-                }
-                yearOfProduction={
-                  item.yearOfProduction ? item.yearOfProduction : ""
-                }
-                phone={item.phone}
-                address={
-                  item.address
-                    ? item.address.country +
-                      ", " +
-                      item.address.city +
-                      ", " +
-                      item.address.street
-                    : ""
-                }
-                id={item._id}
-                clickOnCar={handleOnClick}
-                bizNumber={item.bizNumber}
-                userId={item.user_id}
-                //onDelete={handleDeleteFromInitialCarsArr}
-                //candelete={payload && payload.isAdmin}
-                //onEdit={handleEditFromInitialCarsArr}
-                //Anyone can edit a car sales form from outside advertisers.
-                //The site administrator can agree or reject the publication request
-                canEdit={false}
-                //onLike={handelOnLike}
-                //disLike={
-                // item.likes.includes(payload && payload._id) ? true : false
-                // }
-                collection={"VAR"}
-              />
-            </Grid>
-          ))}
-        </Grid>
+        {!carsArr || carsArr.length === 0 ? (
+          <Box sx={{ width: "100%" }}>
+            <LinearProgress />
+          </Box>
+        ) : (
+          <Grid container spacing={2}>
+            {carsArr.map((item) => (
+              <Grid item xs={4} key={item._id + Date.now()}>
+                <CarComponent
+                  img={item.image ? item.image.url[0] : ""}
+                  manufacturer={
+                    item.manufacturerData
+                      ? item.manufacturerData.manufacturer
+                      : ""
+                  }
+                  type={item.manufacturerData ? item.manufacturerData.type : ""}
+                  subType={
+                    item.manufacturerData ? item.manufacturerData.subType : ""
+                  }
+                  yearOfProduction={
+                    item.yearOfProduction ? item.yearOfProduction : ""
+                  }
+                  phone={item.phone}
+                  address={
+                    item.address
+                      ? item.address.country +
+                        ", " +
+                        item.address.city +
+                        ", " +
+                        item.address.street
+                      : ""
+                  }
+                  id={item._id}
+                  clickOnCar={handleOnClick}
+                  bizNumber={item.bizNumber}
+                  userId={item.user_id}
+                  onDelete={handleDeleteFromInitialCarsArr}
+                  candelete={payload && payload.isAdmin}
+                  onEdit={handleEditFromInitialCarsArr}
+                  //Anyone can edit a car sales form from outside advertisers.
+                  //The site administrator can agree or reject the publication request
+                  canEdit={false}
+                  onLike={handelOnLike}
+                  disLike={
+                    item.likes.includes(payload && payload._id) ? true : false
+                  }
+                  collection={"VAR"}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
     </Container>
   );

@@ -17,7 +17,7 @@ import NumberInput from "../Form/GridComponent/OtherTextField/NumberInput";
 import TexFieldSelectForType from "../Form/GridComponent/OtherTextField/TexFieldSelectForType";
 import TextFieldSelectForFuel from "../Form/GridComponent/OtherTextField/TextFieldSelectForFuel";
 import UploadImage from "../Form/GridComponent/UploadImage/UploadImage";
-import validateCarSchemaGroup3 from "../../validation/CreateCarValidation/Group1";
+import validateCarSchemaGroup3 from "../../validation/CreateCarValidation/Group3";
 import AlertDialogSlide from "../Dialog(Popup)/AlertDialogSlide";
 import ROUTES from "../../routes/ROUTES";
 
@@ -53,6 +53,10 @@ const CreateCar = () => {
     if (
       validateCarSchemaGroup3(manufacturerSelected, type, fuelType).length !== 0
     ) {
+      console.log(
+        "g3err = ",
+        validateCarSchemaGroup3(manufacturerSelected, type, fuelType)
+      );
       setDialogErrMsg(
         validateCarSchemaGroup3(manufacturerSelected, type, fuelType)
       );
@@ -225,6 +229,7 @@ const CreateCar = () => {
           <SubmitComponent
             onClick={handleBtnSubmitClick}
             disablebtn={!btnDisable1 && !btnDisable2}
+            from={"createcar"}
           />
         </Box>
       </Box>
