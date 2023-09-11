@@ -26,7 +26,7 @@ const userSchema = Joi.object({
 const registerPasswordSchema = Joi.object({
     password: Joi.string()
         .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$", "i"))
-        .min(6).max(1024)
+        .min(8).max(1024)
         .required(),
 });
 

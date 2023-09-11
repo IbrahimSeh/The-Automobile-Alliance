@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 
 //redux
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // toast
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // css
@@ -26,6 +26,7 @@ import Router from "./routes/Router";
 import NavBar from "./components/Navbar/Navbar";
 import BCarFooter from "./components/Footer/BCarFooter";
 import useNumberOfRequest from "./hooks/useNumberOfRequest";
+import { authActions } from "./redux/auth";
 
 const light = {
   palette: {
@@ -39,6 +40,7 @@ const dark = {
   },
 };
 function App() {
+  const [mousePos, setMousePos] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const loggedIn = useLoggedIn();
   const numberOfRequest = useNumberOfRequest();
@@ -46,6 +48,7 @@ function App() {
   const isDarkTheme = useSelector(
     (bigPie) => bigPie.darkThemeSlice.isDarkTheme
   );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -59,6 +62,30 @@ function App() {
     listenToScrollEvent();
   }, []);
 
+  // var timeoutHandle = setTimeout(() => {
+  //   localStorage.removeItem("token");
+  //   dispatch(authActions.logout());
+  //   toast.warning("Delayed for 4 second you are logged out automatically.");
+  // }, "4000");
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      console.log("mouse moved");
+      //window.clearTimeout(timeoutHandle);
+    };
+    const handleKeyPress = (event) => {
+      console.log("key board pressed");
+      //window.clearTimeout(timeoutHandle);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("keydown", handleKeyPress);
+    // return () => {
+    //   window.removeEventListener("mousemove", handleMouseMove);
+    //   document.removeEventListener("onkeydown", handleKeyPress);
+    // };
+  }, []);
+
+  //1000*60*60*4=4 houre => 14400000
   const listenToScrollEvent = () => {
     document.addEventListener("scroll", () => {
       requestAnimationFrame(() => {
