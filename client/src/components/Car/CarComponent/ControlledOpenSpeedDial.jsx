@@ -16,12 +16,25 @@ const actions = [
 ];
 
 const ControlledOpenSpeedDial = () => {
+  console.log("in ControlledOpenSpeedDial");
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = (event) => {
+    event.stopPropagation();
+    setOpen(true);
+  };
+  const handleClose = (event) => {
+    event.stopPropagation();
+    setOpen(false);
+  };
 
   return (
-    <Box sx={{ height: 320, transform: "translateZ(0px)", flexGrow: 1 }}>
+    <Box
+      sx={{
+        height: 50,
+        transform: "translateZ(0px)",
+        flexGrow: 1,
+      }}
+    >
       <SpeedDial
         ariaLabel="SpeedDial controlled open example"
         sx={{ position: "absolute", bottom: 16, right: 16 }}

@@ -23,6 +23,7 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { useSelector } from "react-redux";
 import DEFAULTCARIMAGE from "./helpers/DefaultCarImage";
 import { useState } from "react";
+import ControlledOpenSpeedDial from "./ControlledOpenSpeedDial";
 //import ControlledOpenSpeedDial from "./ControlledOpenSpeedDial";
 
 const CarComponent = ({
@@ -109,6 +110,9 @@ const CarComponent = ({
         </Typography>
       </CardContent>
       <CardActions>
+        <ControlledOpenSpeedDial />
+      </CardActions>
+      {/* <CardActions>
         {candelete ? (
           <Tooltip
             TransitionComponent={Fade}
@@ -189,9 +193,9 @@ const CarComponent = ({
           ) : (
             ""
           )}
-          {/* <ControlledOpenSpeedDial /> */}
         </Grid>
-      </CardActions>
+      </CardActions> */}
+      {/* <ControlledOpenSpeedDial /> */}
     </Card>
   );
 };

@@ -70,11 +70,11 @@ function App() {
 
   useEffect(() => {
     const handleMouseMove = (event) => {
-      console.log("mouse moved");
+      //console.log("mouse moved");
       //window.clearTimeout(timeoutHandle);
     };
     const handleKeyPress = (event) => {
-      console.log("key board pressed");
+      //console.log("key board pressed");
       //window.clearTimeout(timeoutHandle);
     };
     window.addEventListener("mousemove", handleMouseMove);
