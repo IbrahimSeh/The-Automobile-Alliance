@@ -1,41 +1,30 @@
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-
-import CarComponent from "../components/Car/CarComponent/CarComponent";
-import useQueryParams from "../hooks/useQueryParams";
+import { useNavigate } from "react-router-dom";
 import ROUTES from "../routes/ROUTES";
+import useQueryParams from "../hooks/useQueryParams";
 import InterfaceImage from "../components/Home/InterfaceImage";
 import DviderLine from "../components/Home/DviderLine";
+import ControlledOpenSpeedDial from "../components/Home/ControlledOpenSpeedDial";
+import Tabs from "../components/Home/Display/Tabs";
+import Tables from "../components/Home/Display/Tables";
 
 const HomePage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
   const [arrLikeToUser, setArrLikeToUser] = useState([]);
   const navigate = useNavigate();
-  let qparams = useQueryParams();
-  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-  let userID = "";
+  const [toDisplay, setToDisplay] = useState("tabs");
 
-  if (localStorage.getItem("token")) {
-    userID = jwt_decode(localStorage.getItem("token"))._id;
-  }
+  let qparams = useQueryParams();
 
   //first useEffect when page load
   useEffect(() => {
     axios
       .get("/cars")
       .then(({ data }) => {
-        for (const [i, carItem] of data.entries()) {
-          arrLikeToUser[i] = {
-            carId: carItem._id,
-            Like: carItem.likes.includes(userID) ? true : false,
-          };
-        }
         filterFunc(data);
       })
       .catch((err) => {
@@ -43,8 +32,6 @@ const HomePage = () => {
         toast.error("Oops");
       });
   }, []);
-
-  //console.log("arrLikeToUser = ", arrLikeToUser);
 
   //second useEffect evry time we make change on search
   useEffect(() => {
@@ -111,15 +98,19 @@ const HomePage = () => {
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
-  const handelOnLike = (id, likeFlag) => {
+  const handelOnLike = (id) => {
     let tempArrLikeToUser = arrLikeToUser;
-    for (const carItem of tempArrLikeToUser) {
-      if (carItem.carId === id) {
-        carItem.Like = likeFlag;
-      }
-    }
+    // for (const carItem of tempArrLikeToUser) {
+    //   if (carItem.carId === id) {
+    //     carItem.Like = likeFlag;
+    //   }
+    // }
     setArrLikeToUser(tempArrLikeToUser);
+    //  window.location.reload();
   };
+
+  const handleGetDisplayName = (nameOfDispaly) => setToDisplay(nameOfDispaly);
+
   if (!carsArr) {
     return <CircularProgress />;
   }
@@ -137,50 +128,18 @@ const HomePage = () => {
       </Typography>
       <InterfaceImage />
       <DviderLine text={"ALL THE CAR IN OUR ALLIANCE"} />
-      <Grid container spacing={2}>
-        {carsArr.map((item, i) => (
-          <Grid item xs={4} key={item._id + Date.now()}>
-            <CarComponent
-              img={item.image ? item.image.url[0] : ""}
-              manufacturer={
-                item.manufacturerData ? item.manufacturerData.manufacturer : ""
-              }
-              type={item.manufacturerData ? item.manufacturerData.type : ""}
-              subType={
-                item.manufacturerData ? item.manufacturerData.subType : ""
-              }
-              yearOfProduction={
-                item.yearOfProduction ? item.yearOfProduction : ""
-              }
-              phone={item.phone}
-              address={
-                item.address
-                  ? item.address.country +
-                    ", " +
-                    item.address.city +
-                    ", " +
-                    item.address.street
-                  : ""
-              }
-              id={item._id}
-              clickOnCar={handleOnClick}
-              bizNumber={item.bizNumber}
-              userId={item.user_id}
-              onDelete={handleDeleteFromInitialCarsArr}
-              candelete={
-                (payload && payload.isAdmin) ||
-                (item.user_id === userID && payload && payload.isSubscription)
-              }
-              onEdit={handleEditFromInitialCarsArr}
-              canEdit={
-                item.user_id === userID && payload && payload.isSubscription
-              }
-              onLike={handelOnLike}
-              disLike={arrLikeToUser[i].Like}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      <ControlledOpenSpeedDial getDisplayName={handleGetDisplayName} />
+      {toDisplay === "tabs" ? (
+        <Tabs
+          carsArrFromHome={carsArr}
+          handleOnClick={handleOnClick}
+          handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
+          handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+          handelOnLike={handelOnLike}
+        />
+      ) : (
+        <Tables carsArrFromHome={carsArr} />
+      )}
     </Box>
   );
 };

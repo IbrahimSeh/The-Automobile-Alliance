@@ -23,7 +23,6 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { useSelector } from "react-redux";
 import DEFAULTCARIMAGE from "./helpers/DefaultCarImage";
 import { useState } from "react";
-import ControlledOpenSpeedDial from "./ControlledOpenSpeedDial";
 //import ControlledOpenSpeedDial from "./ControlledOpenSpeedDial";
 
 const CarComponent = ({
@@ -48,7 +47,7 @@ const CarComponent = ({
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
-  const [likeFlag, setLikeFlag] = useState(disLike);
+  //const [likeFlag, setLikeFlag] = useState(disLike);
   let apiCollection;
   if (collection === undefined) apiCollection = "cars/car";
   if (collection === "VAR") apiCollection = "VAR/VAR";
@@ -66,11 +65,10 @@ const CarComponent = ({
     event.stopPropagation();
     try {
       await axios.patch("/" + apiCollection + "-like/" + id); // /cars/:id
-      setLikeFlag(!likeFlag);
     } catch (err) {
       console.log("error when liking car", err.response.data);
     }
-    onLike(id, likeFlag);
+    onLike(id);
   };
 
   const handleClickCar = () => {
@@ -110,9 +108,6 @@ const CarComponent = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <ControlledOpenSpeedDial />
-      </CardActions>
-      {/* <CardActions>
         {candelete ? (
           <Tooltip
             TransitionComponent={Fade}
@@ -163,7 +158,7 @@ const CarComponent = ({
             </Button>
           </Tooltip>
           {isLoggedIn ? (
-            likeFlag ? (
+            disLike ? (
               <Tooltip
                 TransitionComponent={Fade}
                 TransitionProps={{ timeout: 600 }}
@@ -194,8 +189,7 @@ const CarComponent = ({
             ""
           )}
         </Grid>
-      </CardActions> */}
-      {/* <ControlledOpenSpeedDial /> */}
+      </CardActions>
     </Card>
   );
 };
