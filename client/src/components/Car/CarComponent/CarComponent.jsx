@@ -22,7 +22,6 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { useSelector } from "react-redux";
 import DEFAULTCARIMAGE from "./helpers/DefaultCarImage";
-import { useState } from "react";
 //import ControlledOpenSpeedDial from "./ControlledOpenSpeedDial";
 
 const CarComponent = ({
@@ -51,6 +50,7 @@ const CarComponent = ({
   let apiCollection;
   if (collection === undefined) apiCollection = "cars/car";
   if (collection === "VAR") apiCollection = "VAR/VAR";
+
   const handleDeleteBtnClick = (event) => {
     event.stopPropagation();
     onDelete(id);

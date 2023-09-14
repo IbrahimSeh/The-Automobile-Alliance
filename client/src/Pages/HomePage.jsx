@@ -16,7 +16,7 @@ const HomePage = () => {
   const [carsArr, setCarsArr] = useState(null);
   const [arrLikeToUser, setArrLikeToUser] = useState([]);
   const navigate = useNavigate();
-  const [toDisplay, setToDisplay] = useState("tabs");
+  const [toDisplay, setToDisplay] = useState("tables");
 
   let qparams = useQueryParams();
 
@@ -138,7 +138,13 @@ const HomePage = () => {
           handelOnLike={handelOnLike}
         />
       ) : (
-        <Tables carsArrFromHome={carsArr} />
+        <Tables
+          carsArrFromHome={carsArr}
+          handleOnClick={handleOnClick}
+          handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
+          handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+          handelOnLike={handelOnLike}
+        />
       )}
     </Box>
   );

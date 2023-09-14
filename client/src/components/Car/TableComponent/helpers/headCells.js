@@ -35,5 +35,11 @@ const headCells = [
         disablePadding: false,
         label: "Phone",
     },
+    {
+        id: "browse",
+        numeric: true,
+        disablePadding: false,
+        label: "browse",
+    },
 ];
 export default headCells;

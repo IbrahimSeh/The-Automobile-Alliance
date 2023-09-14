@@ -1,6 +1,16 @@
-function createData(carsArrFromHome) {
-    let rows;
+const createData = (carsArrFromHome) => {
+    let rows = [];
 
-    return rows = [{ manufacturer: "Skoda", type: "octavia", yearOfProduction: "2015", previousOwners: "3", phone: "0522753258" }];
+    for (const car of carsArrFromHome) {
+        rows = [...rows, {
+            id: car._id,
+            manufacturer: car.manufacturerData.manufacturer,
+            type: car.manufacturerData.type,
+            yearOfProduction: car.yearOfProduction,
+            previousOwners: car.previousOwners,
+            phone: car.communications.phone,
+        }]
+    }
+    return rows;
 }
 export default createData;

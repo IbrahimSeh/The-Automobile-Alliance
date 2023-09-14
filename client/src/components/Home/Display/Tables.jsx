@@ -9,14 +9,22 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import AdsClickIcon from "@mui/icons-material/AdsClick";
 import Switch from "@mui/material/Switch";
 import EnhancedTableToolbar from "../../Car/TableComponent/EnhancedTableToolbar";
 import EnhancedTableHead from "../../Car/TableComponent/EnhancedTableHead";
 import createData from "../../Car/TableComponent/helpers/createDataAsRows";
 import stableSort from "../../Car/TableComponent/helpers/stableSort";
 import getComparator from "../../Car/TableComponent/helpers/getComparator";
+import { Button, Fade, Tooltip } from "@mui/material";
 
-const Tables = ({ carsArrFromHome }) => {
+const Tables = ({
+  carsArrFromHome,
+  handleOnClick,
+  handleDeleteFromInitialCarsArr,
+  handleEditFromInitialCarsArr,
+  handelOnLike,
+}) => {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -24,6 +32,15 @@ const Tables = ({ carsArrFromHome }) => {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   let rows = createData(carsArrFromHome);
+
+  const clickOnCar = (event, id) => {
+    event.stopPropagation();
+    handleOnClick(id);
+  };
+  const onDelete = (id) => handleDeleteFromInitialCarsArr(id);
+  const onEdit = (id) => handleEditFromInitialCarsArr(id);
+  const onLike = (id) => handelOnLike(id);
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -32,19 +49,19 @@ const Tables = ({ carsArrFromHome }) => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rows.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -55,7 +72,6 @@ const Tables = ({ carsArrFromHome }) => {
         selected.slice(selectedIndex + 1)
       );
     }
-
     setSelected(newSelected);
   };
 
@@ -72,7 +88,7 @@ const Tables = ({ carsArrFromHome }) => {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -84,13 +100,22 @@ const Tables = ({ carsArrFromHome }) => {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, page, rowsPerPage, rows]
   );
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          carArrayId={selected}
+          onDelete={onDelete}
+          candelete
+          onEdit={onEdit}
+          canEdit
+          onLike={onLike}
+          disLike
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -107,17 +132,17 @@ const Tables = ({ carsArrFromHome }) => {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.name);
+                const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.name)}
+                    onClick={(event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.name}
+                    key={row.id}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
                   >
@@ -136,12 +161,30 @@ const Tables = ({ carsArrFromHome }) => {
                       scope="row"
                       padding="none"
                     >
-                      {row.name}
+                      {index}
                     </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    <TableCell align="right">{row.manufacturer}</TableCell>
+                    <TableCell align="right">{row.type}</TableCell>
+                    <TableCell align="right">{row.yearOfProduction}</TableCell>
+                    <TableCell align="right">{row.previousOwners}</TableCell>
+                    <TableCell align="right">{row.phone}</TableCell>
+                    <TableCell align="right">
+                      {
+                        <Tooltip
+                          TransitionComponent={Fade}
+                          TransitionProps={{ timeout: 600 }}
+                          title="take a closer look"
+                          placement="bottom-end"
+                        >
+                          <Button
+                            sx={{ color: "#008e24" }}
+                            onClick={(event) => clickOnCar(event, row.id)}
+                          >
+                            <AdsClickIcon />
+                          </Button>
+                        </Tooltip>
+                      }
+                    </TableCell>
                   </TableRow>
                 );
               })}
