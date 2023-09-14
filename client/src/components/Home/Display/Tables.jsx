@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,6 +11,8 @@ import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import AdsClickIcon from "@mui/icons-material/AdsClick";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import Switch from "@mui/material/Switch";
 import EnhancedTableToolbar from "../../Car/TableComponent/EnhancedTableToolbar";
 import EnhancedTableHead from "../../Car/TableComponent/EnhancedTableHead";
@@ -17,6 +20,8 @@ import createData from "../../Car/TableComponent/helpers/createDataAsRows";
 import stableSort from "../../Car/TableComponent/helpers/stableSort";
 import getComparator from "../../Car/TableComponent/helpers/getComparator";
 import { Button, Fade, Tooltip } from "@mui/material";
+import { useSelector } from "react-redux";
+import VisibleRows from "../../Car/TableComponent/VisibleRows";
 
 const Tables = ({
   carsArrFromHome,
@@ -24,13 +29,22 @@ const Tables = ({
   handleDeleteFromInitialCarsArr,
   handleEditFromInitialCarsArr,
   handelOnLike,
+  collection,
 }) => {
+  let apiCollection;
+  if (collection === undefined) apiCollection = "cars/car";
+  if (collection === "VAR") apiCollection = "VAR/VAR";
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+  const isLoggedIn = useSelector(
+    (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
+  );
+
   let rows = createData(carsArrFromHome);
 
   const clickOnCar = (event, id) => {
@@ -75,21 +89,14 @@ const Tables = ({
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangeDense = (event) => setDense(event.target.checked);
+  //const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = (id) => selected.indexOf(id) !== -1;
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -103,6 +110,52 @@ const Tables = ({
     [order, orderBy, page, rowsPerPage, rows]
   );
 
+  const handleLikeBtnClick = async (event, id) => {
+    event.stopPropagation();
+    try {
+      await axios.patch("/" + apiCollection + "-like/" + id); // /cars/:id
+      window.location.reload();
+    } catch (err) {
+      console.log("error when liking car", err.response.data);
+    }
+  };
+
+  const getIsLike = (isLike, id) => {
+    if (!isLoggedIn) return "";
+    if (isLike)
+      return (
+        <Tooltip
+          TransitionComponent={Fade}
+          TransitionProps={{ timeout: 600 }}
+          title="Dislike Car"
+          placement="bottom-end"
+        >
+          <Button
+            sx={{ color: "red" }}
+            onClick={(event) => handleLikeBtnClick(event, id)}
+          >
+            <FavoriteRoundedIcon />
+          </Button>
+        </Tooltip>
+      );
+    if (!isLike)
+      return (
+        <Tooltip
+          TransitionComponent={Fade}
+          TransitionProps={{ timeout: 600 }}
+          title="Like Car"
+          placement="bottom-end"
+        >
+          <Button
+            sx={{ color: "brown" }}
+            onClick={(event) => handleLikeBtnClick(event, id)}
+          >
+            <ThumbDownIcon />
+          </Button>
+        </Tooltip>
+      );
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -114,7 +167,6 @@ const Tables = ({
           onEdit={onEdit}
           canEdit
           onLike={onLike}
-          disLike
         />
         <TableContainer>
           <Table
@@ -131,10 +183,23 @@ const Tables = ({
               rowCount={rows.length}
             />
             <TableBody>
-              {visibleRows.map((row, index) => {
+              <VisibleRows
+                rows={rows}
+                order={order}
+                orderBy={orderBy}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                selected={selected}
+                clickOnCar={clickOnCar}
+                getIsLike={getIsLike}
+                handleClickFromTables={handleClick}
+              />
+              {/* {visibleRows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
-
+                const isLike = row.likes.includes(payload && payload._id)
+                  ? true
+                  : false;
                 return (
                   <TableRow
                     hover
@@ -169,6 +234,9 @@ const Tables = ({
                     <TableCell align="right">{row.previousOwners}</TableCell>
                     <TableCell align="right">{row.phone}</TableCell>
                     <TableCell align="right">
+                      {getIsLike(isLike, row.id)}
+                    </TableCell>
+                    <TableCell align="right">
                       {
                         <Tooltip
                           TransitionComponent={Fade}
@@ -187,7 +255,7 @@ const Tables = ({
                     </TableCell>
                   </TableRow>
                 );
-              })}
+              })} */}
               {emptyRows > 0 && (
                 <TableRow
                   style={{

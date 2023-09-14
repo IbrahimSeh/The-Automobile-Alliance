@@ -10,14 +10,18 @@ import DviderLine from "../components/Home/DviderLine";
 import ControlledOpenSpeedDial from "../components/Home/ControlledOpenSpeedDial";
 import Tabs from "../components/Home/Display/Tabs";
 import Tables from "../components/Home/Display/Tables";
+import { useDispatch, useSelector } from "react-redux";
+import { displayActions } from "../redux/display";
 
 const HomePage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
   const [arrLikeToUser, setArrLikeToUser] = useState([]);
   const navigate = useNavigate();
-  const [toDisplay, setToDisplay] = useState("tables");
-
+  //const [toDisplay, setToDisplay] = useState("tables");
+  const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.home);
+  const dispatch = useDispatch();
+  //console.log("toDisplay = ", toDisplay);
   let qparams = useQueryParams();
 
   //first useEffect when page load
@@ -109,7 +113,10 @@ const HomePage = () => {
     //  window.location.reload();
   };
 
-  const handleGetDisplayName = (nameOfDispaly) => setToDisplay(nameOfDispaly);
+  const handleGetDisplayName = (nameOfDispaly) => {
+    dispatch(displayActions.setDisplayPage("home"));
+  };
+  //setToDisplay(nameOfDispaly);
 
   if (!carsArr) {
     return <CircularProgress />;
@@ -129,7 +136,7 @@ const HomePage = () => {
       <InterfaceImage />
       <DviderLine text={"ALL THE CAR IN OUR ALLIANCE"} />
       <ControlledOpenSpeedDial getDisplayName={handleGetDisplayName} />
-      {toDisplay === "tabs" ? (
+      {toDisplay === false ? (
         <Tabs
           carsArrFromHome={carsArr}
           handleOnClick={handleOnClick}

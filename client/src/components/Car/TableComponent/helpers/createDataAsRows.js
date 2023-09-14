@@ -9,6 +9,7 @@ const createData = (carsArrFromHome) => {
             yearOfProduction: car.yearOfProduction,
             previousOwners: car.previousOwners,
             phone: car.communications.phone,
+            likes: car.likes,
         }]
     }
     return rows;

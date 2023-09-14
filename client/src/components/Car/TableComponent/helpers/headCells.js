@@ -36,6 +36,12 @@ const headCells = [
         label: "Phone",
     },
     {
+        id: "like",
+        numeric: true,
+        disablePadding: false,
+        label: "like/dislike",
+    },
+    {
         id: "browse",
         numeric: true,
         disablePadding: false,
