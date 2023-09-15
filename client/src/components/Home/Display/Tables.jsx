@@ -22,7 +22,6 @@ const Tables = ({
   handleOnClick,
   handleDeleteFromInitialCarsArr,
   handleEditFromInitialCarsArr,
-  handelOnLike,
   collection,
 }) => {
   let apiCollection;
@@ -54,7 +53,6 @@ const Tables = ({
     setSelected([]);
     handleEditFromInitialCarsArr(id);
   };
-  const onLike = (id) => handelOnLike(id);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -120,7 +118,6 @@ const Tables = ({
           candelete
           onEdit={onEdit}
           canEdit
-          onLike={onLike}
         />
         <TableContainer>
           <Table

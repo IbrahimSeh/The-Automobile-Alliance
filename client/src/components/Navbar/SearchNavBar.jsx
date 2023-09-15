@@ -4,7 +4,8 @@ import { useLocation } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Fade, Tooltip } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import { Fade, IconButton, Tooltip } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -75,7 +76,7 @@ const SearchNavBar = () => {
         >
           <StyledInputBase
             id="search"
-            name="given-search"
+            name="given-"
             placeholder="Search..."
             inputProps={{ "aria-label": "search" }}
             onChange={handleSearchChange}

@@ -140,7 +140,6 @@ const HomePage = () => {
           handleOnClick={handleOnClick}
           handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
           handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
-          handelOnLike={handelOnLike}
         />
       ) : (
         <Tables
@@ -148,7 +147,6 @@ const HomePage = () => {
           handleOnClick={handleOnClick}
           handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
           handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
-          handelOnLike={handelOnLike}
         />
       )}
     </Box>

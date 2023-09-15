@@ -39,7 +39,6 @@ const CarComponent = ({
   candelete,
   onEdit,
   canEdit,
-  onLike,
   disLike,
   collection,
 }) => {
@@ -65,10 +64,10 @@ const CarComponent = ({
     event.stopPropagation();
     try {
       await axios.patch("/" + apiCollection + "-like/" + id); // /cars/:id
+      window.location.reload();
     } catch (err) {
       console.log("error when liking car", err.response.data);
     }
-    onLike(id);
   };
 
   const handleClickCar = () => {
