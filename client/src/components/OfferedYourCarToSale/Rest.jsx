@@ -1,14 +1,24 @@
 import { Box, Grid, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { restData } from "../Pagination/arrayOfPages";
 
 const Rest = ({ passData }) => {
   const [previousOwners, setPreviousOwners] = useState(0);
   const [kilometers, setKilometers] = useState(0);
   const [yearOfProduction, setYearOfProduction] = useState(dayjs("2022-04-17"));
+
+  //first useEffect when page load
+  useEffect(() => {
+    if (restData.previousOwners !== "")
+      setPreviousOwners(restData.previousOwners);
+    if (restData.kilometers !== "") setKilometers(restData.kilometers);
+    if (restData.yearOfProduction !== "")
+      setYearOfProduction(dayjs(`${restData.yearOfProduction}-04-17`));
+  }, []);
 
   const handleChangePreviousOwners = (event) => {
     setPreviousOwners(event.target.value);

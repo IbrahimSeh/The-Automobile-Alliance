@@ -1,12 +1,19 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import SliderImages from "../Car/ExtendedCarComponent/SliderImages";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { imageData } from "../Pagination/arrayOfPages";
 
 const Image = ({ passSrcData, passAltData }) => {
-  let tempItemData = [];
   let tempSrcData = [];
   let tempAltData = [];
-  const [itemData, setItemData] = useState([]);
+  const [itemSrcData, setItemSrcData] = useState([]);
+  const [itemAltData, setItemAltData] = useState([]);
+
+  //first useEffect when page load
+  useEffect(() => {
+    if (imageData.src.length !== 0) setItemSrcData(imageData.src);
+    if ((imageData.alt.length !== 0) !== "") setItemAltData(imageData.alt);
+  }, []);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -19,22 +26,21 @@ const Image = ({ passSrcData, passAltData }) => {
     const reader1 = new FileReader();
     const reader2 = new FileReader();
 
+    setItemAltData(tempAltData);
+
     reader.onloadend = () => {
-      tempItemData[0] = reader.result;
       tempSrcData[0] = reader.result;
-      setItemData(tempItemData);
+      setItemSrcData(tempSrcData);
     };
 
     reader1.onloadend = () => {
-      tempItemData[1] = reader1.result;
-      tempSrcData[1] = reader.result;
-      setItemData(tempItemData);
+      tempSrcData[1] = reader1.result;
+      setItemSrcData(tempSrcData);
     };
 
     reader2.onloadend = () => {
-      tempItemData[2] = reader2.result;
-      tempSrcData[2] = reader.result;
-      setItemData(tempItemData);
+      tempSrcData[2] = reader2.result;
+      setItemSrcData(tempSrcData);
     };
 
     if (file !== undefined) reader.readAsDataURL(file);
@@ -45,9 +51,13 @@ const Image = ({ passSrcData, passAltData }) => {
     passAltData("alt", tempAltData);
   };
 
-  const handelClickClearPhotos = () => setItemData([]);
+  const handelClickClearPhotos = () => {
+    imageData.src = [];
+    imageData.alt = [];
+    setItemSrcData([]);
+  };
   const getStyle = () => {
-    if (itemData.length !== 0) return {};
+    if (itemSrcData.length !== 0) return {};
 
     return {
       margin: "auto",
@@ -60,8 +70,8 @@ const Image = ({ passSrcData, passAltData }) => {
       <Typography mb={3} variant="h3" align="center" color="blue">
         IMAGE DATA
       </Typography>
-      {itemData.length !== 0 ? (
-        <SliderImages sliderImages={itemData} alt={"alt"} />
+      {itemSrcData.length !== 0 ? (
+        <SliderImages sliderImages={itemSrcData} alt={itemAltData} />
       ) : (
         ""
       )}
@@ -83,7 +93,7 @@ const Image = ({ passSrcData, passAltData }) => {
               />
             </label>
           </Box>
-          {itemData.length === 0 ? (
+          {itemSrcData.length === 0 ? (
             ""
           ) : (
             <Box

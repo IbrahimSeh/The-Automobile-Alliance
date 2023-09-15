@@ -18,7 +18,7 @@ import CarSpecification from "../components/Car/CarSpecification";
 import CarEdit from "../components/Car/CarEdit";
 import IsNotLoginPR from "../components/ProtectedRoute/isNotLoginPR";
 import SpecificSearch from "../Pages/SpecificSearch";
-import SaleCar from "../Pages/SaleCar";
+import OfferedYourCarToSale from "../Pages/OfferedYourCarToSale";
 import AdminLogInPage from "../Pages/AdminLogInPage";
 
 const Router = () => {
@@ -29,9 +29,11 @@ const Router = () => {
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.SPECIFICSEARCH} element={<SpecificSearch />} />
       <Route
-        path={ROUTES.SALECAR}
+        path={ROUTES.OFFEREDYOURCARTOSALE}
         element={
-          <IsLoginPR element={<IsSubscriptionPR element={<SaleCar />} />} />
+          <IsLoginPR
+            element={<IsSubscriptionPR element={<OfferedYourCarToSale />} />}
+          />
         }
       />
       <Route

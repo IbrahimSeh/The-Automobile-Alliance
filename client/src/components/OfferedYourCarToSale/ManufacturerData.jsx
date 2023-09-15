@@ -1,11 +1,34 @@
-import { Box, Grid, MenuItem, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  MenuItem,
+  Popover,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { carManufacturer } from "../Form/GridComponent/helper/carManufacturerSelection";
 import typeSelection from "../Form/GridComponent/helper/typeSelection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { manufacturerData } from "../Pagination/arrayOfPages";
+
 const ManufacturerData = ({ passData }) => {
   const [manufacturer, setManufacturer] = useState("ALL");
   const [type, setType] = useState("");
   const [subType, setSubType] = useState("");
+
+  //Popover
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handlePopoverOpen = (event) => setAnchorEl(event.currentTarget);
+  const handlePopoverClose = () => setAnchorEl(null);
+  const open = Boolean(anchorEl);
+
+  //first useEffect when page load
+  useEffect(() => {
+    if (manufacturerData.manufacturer !== "")
+      setManufacturer(manufacturerData.manufacturer);
+    if (manufacturerData.type !== "") setType(manufacturerData.type);
+    if (manufacturerData.subType !== "") setSubType(manufacturerData.subType);
+  }, []);
 
   const handleChangeManufacturer = (event) => {
     if (manufacturer !== "ALL" && type !== "") setType("");
@@ -45,7 +68,7 @@ const ManufacturerData = ({ passData }) => {
               id="manufacturer"
               label=""
               name="given-manufacturer"
-              helperText="Please select your manufacturer"
+              helperText="Please select your manufacturer *"
               select
               required
               fullWidth
@@ -60,12 +83,43 @@ const ManufacturerData = ({ passData }) => {
             </TextField>
           </Grid>
           <Grid item xs={12} sm={12}>
+            {manufacturer === "ALL" ? (
+              <Popover
+                id="mouse-over-popover"
+                sx={{
+                  pointerEvents: "none",
+                }}
+                open={open}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                onClose={handlePopoverClose}
+                disableRestoreFocus
+              >
+                <Typography sx={{ p: 1 }}>
+                  first of all select manufacturer.
+                </Typography>
+              </Popover>
+            ) : (
+              ""
+            )}
+
             <TextField
+              aria-owns="mouse-over-popover"
+              aria-haspopup="true"
+              onMouseEnter={handlePopoverOpen}
+              onMouseLeave={handlePopoverClose}
               id="type"
               name="given-type"
               select
               label=""
-              helperText="Please select your type"
+              helperText="Please select your type *"
               fullWidth
               required
               value={type}
@@ -79,13 +133,11 @@ const ManufacturerData = ({ passData }) => {
               ))}
             </TextField>
           </Grid>
-
           <Grid item xs={12} sm={12}>
             <TextField
               id="subType"
               name="given-subtype"
               label="sub type"
-              required
               fullWidth
               value={subType}
               onChange={handleChangeSubType}

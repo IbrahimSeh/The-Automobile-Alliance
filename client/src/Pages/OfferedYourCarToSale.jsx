@@ -1,14 +1,16 @@
 import { Typography } from "@mui/material";
 import PaginationComponent from "../components/Pagination/PaginationComponent";
+import MouseOverPopover from "../components/Popover/MouseOverPopover";
 
-const SaleCar = () => {
+const OfferedYourCarToSale = () => {
   return (
     <div>
       <Typography mt={3} variant="h3" align="center" color="blue">
-        OFFERED A CAR FOR SALE
+        OFFERED YOU'R CAR TO SALE
       </Typography>
+      <MouseOverPopover />
       <PaginationComponent />
     </div>
   );
 };
-export default SaleCar;
+export default OfferedYourCarToSale;

@@ -14,7 +14,8 @@ const ROUTES = {
     CARSPECIFICATION: "/carspecification",
     CAREDIT: "/caredit",
     SPECIFICSEARCH: "/specificsearch",
-    SALECAR: "/salecar",
+    OFFEREDYOURCARTOSALE: "/offeredyourcartosale",
+
 };
 
 export default ROUTES;

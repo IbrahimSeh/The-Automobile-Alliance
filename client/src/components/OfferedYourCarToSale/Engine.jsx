@@ -1,10 +1,17 @@
 import { Box, Grid, MenuItem, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import listOfFuelType from "../Form/GridComponent/helper/fuelTypeSelection";
+import { engineData } from "../Pagination/arrayOfPages";
 
 const Engine = ({ passData }) => {
   const [engineType, setEngineType] = useState("");
   const [fuelType, setFuelType] = useState("");
+
+  //first useEffect when page load
+  useEffect(() => {
+    if (engineData.engineType !== "") setEngineType(engineData.engineType);
+    if (engineData.fuelType !== "") setFuelType(engineData.fuelType);
+  }, []);
 
   const handleChangeEngineType = (event) => {
     setEngineType(event.target.value);
@@ -47,7 +54,7 @@ const Engine = ({ passData }) => {
               name="given-fueltype"
               select
               label=""
-              helperText="Please select your fuel type"
+              helperText="Please select your fuel type *"
               fullWidth
               required
               value={fuelType}

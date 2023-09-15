@@ -15,7 +15,7 @@ const servicesPages = [
   },
   {
     label: "Offered a car for sale",
-    url: ROUTES.SALECAR,
+    url: ROUTES.OFFEREDYOURCARTOSALE,
   },
   {
     label: "add car",

@@ -24,7 +24,7 @@ const SendRequest = () => {
   const handelClickSaveData = async () => {
     try {
       await axios.post("/VAR/", {
-        // VAR = VehicleAdvertisingRequests
+        // VAR = Vehicle Advertising Requests
         manufacturerData: {
           manufacturer: manufacturerData.manufacturer,
           type: manufacturerData.type,
@@ -60,12 +60,6 @@ const SendRequest = () => {
       toast.error("the car has been not created");
     }
   };
-  // console.log("manufacturerData in SendReq = ", manufacturerData);
-  // console.log("communicationsData in SenReq", communicationsData);
-  // console.log("engineData in SenReq", engineData);
-  // console.log("returnAddressData in SenReq = ", addressData);
-  // console.log("imageData in SenReq = ", imageData);
-  // console.log("restData in SenReq = ", restData);
   return (
     <Box
       sx={{

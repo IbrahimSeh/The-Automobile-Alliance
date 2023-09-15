@@ -1,9 +1,16 @@
 import { Box, Grid, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { communicationsData } from "../Pagination/arrayOfPages";
 
 const Communications = ({ passData }) => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+
+  //first useEffect when page load
+  useEffect(() => {
+    if (communicationsData.phone !== "") setPhone(communicationsData.phone);
+    if (communicationsData.email !== "") setEmail(communicationsData.email);
+  }, []);
 
   const handleChangePhone = (event) => {
     setPhone(event.target.value);
@@ -44,7 +51,6 @@ const Communications = ({ passData }) => {
           <Grid item xs={12} sm={12}>
             <TextField
               name="email"
-              required
               fullWidth
               helperText=""
               id="email"

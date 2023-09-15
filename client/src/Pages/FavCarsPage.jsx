@@ -1,14 +1,11 @@
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
 import ROUTES from "../routes/ROUTES";
 import { displayActions } from "../redux/display";
-import CarComponent from "../components/Car/CarComponent/CarComponent";
 import useQueryParams from "../hooks/useQueryParams";
 import FavVarsPage from "./FavVarsPage";
 import DviderLine from "../components/Home/DviderLine";
@@ -32,12 +29,12 @@ const FavCarsPage = () => {
   let qparams = useQueryParams();
   const dispatch = useDispatch();
   const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.favCar);
-  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-  let userID = "";
+  // const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+  // let userID = "";
 
-  if (localStorage.getItem("token")) {
-    userID = jwt_decode(localStorage.getItem("token"))._id;
-  }
+  // if (localStorage.getItem("token")) {
+  //   userID = jwt_decode(localStorage.getItem("token"))._id;
+  // }
 
   //first useEffect when page load
   useEffect(() => {

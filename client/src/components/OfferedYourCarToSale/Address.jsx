@@ -1,11 +1,20 @@
 import { Box, Grid, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addressData } from "../Pagination/arrayOfPages";
 
 const Address = ({ passData }) => {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
+
+  //first useEffect when page load
+  useEffect(() => {
+    if (addressData.state !== "") setState(addressData.state);
+    if (addressData.country !== "") setCountry(addressData.country);
+    if (addressData.city !== "") setCity(addressData.city);
+    if (addressData.street !== "") setStreet(addressData.street);
+  }, []);
 
   const handleChangeState = (event) => {
     setState(event.target.value);
@@ -41,7 +50,6 @@ const Address = ({ passData }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               name={"state"}
-              required
               fullWidth
               helperText=""
               id={"state"}

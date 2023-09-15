@@ -37,7 +37,7 @@ const SliderImages = ({ sliderImages, alt }) => {
               key={ind}
             >
               {ind === activeImageNum && (
-                <img src={currentSlide} alt={alt} className="image" />
+                <img src={currentSlide} alt={alt[ind]} className="image" />
               )}
             </div>
           );

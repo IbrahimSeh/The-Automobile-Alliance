@@ -1,10 +1,10 @@
-import Communications from "../SaleCarForm/Communications";
-import Engine from "../SaleCarForm/Engine";
-import ManufacturerData from "../SaleCarForm/ManufacturerData";
-import Address from "../SaleCarForm/Address";
-import Image from "../SaleCarForm/Image";
-import Rest from "../SaleCarForm/Rest";
-import SendRequest from "../SaleCarForm/SendRequest";
+import Communications from "../OfferedYourCarToSale/Communications";
+import Engine from "../OfferedYourCarToSale/Engine";
+import ManufacturerData from "../OfferedYourCarToSale/ManufacturerData";
+import Address from "../OfferedYourCarToSale/Address";
+import Image from "../OfferedYourCarToSale/Image";
+import Rest from "../OfferedYourCarToSale/Rest";
+import SendRequest from "../OfferedYourCarToSale/SendRequest";
 const manufacturerData = {
     manufacturer: "",
     type: "",
