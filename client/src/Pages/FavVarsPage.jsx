@@ -2,20 +2,26 @@ import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { displayActions } from "../redux/display";
 import { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import ROUTES from "../routes/ROUTES";
 import CarComponent from "../components/Car/CarComponent/CarComponent";
 import useQueryParams from "../hooks/useQueryParams";
 import DviderLine from "../components/Home/DviderLine";
+import ControlledOpenSpeedDial from "../components/Home/ControlledOpenSpeedDial";
+import Tabs from "../components/Home/Display/Tabs";
+import Tables from "../components/Home/Display/Tables";
 
 const FavVarsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
   const navigate = useNavigate();
   let qparams = useQueryParams();
+  const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.favVAR);
+  const dispatch = useDispatch();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   let userID = "";
 
@@ -104,6 +110,11 @@ const FavVarsPage = () => {
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
   };
+
+  const handleGetDisplayName = (nameOfDispaly) => {
+    dispatch(displayActions.setDisplayPage("favVAR"));
+  };
+
   if (!carsArr) {
     return <CircularProgress />;
   }
