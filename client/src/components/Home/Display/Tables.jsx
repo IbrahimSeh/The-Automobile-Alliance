@@ -22,6 +22,7 @@ const Tables = ({
   handleOnClick,
   handleDeleteFromInitialCarsArr,
   handleEditFromInitialCarsArr,
+  pageName,
   collection,
 }) => {
   let apiCollection;
@@ -111,14 +112,19 @@ const Tables = ({
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar
-          numSelected={selected.length}
-          carArrayId={selected}
-          onDelete={onDelete}
-          candelete
-          onEdit={onEdit}
-          canEdit
-        />
+        {pageName === "RequestsPage" ? (
+          ""
+        ) : (
+          <EnhancedTableToolbar
+            numSelected={selected.length}
+            carArrayId={selected}
+            onDelete={onDelete}
+            candelete
+            onEdit={onEdit}
+            canEdit
+          />
+        )}
+
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -132,6 +138,7 @@ const Tables = ({
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              pageName={pageName}
             />
             <TableBody>
               <VisibleRows
@@ -146,6 +153,7 @@ const Tables = ({
                 handleClickFromTables={handleClick}
                 isLoggedIn={isLoggedIn}
                 handleLikeBtnClick={handleLikeBtnClick}
+                pageName={pageName}
               />
               {emptyRows > 0 && (
                 <TableRow

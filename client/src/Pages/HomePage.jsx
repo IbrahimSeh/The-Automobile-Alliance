@@ -16,7 +16,7 @@ import { displayActions } from "../redux/display";
 const HomePage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
-  const [arrLikeToUser, setArrLikeToUser] = useState([]);
+  //const [arrLikeToUser, setArrLikeToUser] = useState([]);
   const navigate = useNavigate();
   const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.home);
   const dispatch = useDispatch();
@@ -100,16 +100,16 @@ const HomePage = () => {
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?carId=${id}`);
   };
-  const handelOnLike = (id) => {
-    let tempArrLikeToUser = arrLikeToUser;
-    // for (const carItem of tempArrLikeToUser) {
-    //   if (carItem.carId === id) {
-    //     carItem.Like = likeFlag;
-    //   }
-    // }
-    setArrLikeToUser(tempArrLikeToUser);
-    //  window.location.reload();
-  };
+  // const handelOnLike = (id) => {
+  //   let tempArrLikeToUser = arrLikeToUser;
+  //   // for (const carItem of tempArrLikeToUser) {
+  //   //   if (carItem.carId === id) {
+  //   //     carItem.Like = likeFlag;
+  //   //   }
+  //   // }
+  //   setArrLikeToUser(tempArrLikeToUser);
+  //   //  window.location.reload();
+  // };
 
   const handleGetDisplayName = (nameOfDispaly) => {
     dispatch(displayActions.setDisplayPage("home"));

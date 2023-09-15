@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     display: {
         home: false,//false => tabs, true => tables
+        requests: false,
         fav: false,
         sellers: false,
     },

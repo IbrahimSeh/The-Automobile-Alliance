@@ -7,12 +7,21 @@ import useQueryParams from "../hooks/useQueryParams";
 import ROUTES from "../routes/ROUTES";
 import RequestsComponent from "../components/Requests/RequestsComponent";
 import useNumberOfRequest from "../hooks/useNumberOfRequest";
+import ControlledOpenSpeedDial from "../components/Home/ControlledOpenSpeedDial";
+import { useDispatch, useSelector } from "react-redux";
+import { displayActions } from "../redux/display";
+import Tables from "../components/Home/Display/Tables";
+import Tabs from "../components/Home/Display/Tabs";
 
 const RequestsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
+  const toDisplay = useSelector(
+    (bigPie) => bigPie.displaySlice.display.requests
+  );
   const numberOfRequest = useNumberOfRequest();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   let qparams = useQueryParams();
 
   useEffect(() => {
@@ -99,6 +108,9 @@ const RequestsPage = () => {
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
   };
+  const handleGetDisplayName = (nameOfDispaly) => {
+    dispatch(displayActions.setDisplayPage("requests"));
+  };
   if (!carsArr || carsArr.length === 0) {
     return (
       <Fragment>
@@ -117,7 +129,23 @@ const RequestsPage = () => {
       <Typography mb={3} variant="h3" align="center" color="blue">
         All Requests
       </Typography>
-      <Grid container spacing={2}>
+      <ControlledOpenSpeedDial getDisplayName={handleGetDisplayName} />
+      {toDisplay === false ? (
+        <Tabs
+          carsArrFromHome={carsArr}
+          handleOnClick={handleOnClick}
+          pageName={"RequestsPage"}
+        />
+      ) : (
+        <Tables
+          carsArrFromHome={carsArr}
+          handleOnClick={handleOnClick}
+          pageName={"RequestsPage"}
+          // handleDeleteFromInitialCarsArr
+          // handleEditFromInitialCarsArr
+        />
+      )}
+      {/* <Grid container spacing={2}>
         {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
             <RequestsComponent
@@ -150,7 +178,7 @@ const RequestsPage = () => {
             />
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     </Box>
   );
 };
