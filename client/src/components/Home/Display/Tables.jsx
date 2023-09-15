@@ -11,17 +11,18 @@ import Paper from "@mui/material/Paper";
 // import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 // import AdsClickIcon from "@mui/icons-material/AdsClick";
-import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+// import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+// import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import Switch from "@mui/material/Switch";
 import EnhancedTableToolbar from "../../Car/TableComponent/EnhancedTableToolbar";
 import EnhancedTableHead from "../../Car/TableComponent/EnhancedTableHead";
 import createData from "../../Car/TableComponent/helpers/createDataAsRows";
 // import stableSort from "../../Car/TableComponent/helpers/stableSort";
 // import getComparator from "../../Car/TableComponent/helpers/getComparator";
-import { Button, Fade, Tooltip } from "@mui/material";
+// import { Button, Fade, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
 import VisibleRows from "../../Car/TableComponent/VisibleRows";
+import getIsLike from "../../Car/TableComponent/helpers/getIsLike";
 
 const Tables = ({
   carsArrFromHome,
@@ -32,6 +33,7 @@ const Tables = ({
   collection,
 }) => {
   let apiCollection;
+  let rows = createData(carsArrFromHome);
   if (collection === undefined) apiCollection = "cars/car";
   if (collection === "VAR") apiCollection = "VAR/VAR";
   const [order, setOrder] = React.useState("asc");
@@ -40,12 +42,9 @@ const Tables = ({
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  // const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
-
-  let rows = createData(carsArrFromHome);
 
   const clickOnCar = (event, id) => {
     event.stopPropagation();
@@ -97,8 +96,6 @@ const Tables = ({
 
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeDense = (event) => setDense(event.target.checked);
-  //const isSelected = (id) => selected.indexOf(id) !== -1;
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -106,15 +103,6 @@ const Tables = ({
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
-  // const visibleRows = React.useMemo(
-  //   () =>
-  //     stableSort(rows, getComparator(order, orderBy)).slice(
-  //       page * rowsPerPage,
-  //       page * rowsPerPage + rowsPerPage
-  //     ),
-  //   [order, orderBy, page, rowsPerPage, rows]
-  // );
 
   const handleLikeBtnClick = async (event, id) => {
     event.stopPropagation();
@@ -126,41 +114,41 @@ const Tables = ({
     }
   };
 
-  const getIsLike = (isLike, id) => {
-    if (!isLoggedIn) return "";
-    if (isLike)
-      return (
-        <Tooltip
-          TransitionComponent={Fade}
-          TransitionProps={{ timeout: 600 }}
-          title="Dislike Car"
-          placement="bottom-end"
-        >
-          <Button
-            sx={{ color: "red" }}
-            onClick={(event) => handleLikeBtnClick(event, id)}
-          >
-            <FavoriteRoundedIcon />
-          </Button>
-        </Tooltip>
-      );
-    if (!isLike)
-      return (
-        <Tooltip
-          TransitionComponent={Fade}
-          TransitionProps={{ timeout: 600 }}
-          title="Like Car"
-          placement="bottom-end"
-        >
-          <Button
-            sx={{ color: "brown" }}
-            onClick={(event) => handleLikeBtnClick(event, id)}
-          >
-            <ThumbDownIcon />
-          </Button>
-        </Tooltip>
-      );
-  };
+  // const getIsLike = (isLike, id) => {
+  //   if (!isLoggedIn) return "";
+  //   if (isLike)
+  //     return (
+  //       <Tooltip
+  //         TransitionComponent={Fade}
+  //         TransitionProps={{ timeout: 600 }}
+  //         title="Dislike Car"
+  //         placement="bottom-end"
+  //       >
+  //         <Button
+  //           sx={{ color: "red" }}
+  //           onClick={(event) => handleLikeBtnClick(event, id)}
+  //         >
+  //           <FavoriteRoundedIcon />
+  //         </Button>
+  //       </Tooltip>
+  //     );
+  //   if (!isLike)
+  //     return (
+  //       <Tooltip
+  //         TransitionComponent={Fade}
+  //         TransitionProps={{ timeout: 600 }}
+  //         title="Like Car"
+  //         placement="bottom-end"
+  //       >
+  //         <Button
+  //           sx={{ color: "brown" }}
+  //           onClick={(event) => handleLikeBtnClick(event, id)}
+  //         >
+  //           <ThumbDownIcon />
+  //         </Button>
+  //       </Tooltip>
+  //     );
+  // };
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -199,6 +187,8 @@ const Tables = ({
                 clickOnCar={clickOnCar}
                 getIsLike={getIsLike}
                 handleClickFromTables={handleClick}
+                isLoggedIn={isLoggedIn}
+                handleLikeBtnClick={handleLikeBtnClick}
               />
               {/* {visibleRows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);

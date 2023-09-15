@@ -22,6 +22,8 @@ const VisibleRows = ({
   clickOnCar,
   getIsLike,
   handleClickFromTables,
+  isLoggedIn,
+  handleLikeBtnClick,
 }) => {
   const isSelected = (id) => selected.indexOf(id) !== -1;
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
@@ -74,7 +76,9 @@ const VisibleRows = ({
             <TableCell align="right">{row.yearOfProduction}</TableCell>
             <TableCell align="right">{row.previousOwners}</TableCell>
             <TableCell align="right">{row.phone}</TableCell>
-            <TableCell align="right">{getIsLike(isLike, row.id)}</TableCell>
+            <TableCell align="right">
+              {getIsLike(isLike, row.id, isLoggedIn, handleLikeBtnClick)}
+            </TableCell>
             <TableCell align="right">
               {
                 <Tooltip
