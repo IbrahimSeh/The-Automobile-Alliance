@@ -8,18 +8,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-// import AdsClickIcon from "@mui/icons-material/AdsClick";
-// import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
-// import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import Switch from "@mui/material/Switch";
 import EnhancedTableToolbar from "../../Car/TableComponent/EnhancedTableToolbar";
 import EnhancedTableHead from "../../Car/TableComponent/EnhancedTableHead";
 import createData from "../../Car/TableComponent/helpers/createDataAsRows";
-// import stableSort from "../../Car/TableComponent/helpers/stableSort";
-// import getComparator from "../../Car/TableComponent/helpers/getComparator";
-// import { Button, Fade, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
 import VisibleRows from "../../Car/TableComponent/VisibleRows";
 import getIsLike from "../../Car/TableComponent/helpers/getIsLike";
@@ -52,6 +45,9 @@ const Tables = ({
   };
   const onDelete = (id) => {
     setSelected([]);
+    let lenAfterDeleteItems = rows.length - selected.length;
+    let newpage = lenAfterDeleteItems % rowsPerPage;
+    if (lenAfterDeleteItems < rowsPerPage || newpage === 0) setPage(page - 1);
     handleDeleteFromInitialCarsArr(id);
   };
   const onEdit = (id) => {
@@ -114,42 +110,6 @@ const Tables = ({
     }
   };
 
-  // const getIsLike = (isLike, id) => {
-  //   if (!isLoggedIn) return "";
-  //   if (isLike)
-  //     return (
-  //       <Tooltip
-  //         TransitionComponent={Fade}
-  //         TransitionProps={{ timeout: 600 }}
-  //         title="Dislike Car"
-  //         placement="bottom-end"
-  //       >
-  //         <Button
-  //           sx={{ color: "red" }}
-  //           onClick={(event) => handleLikeBtnClick(event, id)}
-  //         >
-  //           <FavoriteRoundedIcon />
-  //         </Button>
-  //       </Tooltip>
-  //     );
-  //   if (!isLike)
-  //     return (
-  //       <Tooltip
-  //         TransitionComponent={Fade}
-  //         TransitionProps={{ timeout: 600 }}
-  //         title="Like Car"
-  //         placement="bottom-end"
-  //       >
-  //         <Button
-  //           sx={{ color: "brown" }}
-  //           onClick={(event) => handleLikeBtnClick(event, id)}
-  //         >
-  //           <ThumbDownIcon />
-  //         </Button>
-  //       </Tooltip>
-  //     );
-  // };
-
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -190,68 +150,6 @@ const Tables = ({
                 isLoggedIn={isLoggedIn}
                 handleLikeBtnClick={handleLikeBtnClick}
               />
-              {/* {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
-                const labelId = `enhanced-table-checkbox-${index}`;
-                const isLike = row.likes.includes(payload && payload._id)
-                  ? true
-                  : false;
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.id)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {index}
-                    </TableCell>
-                    <TableCell align="right">{row.manufacturer}</TableCell>
-                    <TableCell align="right">{row.type}</TableCell>
-                    <TableCell align="right">{row.yearOfProduction}</TableCell>
-                    <TableCell align="right">{row.previousOwners}</TableCell>
-                    <TableCell align="right">{row.phone}</TableCell>
-                    <TableCell align="right">
-                      {getIsLike(isLike, row.id)}
-                    </TableCell>
-                    <TableCell align="right">
-                      {
-                        <Tooltip
-                          TransitionComponent={Fade}
-                          TransitionProps={{ timeout: 600 }}
-                          title="take a closer look"
-                          placement="bottom-end"
-                        >
-                          <Button
-                            sx={{ color: "#008e24" }}
-                            onClick={(event) => clickOnCar(event, row.id)}
-                          >
-                            <AdsClickIcon />
-                          </Button>
-                        </Tooltip>
-                      }
-                    </TableCell>
-                  </TableRow>
-                );
-              })} */}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
