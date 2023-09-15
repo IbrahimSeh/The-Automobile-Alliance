@@ -5,6 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import { Box, Checkbox, TableSortLabel } from "@mui/material";
 import headCells from "./helpers/headCells";
 import { visuallyHidden } from "@mui/utils";
+import acceptOrRejectHeader from "./helpers/acceptOrRejectHeader";
 
 const EnhancedTableHead = (props) => {
   const {
@@ -35,7 +36,8 @@ const EnhancedTableHead = (props) => {
           />
         </TableCell>
         {headCells.map((headCell) => {
-          if (headCell.id === "like" && pageName === "RequestsPage") return "";
+          if (headCell.id === "like" && pageName === "RequestsPage")
+            return acceptOrRejectHeader(orderBy, order, createSortHandler);
           return (
             <TableCell
               key={headCell.id}

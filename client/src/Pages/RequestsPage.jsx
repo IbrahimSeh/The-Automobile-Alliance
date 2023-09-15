@@ -141,6 +141,8 @@ const RequestsPage = () => {
           carsArrFromHome={carsArr}
           handleOnClick={handleOnClick}
           pageName={"RequestsPage"}
+          onAccept={handleLikesFromInitialCarsArr}
+          onReject={handleDeleteFromInitialCarsArr}
           // handleDeleteFromInitialCarsArr
           // handleEditFromInitialCarsArr
         />

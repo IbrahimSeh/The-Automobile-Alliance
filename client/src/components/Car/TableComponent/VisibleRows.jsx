@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import AdsClickIcon from "@mui/icons-material/AdsClick";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import {
   Button,
   Checkbox,
@@ -11,6 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import stableSort from "./helpers/stableSort";
 import getComparator from "./helpers/getComparator";
+import acceptOrRejectVisibleRows from "./helpers/acceptOrRejectVisibleRows";
 
 const VisibleRows = ({
   rows,
@@ -25,6 +28,8 @@ const VisibleRows = ({
   isLoggedIn,
   handleLikeBtnClick,
   pageName,
+  onAccept,
+  onReject,
 }) => {
   const isSelected = (id) => selected.indexOf(id) !== -1;
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
@@ -39,6 +44,16 @@ const VisibleRows = ({
 
   const handleClick = (event, id) => {
     handleClickFromTables(event, id);
+  };
+
+  const handelThumpUpClick = async (event, id) => {
+    event.stopPropagation();
+    onAccept(id);
+  };
+
+  const handelThumpDownClick = async (event, id) => {
+    event.stopPropagation();
+    onReject(id);
   };
 
   return (
@@ -78,7 +93,11 @@ const VisibleRows = ({
             <TableCell align="right">{row.previousOwners}</TableCell>
             <TableCell align="right">{row.phone}</TableCell>
             {pageName === "RequestsPage" ? (
-              ""
+              acceptOrRejectVisibleRows(
+                handelThumpDownClick,
+                handelThumpUpClick,
+                row.id
+              )
             ) : (
               <TableCell align="right">
                 {getIsLike(isLike, row.id, isLoggedIn, handleLikeBtnClick)}

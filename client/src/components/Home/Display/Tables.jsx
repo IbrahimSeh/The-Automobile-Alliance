@@ -24,6 +24,8 @@ const Tables = ({
   handleEditFromInitialCarsArr,
   pageName,
   collection,
+  onAccept,
+  onReject,
 }) => {
   let apiCollection;
   let rows = createData(carsArrFromHome);
@@ -154,6 +156,8 @@ const Tables = ({
                 isLoggedIn={isLoggedIn}
                 handleLikeBtnClick={handleLikeBtnClick}
                 pageName={pageName}
+                onAccept={onAccept}
+                onReject={onReject}
               />
               {emptyRows > 0 && (
                 <TableRow
