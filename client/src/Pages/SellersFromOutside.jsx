@@ -1,19 +1,27 @@
-import { Box, Grid, LinearProgress, Typography } from "@mui/material";
+import { Box, LinearProgress, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+//import { useSelector } from "react-redux";
+import { displayActions } from "../redux/display";
 import ROUTES from "../routes/ROUTES";
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import useQueryParams from "../hooks/useQueryParams";
 import { toast } from "react-toastify";
-import CarComponent from "../components/Car/CarComponent/CarComponent";
+//import CarComponent from "../components/Car/CarComponent/CarComponent";
 import DviderLine from "../components/Home/DviderLine";
+import ControlledOpenSpeedDial from "../components/Home/ControlledOpenSpeedDial";
+import { useDispatch, useSelector } from "react-redux";
+import Tabs from "../components/Home/Display/Tabs";
+import Tables from "../components/Home/Display/Tables";
 
 const SellersFromOutside = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
-  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+  const toDisplay = useSelector(
+    (bigPie) => bigPie.displaySlice.display.sellers
+  );
+  //const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   let qparams = useQueryParams();
 
@@ -79,6 +87,10 @@ const SellersFromOutside = () => {
     }
   };
 
+  const handleGetDisplayName = (nameOfDispaly) => {
+    dispatch(displayActions.setDisplayPage("sellers"));
+  };
+
   const handleDeleteFromInitialCarsArr = async (id) => {
     try {
       await axios.delete("/VAR/" + id);
@@ -108,7 +120,23 @@ const SellersFromOutside = () => {
   return (
     <Box className="myCarBox" mt={3}>
       <DviderLine text={"Offers for selling cars from outside the showroom"} />
-      <Grid container spacing={2}>
+      <ControlledOpenSpeedDial getDisplayName={handleGetDisplayName} />
+      {toDisplay === false ? (
+        <Tabs
+          carsArrFromHome={carsArr}
+          handleOnClick={handleOnClick}
+          handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
+          handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+        />
+      ) : (
+        <Tables
+          carsArrFromHome={carsArr}
+          handleOnClick={handleOnClick}
+          handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
+          handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+        />
+      )}
+      {/* <Grid container spacing={2}>
         {carsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
             <CarComponent
@@ -151,7 +179,7 @@ const SellersFromOutside = () => {
             />
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     </Box>
   );
 };

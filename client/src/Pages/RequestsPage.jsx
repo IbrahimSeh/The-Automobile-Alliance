@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { displayActions } from "../redux/display";
 import Tables from "../components/Home/Display/Tables";
 import Tabs from "../components/Home/Display/Tabs";
+import TabsForRequestPage from "../components/Home/Display/TabsForRequestPage";
 
 const RequestsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
@@ -131,10 +132,11 @@ const RequestsPage = () => {
       </Typography>
       <ControlledOpenSpeedDial getDisplayName={handleGetDisplayName} />
       {toDisplay === false ? (
-        <Tabs
-          carsArrFromHome={carsArr}
+        <TabsForRequestPage
+          carsArr={carsArr}
           handleOnClick={handleOnClick}
-          pageName={"RequestsPage"}
+          handleLikesFromInitialCarsArr={handleLikesFromInitialCarsArr}
+          handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
         />
       ) : (
         <Tables
@@ -143,44 +145,8 @@ const RequestsPage = () => {
           pageName={"RequestsPage"}
           onAccept={handleLikesFromInitialCarsArr}
           onReject={handleDeleteFromInitialCarsArr}
-          // handleDeleteFromInitialCarsArr
-          // handleEditFromInitialCarsArr
         />
       )}
-      {/* <Grid container spacing={2}>
-        {carsArr.map((item) => (
-          <Grid item xs={4} key={item._id + Date.now()}>
-            <RequestsComponent
-              img={item.image ? item.image.url[0] : ""}
-              manufacturer={
-                item.manufacturerData ? item.manufacturerData.manufacturer : ""
-              }
-              type={item.manufacturerData ? item.manufacturerData.type : ""}
-              subType={
-                item.manufacturerData ? item.manufacturerData.subType : ""
-              }
-              yearOfProduction={
-                item.yearOfProduction ? item.yearOfProduction : ""
-              }
-              phone={item.phone}
-              address={
-                item.address
-                  ? item.address.country +
-                    ", " +
-                    item.address.city +
-                    ", " +
-                    item.address.street
-                  : ""
-              }
-              id={item._id}
-              clickOnCar={handleOnClick}
-              bizNumber={item.bizNumber}
-              onDelete={handleDeleteFromInitialCarsArr}
-              onLike={handleLikesFromInitialCarsArr}
-            />
-          </Grid>
-        ))}
-      </Grid> */}
     </Box>
   );
 };

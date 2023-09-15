@@ -3,20 +3,35 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import ROUTES from "../routes/ROUTES";
+import { displayActions } from "../redux/display";
 import CarComponent from "../components/Car/CarComponent/CarComponent";
 import useQueryParams from "../hooks/useQueryParams";
 import FavVarsPage from "./FavVarsPage";
 import DviderLine from "../components/Home/DviderLine";
+import ControlledOpenSpeedDial from "../components/Home/ControlledOpenSpeedDial";
+import Tabs from "../components/Home/Display/Tabs";
+import Tables from "../components/Home/Display/Tables";
+
+const commonStyles = {
+  bgcolor: "#b39ddb",
+  m: 1,
+  p: 1,
+  border: 3,
+  borderColor: "secondary.main",
+  borderRadius: 1,
+};
 
 const FavCarsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
   const navigate = useNavigate();
   let qparams = useQueryParams();
+  const dispatch = useDispatch();
+  const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.favCar);
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   let userID = "";
 
@@ -111,13 +126,8 @@ const FavCarsPage = () => {
     return <CircularProgress />;
   }
 
-  const commonStyles = {
-    bgcolor: "#b39ddb",
-    m: 1,
-    p: 1,
-    border: 3,
-    borderColor: "secondary.main",
-    borderRadius: 1,
+  const handleGetDisplayName = (nameOfDispaly) => {
+    dispatch(displayActions.setDisplayPage("favCar"));
   };
 
   return (
@@ -142,54 +152,22 @@ const FavCarsPage = () => {
           <Typography mb={3} variant="h3" color="blue">
             Collection of you'r favorite Vehicle from Automobile Alliance
           </Typography>
-          <Grid container spacing={2}>
-            {carsArr.map((item) => (
-              <Grid item xs={4} key={item._id + Date.now()}>
-                <CarComponent
-                  img={item.image ? item.image.url[0] : ""}
-                  manufacturer={
-                    item.manufacturerData
-                      ? item.manufacturerData.manufacturer
-                      : ""
-                  }
-                  type={item.manufacturerData ? item.manufacturerData.type : ""}
-                  subType={
-                    item.manufacturerData ? item.manufacturerData.subType : ""
-                  }
-                  yearOfProduction={
-                    item.yearOfProduction ? item.yearOfProduction : ""
-                  }
-                  phone={item.phone}
-                  address={
-                    item.address
-                      ? item.address.country +
-                        ", " +
-                        item.address.city +
-                        ", " +
-                        item.address.street
-                      : ""
-                  }
-                  id={item._id}
-                  clickOnCar={handleOnClick}
-                  bizNumber={item.bizNumber}
-                  userId={item.user_id}
-                  onDelete={handleDeleteFromInitialCarsArr}
-                  candelete={
-                    (payload && payload.isAdmin) ||
-                    (item.user_id === userID &&
-                      payload &&
-                      payload.isSubscription)
-                  }
-                  onEdit={handleEditFromInitialCarsArr}
-                  canEdit={
-                    item.user_id === userID && payload && payload.isSubscription
-                  }
-                  onLike={handleLikesFromInitialCarsArr}
-                  disLike={true}
-                />
-              </Grid>
-            ))}
-          </Grid>
+          <ControlledOpenSpeedDial getDisplayName={handleGetDisplayName} />
+          {toDisplay === false ? (
+            <Tabs
+              carsArrFromHome={carsArr}
+              handleOnClick={handleOnClick}
+              handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
+              handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+            />
+          ) : (
+            <Tables
+              carsArrFromHome={carsArr}
+              handleOnClick={handleOnClick}
+              handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
+              handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+            />
+          )}
         </Fragment>
       )}
       <FavVarsPage />

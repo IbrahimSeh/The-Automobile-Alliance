@@ -119,7 +119,23 @@ const FavVarsPage = () => {
           <Typography mb={3} variant="h3" color="blue">
             Collection of you'r favorite Vehicle from other sellers
           </Typography>
-          <Grid container spacing={2}>
+          <ControlledOpenSpeedDial getDisplayName={handleGetDisplayName} />
+          {toDisplay === false ? (
+            <Tabs
+              carsArrFromHome={carsArr}
+              handleOnClick={handleOnClick}
+              handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
+              handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+            />
+          ) : (
+            <Tables
+              carsArrFromHome={carsArr}
+              handleOnClick={handleOnClick}
+              handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
+              handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+            />
+          )}
+          {/* <Grid container spacing={2}>
             {carsArr.map((item) => (
               <Grid item xs={4} key={item._id + Date.now()}>
                 <CarComponent
@@ -165,7 +181,7 @@ const FavVarsPage = () => {
                 />
               </Grid>
             ))}
-          </Grid>
+          </Grid> */}
         </Fragment>
       )}
     </Box>
