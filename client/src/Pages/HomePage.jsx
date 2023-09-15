@@ -18,10 +18,8 @@ const HomePage = () => {
   const [carsArr, setCarsArr] = useState(null);
   const [arrLikeToUser, setArrLikeToUser] = useState([]);
   const navigate = useNavigate();
-  //const [toDisplay, setToDisplay] = useState("tables");
   const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.home);
   const dispatch = useDispatch();
-  //console.log("toDisplay = ", toDisplay);
   let qparams = useQueryParams();
 
   //first useEffect when page load

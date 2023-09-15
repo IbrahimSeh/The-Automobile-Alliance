@@ -8,17 +8,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
+// import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import AdsClickIcon from "@mui/icons-material/AdsClick";
+// import AdsClickIcon from "@mui/icons-material/AdsClick";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import Switch from "@mui/material/Switch";
 import EnhancedTableToolbar from "../../Car/TableComponent/EnhancedTableToolbar";
 import EnhancedTableHead from "../../Car/TableComponent/EnhancedTableHead";
 import createData from "../../Car/TableComponent/helpers/createDataAsRows";
-import stableSort from "../../Car/TableComponent/helpers/stableSort";
-import getComparator from "../../Car/TableComponent/helpers/getComparator";
+// import stableSort from "../../Car/TableComponent/helpers/stableSort";
+// import getComparator from "../../Car/TableComponent/helpers/getComparator";
 import { Button, Fade, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
 import VisibleRows from "../../Car/TableComponent/VisibleRows";
@@ -40,7 +40,7 @@ const Tables = ({
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+  // const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
@@ -51,8 +51,14 @@ const Tables = ({
     event.stopPropagation();
     handleOnClick(id);
   };
-  const onDelete = (id) => handleDeleteFromInitialCarsArr(id);
-  const onEdit = (id) => handleEditFromInitialCarsArr(id);
+  const onDelete = (id) => {
+    setSelected([]);
+    handleDeleteFromInitialCarsArr(id);
+  };
+  const onEdit = (id) => {
+    setSelected([]);
+    handleEditFromInitialCarsArr(id);
+  };
   const onLike = (id) => handelOnLike(id);
 
   const handleRequestSort = (event, property) => {
@@ -101,14 +107,14 @@ const Tables = ({
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = React.useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage, rows]
-  );
+  // const visibleRows = React.useMemo(
+  //   () =>
+  //     stableSort(rows, getComparator(order, orderBy)).slice(
+  //       page * rowsPerPage,
+  //       page * rowsPerPage + rowsPerPage
+  //     ),
+  //   [order, orderBy, page, rowsPerPage, rows]
+  // );
 
   const handleLikeBtnClick = async (event, id) => {
     event.stopPropagation();
