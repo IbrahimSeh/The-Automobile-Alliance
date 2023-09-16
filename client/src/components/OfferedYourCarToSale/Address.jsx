@@ -16,6 +16,7 @@ const Address = ({ passData }) => {
   //first useEffect when page load
   useEffect(() => {
     if (addressData.state !== "") {
+      console.log("in if");
       setState(addressData.state);
       handleBlurState();
     }
@@ -32,7 +33,7 @@ const Address = ({ passData }) => {
       handleBlurStreet();
     }
   }, []);
-
+  //onchange
   const handleChangeState = (event) => {
     setState(event.target.value);
     passData("state", event.target.value);
@@ -49,8 +50,10 @@ const Address = ({ passData }) => {
     setStreet(event.target.value);
     passData("street", event.target.value);
   };
+  //onBlur
   const handleBlurState = () => {
     joiResponse = validateAddressSchema({ state });
+    console.log("joiResponse = ", joiResponse);
     setInputsErrorsState(joiResponse);
   };
   const handleBlurCountry = () => {

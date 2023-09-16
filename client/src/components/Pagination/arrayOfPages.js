@@ -29,8 +29,8 @@ const imageData = {
     alt: [],
 }
 const restData = {
-    previousOwners: "",
-    kilometers: "",
+    previousOwners: 0,
+    kilometers: 0,
     yearOfProduction: "",
 }
 
