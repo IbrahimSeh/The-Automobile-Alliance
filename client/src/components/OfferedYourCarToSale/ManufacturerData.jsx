@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Grid,
   MenuItem,
@@ -10,11 +11,16 @@ import { carManufacturer } from "../Form/GridComponent/helper/carManufacturerSel
 import typeSelection from "../Form/GridComponent/helper/typeSelection";
 import { useEffect, useState } from "react";
 import { manufacturerData } from "../Pagination/arrayOfPages";
+import validateManufacturerDataSchema from "../../validation/OfferedCarToSale/ManufacturerData";
 
 const ManufacturerData = ({ passData }) => {
   const [manufacturer, setManufacturer] = useState("ALL");
   const [type, setType] = useState("");
   const [subType, setSubType] = useState("");
+
+  //validate
+  const [inputsErrorsState, setInputsErrorsState] = useState(null);
+  let joiResponse;
 
   //Popover
   const [anchorEl, setAnchorEl] = useState(null);
@@ -27,7 +33,10 @@ const ManufacturerData = ({ passData }) => {
     if (manufacturerData.manufacturer !== "")
       setManufacturer(manufacturerData.manufacturer);
     if (manufacturerData.type !== "") setType(manufacturerData.type);
-    if (manufacturerData.subType !== "") setSubType(manufacturerData.subType);
+    if (manufacturerData.subType !== "") {
+      setSubType(manufacturerData.subType);
+      handleBlurSubType();
+    }
   }, []);
 
   const handleChangeManufacturer = (event) => {
@@ -43,6 +52,10 @@ const ManufacturerData = ({ passData }) => {
   const handleChangeSubType = (event) => {
     setSubType(event.target.value);
     passData("subType", event.target.value);
+  };
+  const handleBlurSubType = () => {
+    joiResponse = validateManufacturerDataSchema({ subType });
+    setInputsErrorsState(joiResponse);
   };
   const getDisable = () => {
     if (manufacturer === "ALL") return true;
@@ -109,7 +122,6 @@ const ManufacturerData = ({ passData }) => {
             ) : (
               ""
             )}
-
             <TextField
               aria-owns="mouse-over-popover"
               aria-haspopup="true"
@@ -141,7 +153,19 @@ const ManufacturerData = ({ passData }) => {
               fullWidth
               value={subType}
               onChange={handleChangeSubType}
+              onBlur={handleBlurSubType}
             />
+            {inputsErrorsState && inputsErrorsState["subType"] && (
+              <Alert severity="warning">
+                {inputsErrorsState["subType"].map((item) => (
+                  <div key={`${"subType"}-errors` + item}>
+                    {item.includes("pattern:")
+                      ? item.split("pattern:")[0] + "pattern"
+                      : item}
+                  </div>
+                ))}
+              </Alert>
+            )}
           </Grid>
         </Grid>
       </div>

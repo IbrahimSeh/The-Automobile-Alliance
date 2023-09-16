@@ -1,15 +1,26 @@
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Box, Grid, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { communicationsData } from "../Pagination/arrayOfPages";
+import validateCommunicationsSchema from "../../validation/OfferedCarToSale/Communications";
 
 const Communications = ({ passData }) => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
+  //validate
+  const [inputsErrorsState, setInputsErrorsState] = useState(null);
+  let joiResponse;
+
   //first useEffect when page load
   useEffect(() => {
-    if (communicationsData.phone !== "") setPhone(communicationsData.phone);
-    if (communicationsData.email !== "") setEmail(communicationsData.email);
+    if (communicationsData.phone !== "") {
+      setPhone(communicationsData.phone);
+      handleBlurPhone();
+    }
+    if (communicationsData.email !== "") {
+      setEmail(communicationsData.email);
+      handleBlurEmail();
+    }
   }, []);
 
   const handleChangePhone = (event) => {
@@ -20,7 +31,14 @@ const Communications = ({ passData }) => {
     setEmail(event.target.value);
     passData("email", event.target.value);
   };
-
+  const handleBlurPhone = () => {
+    joiResponse = validateCommunicationsSchema({ phone });
+    setInputsErrorsState(joiResponse);
+  };
+  const handleBlurEmail = () => {
+    joiResponse = validateCommunicationsSchema({ email });
+    setInputsErrorsState(joiResponse);
+  };
   return (
     <Box
       sx={{
@@ -46,7 +64,19 @@ const Communications = ({ passData }) => {
               autoComplete="Currect Phone"
               value={phone}
               onChange={handleChangePhone}
+              onBlur={handleBlurPhone}
             />
+            {inputsErrorsState && inputsErrorsState["phone"] && (
+              <Alert severity="warning">
+                {inputsErrorsState["phone"].map((item) => (
+                  <div key={`${"phone"}-errors` + item}>
+                    {item.includes("pattern:")
+                      ? item.split("pattern:")[0] + "pattern"
+                      : item}
+                  </div>
+                ))}
+              </Alert>
+            )}
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
@@ -58,7 +88,19 @@ const Communications = ({ passData }) => {
               autoComplete="Currect Email"
               value={email}
               onChange={handleChangeEmail}
+              onBlur={handleBlurEmail}
             />
+            {inputsErrorsState && inputsErrorsState["email"] && (
+              <Alert severity="warning">
+                {inputsErrorsState["email"].map((item) => (
+                  <div key={`${"email"}-errors` + item}>
+                    {item.includes("pattern:")
+                      ? item.split("pattern:")[0] + "pattern"
+                      : item}
+                  </div>
+                ))}
+              </Alert>
+            )}
           </Grid>
         </Grid>
       </div>

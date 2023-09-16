@@ -1,6 +1,7 @@
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Box, Grid, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { addressData } from "../Pagination/arrayOfPages";
+import validateAddressSchema from "../../validation/OfferedCarToSale/Address";
 
 const Address = ({ passData }) => {
   const [state, setState] = useState("");
@@ -8,12 +9,28 @@ const Address = ({ passData }) => {
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
 
+  //validate
+  const [inputsErrorsState, setInputsErrorsState] = useState(null);
+  let joiResponse;
+
   //first useEffect when page load
   useEffect(() => {
-    if (addressData.state !== "") setState(addressData.state);
-    if (addressData.country !== "") setCountry(addressData.country);
-    if (addressData.city !== "") setCity(addressData.city);
-    if (addressData.street !== "") setStreet(addressData.street);
+    if (addressData.state !== "") {
+      setState(addressData.state);
+      handleBlurState();
+    }
+    if (addressData.country !== "") {
+      setCountry(addressData.country);
+      handleBlurCountry();
+    }
+    if (addressData.city !== "") {
+      setCity(addressData.city);
+      handleBlurCity();
+    }
+    if (addressData.street !== "") {
+      setStreet(addressData.street);
+      handleBlurStreet();
+    }
   }, []);
 
   const handleChangeState = (event) => {
@@ -28,9 +45,25 @@ const Address = ({ passData }) => {
     setCity(event.target.value);
     passData("city", event.target.value);
   };
-  const handleChangestreet = (event) => {
+  const handleChangeStreet = (event) => {
     setStreet(event.target.value);
     passData("street", event.target.value);
+  };
+  const handleBlurState = () => {
+    joiResponse = validateAddressSchema({ state });
+    setInputsErrorsState(joiResponse);
+  };
+  const handleBlurCountry = () => {
+    joiResponse = validateAddressSchema({ country });
+    setInputsErrorsState(joiResponse);
+  };
+  const handleBlurCity = () => {
+    joiResponse = validateAddressSchema({ city });
+    setInputsErrorsState(joiResponse);
+  };
+  const handleBlurStreet = () => {
+    joiResponse = validateAddressSchema({ street });
+    setInputsErrorsState(joiResponse);
   };
 
   return (
@@ -56,7 +89,19 @@ const Address = ({ passData }) => {
               label={"state"}
               value={state}
               onChange={handleChangeState}
+              onBlur={handleBlurState}
             />
+            {inputsErrorsState && inputsErrorsState["state"] && (
+              <Alert severity="warning">
+                {inputsErrorsState["state"].map((item) => (
+                  <div key={`${"state"}-errors` + item}>
+                    {item.includes("pattern:")
+                      ? item.split("pattern:")[0] + "pattern"
+                      : item}
+                  </div>
+                ))}
+              </Alert>
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -69,7 +114,19 @@ const Address = ({ passData }) => {
               autoComplete="Currect Country"
               value={country}
               onChange={handleChangeCountry}
+              onBlur={handleBlurCountry}
             />
+            {inputsErrorsState && inputsErrorsState["country"] && (
+              <Alert severity="warning">
+                {inputsErrorsState["country"].map((item) => (
+                  <div key={`${"country"}-errors` + item}>
+                    {item.includes("pattern:")
+                      ? item.split("pattern:")[0] + "pattern"
+                      : item}
+                  </div>
+                ))}
+              </Alert>
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -81,7 +138,19 @@ const Address = ({ passData }) => {
               label={"city"}
               value={city}
               onChange={handleChangeCity}
+              onBlur={handleBlurCity}
             />
+            {inputsErrorsState && inputsErrorsState["city"] && (
+              <Alert severity="warning">
+                {inputsErrorsState["city"].map((item) => (
+                  <div key={`${"city"}-errors` + item}>
+                    {item.includes("pattern:")
+                      ? item.split("pattern:")[0] + "pattern"
+                      : item}
+                  </div>
+                ))}
+              </Alert>
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -92,8 +161,20 @@ const Address = ({ passData }) => {
               id={"street"}
               label={"street"}
               value={street}
-              onChange={handleChangestreet}
+              onChange={handleChangeStreet}
+              onBlur={handleBlurStreet}
             />
+            {inputsErrorsState && inputsErrorsState["street"] && (
+              <Alert severity="warning">
+                {inputsErrorsState["street"].map((item) => (
+                  <div key={`${"street"}-errors` + item}>
+                    {item.includes("pattern:")
+                      ? item.split("pattern:")[0] + "pattern"
+                      : item}
+                  </div>
+                ))}
+              </Alert>
+            )}
           </Grid>
         </Grid>
       </div>
