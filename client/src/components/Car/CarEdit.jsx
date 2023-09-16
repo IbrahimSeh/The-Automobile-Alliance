@@ -20,6 +20,7 @@ import useQueryParams from "../../hooks/useQueryParams";
 import UploadImage from "../Form/GridComponent/UploadImage/UploadImage";
 import AlertDialogSlide from "../Dialog(Popup)/AlertDialogSlide";
 import validateCarSchemaGroup3 from "../../validation/CreateCarValidation/Group1";
+import updateSelectedImage from "./updateSelectedImage";
 
 const CarEdit = () => {
   let qparams = useQueryParams();
@@ -162,24 +163,6 @@ const CarEdit = () => {
   const updateSelectedUrl = (url) => setUrl(url);
   const handelClose = () => setOpenDialog(false);
 
-  const updateSelectedImage = (event) => {
-    let tempalt = [];
-    if (event.target.files[0]) tempalt[0] = event.target.files[0].name;
-    if (event.target.files[1]) tempalt[1] = event.target.files[1].name;
-    if (event.target.files[2]) tempalt[2] = event.target.files[2].name;
-    updateSelectedAlt(tempalt);
-    let tempurl = [];
-    const reader = new FileReader();
-    const reader1 = new FileReader();
-    const reader2 = new FileReader();
-    reader.onloadend = () => (tempurl[0] = reader.result);
-    reader1.onloadend = () => (tempurl[1] = reader1.result);
-    reader2.onloadend = () => (tempurl[2] = reader2.result);
-    if (event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
-    if (event.target.files[1]) reader1.readAsDataURL(event.target.files[1]);
-    if (event.target.files[2]) reader2.readAsDataURL(event.target.files[2]);
-    updateSelectedUrl(tempurl);
-  };
   return (
     <Container component="main" maxWidth="md">
       <Box
@@ -276,7 +259,9 @@ const CarEdit = () => {
               </Grid>
             ))}
             <UploadImage
-              passSelectedFromChildToParent={updateSelectedImage}
+              passSelectedFromChildToParent={(event) =>
+                updateSelectedImage(event, updateSelectedAlt, updateSelectedUrl)
+              }
               itemDataFromCarEdit={tempItemData}
             />
             <CRComponent
