@@ -1,0 +1,40 @@
+import { toast } from "react-toastify";
+import ROUTES from "../../routes/ROUTES";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const PostCreateCar = async (manufacturer, type, inputState, yearOfProductionSelected, previousOwners, kilometers,
+    fuelType, url, alt) => {
+    const navigate = useNavigate();
+    try {
+        await axios.post("/cars/", {
+            manufacturerData: {
+                manufacturer: manufacturer,
+                type: type,
+                subType: inputState.subType,
+            },
+            yearOfProduction: yearOfProductionSelected.$y,
+            previousOwners: previousOwners,
+            kilometers: kilometers,
+            engine: {
+                engineType: inputState.engineType,
+                fuelType: fuelType,
+            },
+            image: { url: url, alt: alt },
+            address: {
+                state: inputState.state,
+                country: inputState.country,
+                city: inputState.city,
+                street: inputState.street,
+            },
+            communications: { phone: inputState.phone, email: inputState.email },
+        });
+
+        toast.success("A new car has been created");
+        navigate(ROUTES.HOME);
+    } catch (err) {
+        console.log("error from axios", err.response.data);
+        toast.error("the car has been not created");
+    }
+}
+export default PostCreateCar;

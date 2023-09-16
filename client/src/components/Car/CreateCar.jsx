@@ -62,7 +62,6 @@ const CreateCar = () => {
       setOpenDialog(true);
       return;
     }
-
     try {
       await axios.post("/cars/", {
         manufacturerData: {

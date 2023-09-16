@@ -273,7 +273,7 @@ const CarEdit = () => {
 
           <SubmitComponent
             onClick={handleBtnSubmitClick}
-            disablebtn={!btnDisable1 && !btnDisable2}
+            disablebtn={btnDisable1 || btnDisable2}
             from={""}
           />
         </Box>
