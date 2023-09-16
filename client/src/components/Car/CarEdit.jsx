@@ -25,7 +25,7 @@ import updateSelectedImage from "./updateSelectedImage";
 const CarEdit = () => {
   let qparams = useQueryParams();
   const [inputState] = useState({});
-  const [manufacturerSelected, setManufacturerSelected] = useState("SKODA");
+  const [manufacturer, setManufacturer] = useState("SKODA");
   const [previousOwners, setPreviousOwners] = useState(0);
   const [kilometers, setKilometers] = useState(0);
   const [fuelType, setFuelType] = useState("");
@@ -54,7 +54,7 @@ const CarEdit = () => {
         inputState.phone = inputState.communications.phone;
         inputState.email = inputState.communications.email;
         delete inputState.communications;
-        setManufacturerSelected(inputState.manufacturerData.manufacturer);
+        setManufacturer(inputState.manufacturerData.manufacturer);
         setType(inputState.manufacturerData.type);
         inputState.subType = inputState.manufacturerData.subType;
         delete inputState.manufacturerData;
@@ -107,19 +107,20 @@ const CarEdit = () => {
   ];
   const handleBtnSubmitClick = async (ev) => {
     //validate manufacturer, type & fuelType
-    if (
-      validateCarSchemaGroup3(manufacturerSelected, type, fuelType).length !== 0
-    ) {
-      setDialogErrMsg(
-        validateCarSchemaGroup3(manufacturerSelected, type, fuelType)
-      );
+    let resultfromGroup3 = validateCarSchemaGroup3(
+      manufacturer,
+      type,
+      fuelType
+    );
+    if (resultfromGroup3.length !== 0) {
+      setDialogErrMsg(resultfromGroup3);
       setOpenDialog(true);
       return;
     }
     try {
       await axios.put("/cars/" + qparams.id, {
         manufacturerData: {
-          manufacturer: manufacturerSelected,
+          manufacturer: manufacturer,
           type: type,
           subType: inputState.subType,
         },
@@ -153,7 +154,7 @@ const CarEdit = () => {
   const updateState = (key, value) => (inputState[key] = value);
   const onBlurHandel1 = (submitLock1) => setbtnDisable1(submitLock1);
   const onBlurHandel2 = (submitLock2) => setbtnDisable2(submitLock2);
-  const updateSelectedManufacturer = (value) => setManufacturerSelected(value);
+  const updateSelectedManufacturer = (value) => setManufacturer(value);
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
   const updateSelectedType = (type) => setType(type);
   const updateSelectedYear = (year) => setYearOfProduction(year);
@@ -191,8 +192,8 @@ const CarEdit = () => {
                 passSelectedFromChildToParent={updateSelectedManufacturer}
                 listOfSelection={carManufacturer}
                 inputKey={"manufacturer"}
-                selectedManufacturerRelatedToType={manufacturerSelected}
-                inputValue={manufacturerSelected}
+                selectedManufacturerRelatedToType={manufacturer}
+                inputValue={manufacturer}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -201,9 +202,9 @@ const CarEdit = () => {
                 returnManufacturerRelatedToSelectedType={
                   updateSelectedManufacturer
                 }
-                listOfSelection={typeSelection[manufacturerSelected]}
+                listOfSelection={typeSelection[manufacturer]}
                 inputKey={"type"}
-                selectedManufacturer={manufacturerSelected}
+                selectedManufacturer={manufacturer}
                 inputValue={type}
               />
             </Grid>

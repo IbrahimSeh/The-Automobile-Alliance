@@ -49,6 +49,7 @@ const CreateCar = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
   const [dialogErrMsg, setDialogErrMsg] = useState([]);
+
   const handleBtnSubmitClick = async (ev) => {
     //validate manufacturer, type & fuelType
     let resultfromGroup3 = validateCarSchemaGroup3(
