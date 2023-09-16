@@ -31,7 +31,7 @@ const imageData = {
 const restData = {
     previousOwners: 0,
     kilometers: 0,
-    yearOfProduction: "",
+    yearOfProduction: "2022",
 }
 
 const returnManufacturerData = (inputKey, inputValue) => { manufacturerData[inputKey] = inputValue }
@@ -44,11 +44,11 @@ const returnRestData = (inputKey, inputValue) => { restData[inputKey] = inputVal
 
 const arrPaginationComponent = [];
 arrPaginationComponent[0] = <ManufacturerData passData={returnManufacturerData} />;
-arrPaginationComponent[1] = <Communications passData={returnCommunicationsData} />
+arrPaginationComponent[1] = <Communications passData={returnCommunicationsData} prevState={communicationsData} />
 arrPaginationComponent[2] = <Engine passData={returnEngineData} />
-arrPaginationComponent[3] = <Address passData={returnAddressData} />
+arrPaginationComponent[3] = <Address passData={returnAddressData} prevState={addressData} />
 arrPaginationComponent[4] = <Image passSrcData={returnImageSrcData} passAltData={returnImageAltData} />
-arrPaginationComponent[5] = <Rest passData={returnRestData} />
+arrPaginationComponent[5] = <Rest passData={returnRestData} prevState={restData} />
 arrPaginationComponent[6] = <SendRequest />
 
 export { arrPaginationComponent, manufacturerData, communicationsData, engineData, addressData, imageData, restData };

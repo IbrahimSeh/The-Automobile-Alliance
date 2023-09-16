@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { addressData } from "../Pagination/arrayOfPages";
 import validateAddressSchema from "../../validation/OfferedCarToSale/Address";
 
-const Address = ({ passData }) => {
+const Address = ({ passData, prevState }) => {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
@@ -16,7 +16,6 @@ const Address = ({ passData }) => {
   //first useEffect when page load
   useEffect(() => {
     if (addressData.state !== "") {
-      console.log("in if");
       setState(addressData.state);
       handleBlurState();
     }
@@ -25,8 +24,8 @@ const Address = ({ passData }) => {
       handleBlurCountry();
     }
     if (addressData.city !== "") {
-      setCity(addressData.city);
       handleBlurCity();
+      setCity(addressData.city);
     }
     if (addressData.street !== "") {
       setStreet(addressData.street);
@@ -52,20 +51,21 @@ const Address = ({ passData }) => {
   };
   //onBlur
   const handleBlurState = () => {
-    joiResponse = validateAddressSchema({ state });
+    joiResponse = validateAddressSchema(prevState);
     console.log("joiResponse = ", joiResponse);
     setInputsErrorsState(joiResponse);
   };
   const handleBlurCountry = () => {
-    joiResponse = validateAddressSchema({ country });
+    joiResponse = validateAddressSchema(prevState);
     setInputsErrorsState(joiResponse);
   };
   const handleBlurCity = () => {
-    joiResponse = validateAddressSchema({ city });
+    joiResponse = validateAddressSchema(prevState);
+    console.log("joiResponse = ", joiResponse);
     setInputsErrorsState(joiResponse);
   };
   const handleBlurStreet = () => {
-    joiResponse = validateAddressSchema({ street });
+    joiResponse = validateAddressSchema(prevState);
     setInputsErrorsState(joiResponse);
   };
 

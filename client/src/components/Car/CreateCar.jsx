@@ -33,7 +33,7 @@ const CreateCar = () => {
     street: "",
   });
 
-  const [manufacturerSelected, setManufacturerSelected] = useState("ALL");
+  const [manufacturer, setManufacturer] = useState("ALL");
   const [previousOwners, setPreviousOwners] = useState("");
   const [kilometers, setKilometers] = useState("");
   const [fuelType, setFuelType] = useState("");
@@ -50,16 +50,13 @@ const CreateCar = () => {
   const [dialogErrMsg, setDialogErrMsg] = useState([]);
   const handleBtnSubmitClick = async (ev) => {
     //validate manufacturer, type & fuelType
-    if (
-      validateCarSchemaGroup3(manufacturerSelected, type, fuelType).length !== 0
-    ) {
-      console.log(
-        "g3err = ",
-        validateCarSchemaGroup3(manufacturerSelected, type, fuelType)
-      );
-      setDialogErrMsg(
-        validateCarSchemaGroup3(manufacturerSelected, type, fuelType)
-      );
+    let resultfromGroup3 = validateCarSchemaGroup3(
+      manufacturer,
+      type,
+      fuelType
+    );
+    if (resultfromGroup3.length !== 0) {
+      setDialogErrMsg(resultfromGroup3);
       setOpenDialog(true);
       return;
     }
@@ -67,7 +64,7 @@ const CreateCar = () => {
     try {
       await axios.post("/cars/", {
         manufacturerData: {
-          manufacturer: manufacturerSelected,
+          manufacturer: manufacturer,
           type: type,
           subType: inputState.subType,
         },
@@ -101,7 +98,7 @@ const CreateCar = () => {
   const updateState = (key, value) => (inputState[key] = value);
   const onBlurHandel1 = (submitLock1) => setbtnDisable1(submitLock1);
   const onBlurHandel2 = (submitLock2) => setbtnDisable2(submitLock2);
-  const updateSelectedManufacturer = (value) => setManufacturerSelected(value);
+  const updateSelectedManufacturer = (value) => setManufacturer(value);
   const updateSelectedFuelType = (fuelType) => setFuelType(fuelType);
   const updateSelectedType = (type) => setType(type);
   const updateSelectedYear = (year) => setYearOfProduction(year);
@@ -158,13 +155,13 @@ const CreateCar = () => {
                 listOfSelection={carManufacturer}
                 inputKey={"manufacturer"}
                 returnTypeRelatedToSelectedManufacturer={updateSelectedType}
-                selectedManufacturerRelatedToType={manufacturerSelected}
+                selectedManufacturerRelatedToType={manufacturer}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TexFieldSelectForType
                 passSelectedFromChildToParent={updateSelectedType}
-                listOfSelection={typeSelection[manufacturerSelected]}
+                listOfSelection={typeSelection[manufacturer]}
                 inputKey={"type"}
                 returnManufacturerRelatedToSelectedType={
                   updateSelectedManufacturer

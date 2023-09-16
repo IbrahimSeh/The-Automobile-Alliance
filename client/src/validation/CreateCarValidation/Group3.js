@@ -1,7 +1,9 @@
-const Group3 = (manufacturerSelected, type, fuelType) => {
+const Group3 = (manufacturer, type, fuelType) => {
     let msgValidationArr = [];
-    if (manufacturerSelected === "ALL")
-        msgValidationArr[0] = "manufacturerSelected is required"
+    if (manufacturer === "ALL" || manufacturer === "") {
+        console.log('in eff g3');
+        msgValidationArr[0] = "manufacturer is required"
+    }
 
     if (type === "")
         msgValidationArr[1] = "type is required"

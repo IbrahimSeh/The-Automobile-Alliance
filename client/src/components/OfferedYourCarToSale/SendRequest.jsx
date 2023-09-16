@@ -14,14 +14,31 @@ import {
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
+import AlertDialogSlide from "../Dialog(Popup)/AlertDialogSlide";
+import validateCarSchemaGroup3 from "../../validation/CreateCarValidation/Group3";
 import useNumberOfRequest from "../../hooks/useNumberOfRequest";
 
 const SendRequest = () => {
   const [save, setSave] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogErrMsg, setDialogErrMsg] = useState([]);
   const navigate = useNavigate();
   const numberOfRequest = useNumberOfRequest();
 
+  const handelClose = () => setOpenDialog(false);
+
   const handelClickSaveData = async () => {
+    //validate manufacturer, type & fuelType
+    let resultfromGroup3 = validateCarSchemaGroup3(
+      manufacturerData.manufacturer,
+      manufacturerData.type,
+      engineData.fuelType
+    );
+    if (resultfromGroup3.length !== 0) {
+      setDialogErrMsg(resultfromGroup3);
+      setOpenDialog(true);
+      return;
+    }
     try {
       await axios.post("/VAR/", {
         // VAR = Vehicle Advertising Requests
@@ -69,6 +86,11 @@ const SendRequest = () => {
         alignItems: "center",
       }}
     >
+      <AlertDialogSlide
+        falgToOpen={openDialog}
+        closeFromCreateCar={handelClose}
+        information={dialogErrMsg}
+      />
       <div>
         <Typography mb={3} variant="h3" align="center" color="blue">
           Now you can send the information about your car to the webmaster to

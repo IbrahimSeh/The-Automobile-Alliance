@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { communicationsData } from "../Pagination/arrayOfPages";
 import validateCommunicationsSchema from "../../validation/OfferedCarToSale/Communications";
 
-const Communications = ({ passData }) => {
+const Communications = ({ passData, prevState }) => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
@@ -32,11 +32,11 @@ const Communications = ({ passData }) => {
     passData("email", event.target.value);
   };
   const handleBlurPhone = () => {
-    joiResponse = validateCommunicationsSchema({ phone });
+    joiResponse = validateCommunicationsSchema(prevState);
     setInputsErrorsState(joiResponse);
   };
   const handleBlurEmail = () => {
-    joiResponse = validateCommunicationsSchema({ email });
+    joiResponse = validateCommunicationsSchema(prevState);
     setInputsErrorsState(joiResponse);
   };
   return (

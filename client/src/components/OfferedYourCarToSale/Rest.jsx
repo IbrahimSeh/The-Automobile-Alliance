@@ -7,7 +7,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { restData } from "../Pagination/arrayOfPages";
 import validateRestSchema from "../../validation/OfferedCarToSale/Rest";
 
-const Rest = ({ passData }) => {
+const Rest = ({ passData, prevState }) => {
   const [previousOwners, setPreviousOwners] = useState(0);
   const [kilometers, setKilometers] = useState(0);
   const [yearOfProduction, setYearOfProduction] = useState(dayjs("2022-04-17"));
@@ -26,7 +26,7 @@ const Rest = ({ passData }) => {
       setKilometers(restData.kilometers);
       handleBlurKilometers();
     }
-    if (restData.yearOfProduction !== "")
+    if (restData.yearOfProduction !== "2022")
       setYearOfProduction(dayjs(`${restData.yearOfProduction}-04-17`));
   }, []);
 
@@ -43,7 +43,7 @@ const Rest = ({ passData }) => {
     passData("yearOfProduction", event.$y);
   };
   const handleBlurPreviousOwners = () => {
-    joiResponse = validateRestSchema({ previousOwners, kilometers });
+    joiResponse = validateRestSchema(prevState);
     setInputsErrorsState(joiResponse);
   };
   const handleBlurKilometers = () => {
