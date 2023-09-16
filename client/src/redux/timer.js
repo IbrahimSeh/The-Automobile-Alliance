@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Logout from "./Logout";
 
 const initialState = {
     timer: 0,
@@ -8,16 +9,15 @@ const timerSlice = createSlice({
     name: "timer",
     initialState,
     reducers: {
-        initTimer(state, action) {
-            state.timer = 0;
-            // var timeoutHandle = setTimeout(() => {
-            //     localStorage.removeItem("token");
-            //     dispatch(authActions.logout());
-            //     toast.warning("Delayed for 4 second you are logged out automatically.");
-            // }, "4000");
+        initTimer(state) {
+            console.log("in initTimer");
+            state.timer = setTimeout(() => {
+                Logout();
+            }, "3000");
         },
-        resetTimer(state) {
-            state.timer = 0;
+        stopTimer(state) {
+            console.log('in stopTimer');
+            clearTimeout(state.timer);
         },
     },
 });

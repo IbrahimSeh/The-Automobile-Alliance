@@ -18,15 +18,17 @@ import "react-toastify/dist/ReactToastify.css";
 // css
 import "./css/App.css";
 import "./css/BCarFooter.css";
-
+//hooks
 import useLoggedIn from "./hooks/useLoggedIn";
-import Router from "./routes/Router";
+import useNumberOfRequest from "./hooks/useNumberOfRequest";
+import useTimer from "./hooks/useTimer";
 
 // components
+import Router from "./routes/Router";
 import NavBar from "./components/Navbar/Navbar";
 import BCarFooter from "./components/Footer/BCarFooter";
-import useNumberOfRequest from "./hooks/useNumberOfRequest";
 import { authActions } from "./redux/auth";
+import { timerActions } from "./redux/timer";
 
 const light = {
   palette: {
@@ -40,19 +42,25 @@ const dark = {
   },
 };
 function App() {
+  console.log("in app");
   const [mousePos, setMousePos] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const loggedIn = useLoggedIn();
+  const timer = useTimer();
   const numberOfRequest = useNumberOfRequest();
   const [scrollPostion, setState] = useState(0);
   const isDarkTheme = useSelector(
     (bigPie) => bigPie.darkThemeSlice.isDarkTheme
   );
   const dispatch = useDispatch();
+  //dispatch(timerActions.initTimer());
 
   useEffect(() => {
+    console.log("useEffect");
     (async () => {
       await loggedIn();
+      //await timer();
+      dispatch(timerActions.initTimer());
       await numberOfRequest();
       setIsLoading(false);
     })();
@@ -62,20 +70,14 @@ function App() {
     listenToScrollEvent();
   }, []);
 
-  // var timeoutHandle = setTimeout(() => {
-  //   localStorage.removeItem("token");
-  //   dispatch(authActions.logout());
-  //   toast.warning("Delayed for 4 second you are logged out automatically.");
-  // }, "4000");
-
   useEffect(() => {
     const handleMouseMove = (event) => {
-      //console.log("mouse moved");
-      //window.clearTimeout(timeoutHandle);
+      dispatch(timerActions.stopTimer());
+      dispatch(timerActions.initTimer());
     };
     const handleKeyPress = (event) => {
-      //console.log("key board pressed");
-      //window.clearTimeout(timeoutHandle);
+      dispatch(timerActions.stopTimer());
+      dispatch(timerActions.initTimer());
     };
     window.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("keydown", handleKeyPress);

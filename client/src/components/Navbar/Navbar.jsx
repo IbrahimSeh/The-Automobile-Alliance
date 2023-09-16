@@ -17,100 +17,22 @@ import jwt_decode from "jwt-decode";
 import ROUTES from "../../routes/ROUTES";
 import NavLinkComponent from "./NavLinkComponent";
 import { authActions } from "../../redux/auth";
-import logoutAvatar from "../../assets/images/logout.png";
 import Fade from "@mui/material/Fade";
-import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
 import HumborgerNavbar from "./HumborgerNavbar";
 import ToggleColorMode from "./ToggleColorMode";
 import SearchNavBar from "./SearchNavBar";
 import logo from "../../assets/images/car-showroom.png";
 import DropDownNavLink from "./DropDownNavLink";
 import "../../css/Navbar.css";
-// access to all
-const pages = [
-  {
-    label: "Home",
-    url: ROUTES.HOME,
-  },
-  {
-    label: "About",
-    url: ROUTES.ABOUT,
-  },
-];
-
-//not logged in users
-const notAuthPages = [
-  {
-    label: "Signup",
-    url: ROUTES.SIGNUP,
-  },
-  {
-    label: "Login",
-    url: ROUTES.LOGIN,
-  },
-];
-
-//logged in users
-let authedPages = [
-  {
-    label: (
-      <Tooltip
-        TransitionComponent={Fade}
-        TransitionProps={{ timeout: 600 }}
-        title="LogOut"
-        placement="bottom-end"
-      >
-        <Avatar alt="logout Avatar" src={logoutAvatar} />
-      </Tooltip>
-    ),
-    url: ROUTES.LOGOUT,
-  },
-  {
-    label: "",
-    url: ROUTES.PROFILE,
-  },
-];
-
-//logged in user for humborger item
-const authedPagesHumborger = [
-  {
-    label: "Logout",
-    url: ROUTES.LOGOUT,
-  },
-  {
-    label: "Profile",
-    url: ROUTES.PROFILE,
-  },
-];
-
-const userLoggedInLogo = [
-  {
-    label: (
-      <Tooltip
-        TransitionComponent={Fade}
-        TransitionProps={{ timeout: 600 }}
-        title="Favorite Cars"
-        placement="bottom-end"
-      >
-        <FavoriteBorderTwoToneIcon fontSize="large" />
-      </Tooltip>
-    ),
-    url: ROUTES.FAVCARS,
-  },
-];
-
-const userLoggedIn = [
-  {
-    label: "Favorite Cars",
-    url: ROUTES.FAVCARS,
-  },
-];
-const userAsAdmin = [
-  {
-    label: "",
-    url: ROUTES.REQUESTS,
-  },
-];
+import {
+  authedPages,
+  authedPagesHumborger,
+  notAuthPages,
+  pages,
+  userAsAdmin,
+  userLoggedIn,
+  userLoggedInLogo,
+} from "./navBarLink";
 
 const Navbar = () => {
   const isLoggedIn = useSelector(
@@ -156,15 +78,12 @@ const Navbar = () => {
     </Tooltip>
   );
 
-  // console.log("len = ", badge);
   const payload = useSelector((bigState) => bigState.authSlice.payload);
   const dispatch = useDispatch();
-
   const logoutClick = () => {
     localStorage.removeItem("token");
     dispatch(authActions.logout());
   };
-
   const navbarstyle = {
     backgroundColor: "#0f0d35",
   };
@@ -172,18 +91,13 @@ const Navbar = () => {
   let humgorgerItem = [];
   humgorgerItem = humgorgerItem.concat(pages);
 
-  if (isLoggedIn) {
-    humgorgerItem = humgorgerItem.concat(authedPagesHumborger);
-  } else {
-    humgorgerItem = humgorgerItem.concat(notAuthPages);
-  }
+  if (isLoggedIn) humgorgerItem = humgorgerItem.concat(authedPagesHumborger);
+  else humgorgerItem = humgorgerItem.concat(notAuthPages);
 
-  if (isLoggedIn) {
-    humgorgerItem = humgorgerItem.concat(userLoggedIn);
-  }
-  if (payload && payload.isAdmin) {
+  if (isLoggedIn) humgorgerItem = humgorgerItem.concat(userLoggedIn);
+
+  if (payload && payload.isAdmin)
     humgorgerItem = humgorgerItem.concat(userAsAdmin);
-  }
 
   return (
     <AppBar
