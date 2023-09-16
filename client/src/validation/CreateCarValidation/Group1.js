@@ -15,7 +15,6 @@ const createCarSchemaGroup1 = Joi.object({
     country: Joi.string().min(2).max(256).required(),
     city: Joi.string().min(2).max(256).required(),
     street: Joi.string().min(2).max(256).required(),
-
 });
 
 const Group1 = (userInput) => {

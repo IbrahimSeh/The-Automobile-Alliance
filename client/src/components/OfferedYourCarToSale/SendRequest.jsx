@@ -15,8 +15,10 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import AlertDialogSlide from "../Dialog(Popup)/AlertDialogSlide";
+import validateCarSchemaGroup1 from "../../validation/CreateCarValidation/Group1";
 import validateCarSchemaGroup3 from "../../validation/CreateCarValidation/Group3";
 import useNumberOfRequest from "../../hooks/useNumberOfRequest";
+import createMsgDialog from "./createMsg";
 
 const SendRequest = () => {
   const [save, setSave] = useState(false);
@@ -28,17 +30,28 @@ const SendRequest = () => {
   const handelClose = () => setOpenDialog(false);
 
   const handelClickSaveData = async () => {
+    let resultfromGroup1 = validateCarSchemaGroup1({
+      subType: manufacturerData.subType,
+      engineType: engineData.engineType,
+      phone: communicationsData.phone,
+      email: communicationsData.email,
+      state: addressData.state,
+      country: addressData.country,
+      city: addressData.city,
+      street: addressData.street,
+    });
     //validate manufacturer, type & fuelType
     let resultfromGroup3 = validateCarSchemaGroup3(
       manufacturerData.manufacturer,
       manufacturerData.type,
       engineData.fuelType
     );
-    if (resultfromGroup3.length !== 0) {
-      setDialogErrMsg(resultfromGroup3);
+    if (resultfromGroup3.length !== 0 || resultfromGroup1 !== null) {
+      setDialogErrMsg(createMsgDialog(resultfromGroup3, resultfromGroup1));
       setOpenDialog(true);
       return;
     }
+
     try {
       await axios.post("/VAR/", {
         // VAR = Vehicle Advertising Requests
