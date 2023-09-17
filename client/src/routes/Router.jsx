@@ -41,10 +41,6 @@ const Router = () => {
         element={<IsNotLoginPR element={<LogInPage />} />}
       />
       <Route
-        path={ROUTES.ADMINLOGIN}
-        element={<IsNotLoginPR element={<AdminLogInPage />} />}
-      />
-      <Route
         path={ROUTES.SIGNUP}
         element={<IsNotLoginPR element={<SignUpPage />} />}
       />
