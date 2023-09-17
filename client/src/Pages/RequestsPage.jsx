@@ -13,6 +13,7 @@ import { displayActions } from "../redux/display";
 import Tables from "../components/Home/Display/Tables";
 import Tabs from "../components/Home/Display/Tabs";
 import TabsForRequestPage from "../components/Home/Display/TabsForRequestPage";
+import DviderLine from "../components/Home/DviderLine";
 
 const RequestsPage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
@@ -127,9 +128,7 @@ const RequestsPage = () => {
 
   return (
     <Box mt={3}>
-      <Typography mb={3} variant="h3" align="center" color="blue">
-        All Requests
-      </Typography>
+      <DviderLine text={"All Requests"} />
       <ControlledOpenSpeedDial getDisplayName={handleGetDisplayName} />
       {toDisplay === false ? (
         <TabsForRequestPage

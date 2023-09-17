@@ -19,7 +19,6 @@ import CarEdit from "../components/Car/CarEdit";
 import IsNotLoginPR from "../components/ProtectedRoute/isNotLoginPR";
 import SpecificSearch from "../Pages/SpecificSearch";
 import OfferedYourCarToSale from "../Pages/OfferedYourCarToSale";
-import AdminLogInPage from "../Pages/AdminLogInPage";
 
 const Router = () => {
   return (

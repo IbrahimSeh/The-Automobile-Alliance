@@ -146,7 +146,7 @@ const FavCarsPage = () => {
 
   return (
     <Box mt={3}>
-      <Typography
+      {/* <Typography
         sx={{ ...commonStyles }}
         mb={3}
         variant="h3"
@@ -154,7 +154,8 @@ const FavCarsPage = () => {
         color="blue"
       >
         Collection of you'r favorite cars
-      </Typography>
+      </Typography> */}
+      <DviderLine text={"Collection of you'r favorite cars"} />
       {carsArr.length === 0 ? (
         <DviderLine
           text={
