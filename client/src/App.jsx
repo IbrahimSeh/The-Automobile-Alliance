@@ -42,16 +42,11 @@ const dark = {
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const loggedIn = useLoggedIn();
-  //const logout = useLogout();
   const numberOfRequest = useNumberOfRequest();
   const [scrollPostion, setState] = useState(0);
   const isDarkTheme = useSelector(
     (bigPie) => bigPie.darkThemeSlice.isDarkTheme
   );
-
-  // let timer = setTimeout(() => {
-  //   logout();
-  // }, "10000");
 
   useEffect(() => {
     (async () => {
@@ -65,20 +60,6 @@ function App() {
     listenToScrollEvent();
   }, []);
 
-  // useEffect(() => {
-  //   const handleMouseMove = (event) => {
-  //     console.log("in move");
-  //     clearTimeout(timer);
-  //   };
-
-  //   const handleKeyPress = (event) => {
-  //     clearTimeout(timer);
-  //   };
-  //   window.addEventListener("mousemove", handleMouseMove);
-  //   document.addEventListener("keydown", handleKeyPress);
-  // }, []);
-
-  //1000*60*60*4=4 houre => 14400000
   const listenToScrollEvent = () => {
     document.addEventListener("scroll", () => {
       requestAnimationFrame(() => {
