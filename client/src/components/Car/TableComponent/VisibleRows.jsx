@@ -24,6 +24,7 @@ const VisibleRows = ({
   selected,
   clickOnCar,
   getIsLike,
+  onLike,
   handleClickFromTables,
   isLoggedIn,
   handleLikeBtnClick,

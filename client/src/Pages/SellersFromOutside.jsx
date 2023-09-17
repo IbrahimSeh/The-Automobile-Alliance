@@ -1,13 +1,11 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-//import { useSelector } from "react-redux";
 import { displayActions } from "../redux/display";
 import ROUTES from "../routes/ROUTES";
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import useQueryParams from "../hooks/useQueryParams";
 import { toast } from "react-toastify";
-//import CarComponent from "../components/Car/CarComponent/CarComponent";
 import DviderLine from "../components/Home/DviderLine";
 import ControlledOpenSpeedDial from "../components/Home/ControlledOpenSpeedDial";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +15,10 @@ import Tables from "../components/Home/Display/Tables";
 const SellersFromOutside = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
+  const [render, setRender] = useState(0);
   const toDisplay = useSelector(
     (bigPie) => bigPie.displaySlice.display.sellers
   );
-  //const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let qparams = useQueryParams();

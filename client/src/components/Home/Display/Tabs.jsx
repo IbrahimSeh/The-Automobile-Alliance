@@ -8,6 +8,7 @@ const Tabs = ({
   handleOnClick,
   handleDeleteFromInitialCarsArr,
   handleEditFromInitialCarsArr,
+  handleLikeFromInitialCarsArr,
 }) => {
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   let userID = "";
@@ -19,7 +20,7 @@ const Tabs = ({
   const clickOnCar = (id) => handleOnClick(id);
   const onDelete = (id) => handleDeleteFromInitialCarsArr(id);
   const onEdit = (id) => handleEditFromInitialCarsArr(id);
-
+  const onLike = (id) => handleLikeFromInitialCarsArr(id);
   return (
     <Grid container spacing={2}>
       {carsArrFromHome.map((item, i) => (
@@ -58,6 +59,7 @@ const Tabs = ({
               item.user_id === userID && payload && payload.isSubscription
             }
             disLike={item.likes.includes(payload && payload._id) ? true : false}
+            onLike={onLike}
           />
         </Grid>
       ))}

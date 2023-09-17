@@ -19,14 +19,7 @@ const FavVarsPage = () => {
   let qparams = useQueryParams();
   const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.favVAR);
   const dispatch = useDispatch();
-  // const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-  // let userID = "";
 
-  // if (localStorage.getItem("token")) {
-  //   userID = jwt_decode(localStorage.getItem("token"))._id;
-  // }
-
-  //first useEffect when page load
   useEffect(() => {
     axios
       .get("/VAR/get-my-fav-vars")
@@ -98,9 +91,9 @@ const FavVarsPage = () => {
     }
   };
 
-  const handleLikesFromInitialCarsArr = async (id) => {
-    setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
-  };
+  // const handleLikesFromInitialCarsArr = async (id) => {
+  //   setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
+  // };
 
   const handleEditFromInitialCarsArr = (id) => {};
 

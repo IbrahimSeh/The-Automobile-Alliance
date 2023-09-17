@@ -9,7 +9,7 @@ const getIsLike = (isLike, id, isLoggedIn, handleLikeBtnClick) => {
             <Tooltip
                 TransitionComponent={Fade}
                 TransitionProps={{ timeout: 600 }}
-                title="Dislike Car"
+                title="Like Car"
                 placement="bottom-end"
             >
                 <Button
@@ -25,7 +25,7 @@ const getIsLike = (isLike, id, isLoggedIn, handleLikeBtnClick) => {
             <Tooltip
                 TransitionComponent={Fade}
                 TransitionProps={{ timeout: 600 }}
-                title="Like Car"
+                title="Dislike Car"
                 placement="bottom-end"
             >
                 <Button

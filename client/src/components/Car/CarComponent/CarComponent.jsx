@@ -40,6 +40,7 @@ const CarComponent = ({
   onEdit,
   canEdit,
   disLike,
+  onLike,
   collection,
 }) => {
   const isLoggedIn = useSelector(
@@ -64,7 +65,8 @@ const CarComponent = ({
     event.stopPropagation();
     try {
       await axios.patch("/" + apiCollection + "-like/" + id); // /cars/:id
-      window.location.reload();
+      onLike(id);
+      //window.location.reload();
     } catch (err) {
       console.log("error when liking car", err.response.data);
     }

@@ -22,6 +22,7 @@ const Tables = ({
   handleOnClick,
   handleDeleteFromInitialCarsArr,
   handleEditFromInitialCarsArr,
+  handleLikeFromInitialCarsArr,
   pageName,
   collection,
   onAccept,
@@ -56,6 +57,8 @@ const Tables = ({
     setSelected([]);
     handleEditFromInitialCarsArr(id);
   };
+
+  const onLike = (id) => handleLikeFromInitialCarsArr(id);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -105,7 +108,7 @@ const Tables = ({
     event.stopPropagation();
     try {
       await axios.patch("/" + apiCollection + "-like/" + id); // /cars/:id
-      window.location.reload();
+      handleLikeFromInitialCarsArr(id);
     } catch (err) {
       console.log("error when liking car", err.response.data);
     }
@@ -152,6 +155,7 @@ const Tables = ({
                 selected={selected}
                 clickOnCar={clickOnCar}
                 getIsLike={getIsLike}
+                onLike={onLike}
                 handleClickFromTables={handleClick}
                 isLoggedIn={isLoggedIn}
                 handleLikeBtnClick={handleLikeBtnClick}

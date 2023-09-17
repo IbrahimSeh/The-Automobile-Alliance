@@ -1,6 +1,7 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../routes/ROUTES";
@@ -16,10 +17,16 @@ import { displayActions } from "../redux/display";
 const HomePage = () => {
   const [originalCarsArr, setOriginalCarsArr] = useState(null);
   const [carsArr, setCarsArr] = useState(null);
+  const [render, setRender] = useState(0);
   const navigate = useNavigate();
   const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.home);
   const dispatch = useDispatch();
   let qparams = useQueryParams();
+  let userID = "";
+
+  if (localStorage.getItem("token")) {
+    userID = jwt_decode(localStorage.getItem("token"))._id;
+  }
 
   //first useEffect when page load
   useEffect(() => {
@@ -91,6 +98,26 @@ const HomePage = () => {
       console.log("error when deleting", err.response.data);
     }
   };
+  const handleLikeFromInitialCarsArr = (id) => {
+    //check if id-user exist in like array of id(car) -yes remove ide-user, else add id-user
+    let index = 0;
+    let tempCarsArr = carsArr;
+
+    for (const tempCar of tempCarsArr) {
+      if (tempCar._id === id) {
+        if (tempCar.likes.includes(userID)) {
+          //userID exsit in likes -> user like car -> convert to dislike
+          index = tempCar.likes.indexOf(userID);
+          delete tempCar.likes[index];
+        } else {
+          //userID does not exsit in likes -> add userID -> convert to like
+          tempCar.likes.push(userID);
+        }
+      }
+    }
+    setCarsArr(tempCarsArr);
+    setRender(render + 1);
+  };
 
   const handleEditFromInitialCarsArr = (id) => {
     navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
@@ -104,7 +131,7 @@ const HomePage = () => {
     dispatch(displayActions.setDisplayPage("home"));
   };
 
-  //console.log("carsArr = ", carsArr);
+  // console.log("carsArr = ", carsArr);
   if (!carsArr) {
     return <CircularProgress />;
   }
@@ -129,6 +156,7 @@ const HomePage = () => {
           handleOnClick={handleOnClick}
           handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
           handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+          handleLikeFromInitialCarsArr={handleLikeFromInitialCarsArr}
         />
       ) : (
         <Tables
@@ -136,6 +164,7 @@ const HomePage = () => {
           handleOnClick={handleOnClick}
           handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
           handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+          handleLikeFromInitialCarsArr={handleLikeFromInitialCarsArr}
         />
       )}
     </Box>
