@@ -49,10 +49,14 @@ const Tables = ({
     handleOnClick(id);
   };
   const onDelete = (id) => {
+    console.log("here");
     setSelected([]);
     let lenAfterDeleteItems = rows.length - selected.length;
     let newpage = lenAfterDeleteItems % rowsPerPage;
-    if (lenAfterDeleteItems < rowsPerPage || newpage === 0) setPage(page - 1);
+    if (lenAfterDeleteItems < rowsPerPage || newpage === 0) {
+      if (page === 0) setPage(0);
+      setPage(page - 1);
+    }
     handleDeleteFromInitialCarsArr(id);
   };
   const onEdit = (id) => {
