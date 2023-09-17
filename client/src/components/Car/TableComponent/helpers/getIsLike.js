@@ -4,7 +4,7 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 
 const getIsLike = (isLike, id, isLoggedIn, handleLikeBtnClick) => {
     if (!isLoggedIn) return "";
-    if (isLike)
+    if (!isLike)
         return (
             <Tooltip
                 TransitionComponent={Fade}
@@ -20,7 +20,7 @@ const getIsLike = (isLike, id, isLoggedIn, handleLikeBtnClick) => {
                 </Button>
             </Tooltip>
         );
-    if (!isLike)
+    if (isLike)
         return (
             <Tooltip
                 TransitionComponent={Fade}

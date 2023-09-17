@@ -104,6 +104,7 @@ const HomePage = () => {
     dispatch(displayActions.setDisplayPage("home"));
   };
 
+  //console.log("carsArr = ", carsArr);
   if (!carsArr) {
     return <CircularProgress />;
   }

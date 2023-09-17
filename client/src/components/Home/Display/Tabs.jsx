@@ -57,7 +57,7 @@ const Tabs = ({
             canEdit={
               item.user_id === userID && payload && payload.isSubscription
             }
-            disLike={item.likes.includes(payload && payload._id) ? false : true}
+            disLike={item.likes.includes(payload && payload._id) ? true : false}
           />
         </Grid>
       ))}

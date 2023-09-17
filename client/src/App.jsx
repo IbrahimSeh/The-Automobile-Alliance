@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 
 //redux
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 // toast
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // css
@@ -21,14 +21,12 @@ import "./css/BCarFooter.css";
 //hooks
 import useLoggedIn from "./hooks/useLoggedIn";
 import useNumberOfRequest from "./hooks/useNumberOfRequest";
-import useTimer from "./hooks/useTimer";
 
 // components
 import Router from "./routes/Router";
 import NavBar from "./components/Navbar/Navbar";
 import BCarFooter from "./components/Footer/BCarFooter";
-import { authActions } from "./redux/auth";
-import { timerActions } from "./redux/timer";
+import useLogout from "./hooks/useLogout";
 
 const light = {
   palette: {
@@ -42,25 +40,22 @@ const dark = {
   },
 };
 function App() {
-  console.log("in app");
-  const [mousePos, setMousePos] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const loggedIn = useLoggedIn();
-  const timer = useTimer();
+  //const logout = useLogout();
   const numberOfRequest = useNumberOfRequest();
   const [scrollPostion, setState] = useState(0);
   const isDarkTheme = useSelector(
     (bigPie) => bigPie.darkThemeSlice.isDarkTheme
   );
-  const dispatch = useDispatch();
-  //dispatch(timerActions.initTimer());
+
+  // let timer = setTimeout(() => {
+  //   logout();
+  // }, "10000");
 
   useEffect(() => {
-    console.log("useEffect");
     (async () => {
       await loggedIn();
-      //await timer();
-      dispatch(timerActions.initTimer());
       await numberOfRequest();
       setIsLoading(false);
     })();
@@ -70,22 +65,18 @@ function App() {
     listenToScrollEvent();
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      dispatch(timerActions.stopTimer());
-      dispatch(timerActions.initTimer());
-    };
-    const handleKeyPress = (event) => {
-      dispatch(timerActions.stopTimer());
-      dispatch(timerActions.initTimer());
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("keydown", handleKeyPress);
-    // return () => {
-    //   window.removeEventListener("mousemove", handleMouseMove);
-    //   document.removeEventListener("onkeydown", handleKeyPress);
-    // };
-  }, []);
+  // useEffect(() => {
+  //   const handleMouseMove = (event) => {
+  //     console.log("in move");
+  //     clearTimeout(timer);
+  //   };
+
+  //   const handleKeyPress = (event) => {
+  //     clearTimeout(timer);
+  //   };
+  //   window.addEventListener("mousemove", handleMouseMove);
+  //   document.addEventListener("keydown", handleKeyPress);
+  // }, []);
 
   //1000*60*60*4=4 houre => 14400000
   const listenToScrollEvent = () => {

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Logout from "./Logout";
+import useLogout from "../hooks/useLogout";
 
+const logout = useLogout;
 const initialState = {
     timer: 0,
 };
@@ -9,10 +10,10 @@ const timerSlice = createSlice({
     name: "timer",
     initialState,
     reducers: {
-        initTimer(state) {
-            console.log("in initTimer");
+        initTimer(state, action) {
+            //console.log("in initTimer action = ", action.payload);
             state.timer = setTimeout(() => {
-                Logout();
+                logout();
             }, "3000");
         },
         stopTimer(state) {
