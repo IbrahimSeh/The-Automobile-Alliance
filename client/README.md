@@ -1,3 +1,19 @@
+# Getting Started with The-Automobile-Alliance App
+
+## Installation
+
+Enter to the The-Automobile-Alliance folder
+
+```bash
+cd The-Automobile-Alliance/client
+```
+
+Install the node_modules
+
+```bash
+npm i
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

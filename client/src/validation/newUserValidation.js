@@ -16,7 +16,7 @@ const newUserSchema = Joi.object({
         .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$", "i"))
         .min(8).max(1024)
         .required(),
-    url: Joi.string().min(6).max(1024).allow(null, ''),
+    url: Joi.string().allow(null, ''),
     alt: Joi.string().min(6).max(256).allow(null, ''),
     state: Joi.string().min(2).max(256).allow(null, ''),
     country: Joi.string().min(2).max(256).required(),
