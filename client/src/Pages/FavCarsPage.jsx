@@ -1,6 +1,7 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -29,7 +30,12 @@ const FavCarsPage = () => {
   let qparams = useQueryParams();
   const dispatch = useDispatch();
   const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.favCar);
- 
+  let userID = "";
+
+  if (localStorage.getItem("token")) {
+    userID = jwt_decode(localStorage.getItem("token"))._id;
+  }
+
   //first useEffect when page load
   useEffect(() => {
     axios
@@ -102,9 +108,26 @@ const FavCarsPage = () => {
     }
   };
 
-  // const handleLikesFromInitialCarsArr = async (id) => {
-  //   setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
-  // };
+  const handleLikeFromInitialCarsArr = (id) => {
+    //check if id-user exist in like array of id(car) -yes remove ide-user, else add id-user
+    let index = 0;
+    let tempCarsArr = carsArr;
+
+    for (const tempCar of tempCarsArr) {
+      if (tempCar._id === id) {
+        if (tempCar.likes.includes(userID)) {
+          //userID exsit in likes -> user like car -> convert to dislike
+          index = tempCar.likes.indexOf(userID);
+          delete tempCar.likes[index];
+        } else {
+          //userID does not exsit in likes -> add userID -> convert to like
+          tempCar.likes.push(userID);
+        }
+      }
+    }
+    setCarsArr(tempCarsArr);
+    setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
+  };
 
   const handleEditFromInitialCarsArr = (id) => {
     navigate(`${ROUTES.CAREDIT}/?carId=${id}`);
@@ -150,6 +173,7 @@ const FavCarsPage = () => {
               handleOnClick={handleOnClick}
               handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
               handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+              handleLikeFromInitialCarsArr={handleLikeFromInitialCarsArr}
             />
           ) : (
             <Tables
@@ -157,6 +181,7 @@ const FavCarsPage = () => {
               handleOnClick={handleOnClick}
               handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
               handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+              handleLikeFromInitialCarsArr={handleLikeFromInitialCarsArr}
             />
           )}
         </Fragment>

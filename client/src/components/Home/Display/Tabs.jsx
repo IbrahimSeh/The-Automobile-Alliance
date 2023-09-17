@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
-import jwt_decode from "jwt-decode";
+//import jwt_decode from "jwt-decode";
 import CarComponent from "../../Car/CarComponent/CarComponent";
 
 const Tabs = ({
@@ -9,14 +9,19 @@ const Tabs = ({
   handleDeleteFromInitialCarsArr,
   handleEditFromInitialCarsArr,
   handleLikeFromInitialCarsArr,
+  from,
+  collection,
 }) => {
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-  let userID = "";
-
-  if (localStorage.getItem("token")) {
-    userID = jwt_decode(localStorage.getItem("token"))._id;
-  }
-
+  // let userID = "";
+  // if (localStorage.getItem("token")) {
+  //   userID = jwt_decode(localStorage.getItem("token"))._id;
+  // }
+  const canEdit = () => {
+    if (from === "SellersFromOutSide") return false;
+    if (payload && payload.isAdmin) return true;
+    return false;
+  };
   const clickOnCar = (id) => handleOnClick(id);
   const onDelete = (id) => handleDeleteFromInitialCarsArr(id);
   const onEdit = (id) => handleEditFromInitialCarsArr(id);
@@ -50,16 +55,12 @@ const Tabs = ({
             bizNumber={item.bizNumber}
             userId={item.user_id}
             onDelete={onDelete}
-            candelete={
-              (payload && payload.isAdmin) ||
-              (item.user_id === userID && payload && payload.isSubscription)
-            }
+            candelete={payload && payload.isAdmin}
             onEdit={onEdit}
-            canEdit={
-              item.user_id === userID && payload && payload.isSubscription
-            }
+            canEdit={canEdit()}
             disLike={item.likes.includes(payload && payload._id) ? true : false}
             onLike={onLike}
+            collection={collection}
           />
         </Grid>
       ))}

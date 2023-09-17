@@ -1,5 +1,6 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import { displayActions } from "../redux/display";
 import ROUTES from "../routes/ROUTES";
 import axios from "axios";
@@ -22,6 +23,12 @@ const SellersFromOutside = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let qparams = useQueryParams();
+
+  let userID = "";
+
+  if (localStorage.getItem("token")) {
+    userID = jwt_decode(localStorage.getItem("token"))._id;
+  }
 
   useEffect(() => {
     axios
@@ -98,8 +105,27 @@ const SellersFromOutside = () => {
     }
   };
 
-  const handleEditFromInitialCarsArr = (id) => {};
-  const handelOnLike = (id) => {};
+  const handleLikeFromInitialCarsArr = (id) => {
+    //check if id-user exist in like array of id(car) -yes remove ide-user, else add id-user
+    let index = 0;
+    let tempCarsArr = carsArr;
+
+    for (const tempCar of tempCarsArr) {
+      if (tempCar._id === id) {
+        if (tempCar.likes.includes(userID)) {
+          //userID exsit in likes -> user like car -> convert to dislike
+          index = tempCar.likes.indexOf(userID);
+          delete tempCar.likes[index];
+        } else {
+          //userID does not exsit in likes -> add userID -> convert to like
+          tempCar.likes.push(userID);
+        }
+      }
+    }
+    setCarsArr(tempCarsArr);
+    setRender(render + 1);
+  };
+
   const handleOnClick = (id) => {
     navigate(`${ROUTES.CARSPECIFICATION}/?VARId=${id}`);
   };
@@ -124,60 +150,20 @@ const SellersFromOutside = () => {
           carsArrFromHome={carsArr}
           handleOnClick={handleOnClick}
           handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
-          handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+          handleLikeFromInitialCarsArr={handleLikeFromInitialCarsArr}
+          from={"SellersFromOutSide"}
+          collection={"VAR"}
         />
       ) : (
         <Tables
           carsArrFromHome={carsArr}
           handleOnClick={handleOnClick}
           handleDeleteFromInitialCarsArr={handleDeleteFromInitialCarsArr}
-          handleEditFromInitialCarsArr={handleEditFromInitialCarsArr}
+          handleLikeFromInitialCarsArr={handleLikeFromInitialCarsArr}
+          from={"SellersFromOutSide"}
+          collection={"VAR"}
         />
       )}
-      {/* <Grid container spacing={2}>
-        {carsArr.map((item) => (
-          <Grid item xs={4} key={item._id + Date.now()}>
-            <CarComponent
-              img={item.image ? item.image.url[0] : ""}
-              manufacturer={
-                item.manufacturerData ? item.manufacturerData.manufacturer : ""
-              }
-              type={item.manufacturerData ? item.manufacturerData.type : ""}
-              subType={
-                item.manufacturerData ? item.manufacturerData.subType : ""
-              }
-              yearOfProduction={
-                item.yearOfProduction ? item.yearOfProduction : ""
-              }
-              phone={item.phone}
-              address={
-                item.address
-                  ? item.address.country +
-                    ", " +
-                    item.address.city +
-                    ", " +
-                    item.address.street
-                  : ""
-              }
-              id={item._id}
-              clickOnCar={handleOnClick}
-              bizNumber={item.bizNumber}
-              userId={item.user_id}
-              onDelete={handleDeleteFromInitialCarsArr}
-              candelete={payload && payload.isAdmin}
-              onEdit={handleEditFromInitialCarsArr}
-              //Anyone can edit a car sales form from outside advertisers.
-              //The site administrator can agree or reject the publication request
-              canEdit={false}
-              onLike={handelOnLike}
-              disLike={
-                item.likes.includes(payload && payload._id) ? true : false
-              }
-              collection={"VAR"}
-            />
-          </Grid>
-        ))}
-      </Grid> */}
     </Box>
   );
 };

@@ -27,6 +27,7 @@ const Tables = ({
   collection,
   onAccept,
   onReject,
+  from,
 }) => {
   let apiCollection;
   let rows = createData(carsArrFromHome);
@@ -41,6 +42,7 @@ const Tables = ({
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
+  const payload = useSelector((bigPie) => bigPie.authSlice.payload);
 
   const clickOnCar = (event, id) => {
     event.stopPropagation();
@@ -114,6 +116,12 @@ const Tables = ({
     }
   };
 
+  const canEdit = () => {
+    if (from === "SellersFromOutSide") return false;
+    if (payload && payload.isAdmin) return true;
+    return false;
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -124,9 +132,9 @@ const Tables = ({
             numSelected={selected.length}
             carArrayId={selected}
             onDelete={onDelete}
-            candelete
+            candelete={payload && payload.isAdmin}
             onEdit={onEdit}
-            canEdit
+            canEdit={canEdit()}
           />
         )}
 
