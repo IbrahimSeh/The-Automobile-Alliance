@@ -34,13 +34,17 @@ const SignUpPage = () => {
     zip: 0,
   });
 
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
+
   const [btnDisable, setbtnDisable] = useState(true);
   const navigate = useNavigate();
   let checkBoxState;
 
   const handleBtnSubmitClick = async (ev) => {
     try {
-      await axios.post("/users", {
+      await axiosInstance.post("/users", {
         name: {
           first: inputstate.firstName,
           middle: inputstate.middleName,

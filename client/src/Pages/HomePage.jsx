@@ -24,6 +24,10 @@ const HomePage = () => {
   let qparams = useQueryParams();
   let userID = "";
 
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
+
   if (localStorage.getItem("token")) {
     userID = jwt_decode(localStorage.getItem("token"))._id;
   }

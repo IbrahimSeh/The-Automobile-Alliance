@@ -30,6 +30,10 @@ const SpecificSearch = () => {
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
 
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
+
   const [manufacturerArr, setManufacturerArr] = useState([]);
   const [typeArr, setTypeArr] = useState([]);
   const [fromYear, setFromYear] = useState(dayjs("1900-04-17"));
@@ -57,7 +61,7 @@ const SpecificSearch = () => {
   const updateToPrvOwn = (value) => setToPrvOwn(value);
 
   const handelClickSendSearch = async () => {
-    axios
+    axiosInstance
       .get("/cars/search/", {
         params: {
           manufacturerArr: manufacturerArr,
@@ -134,7 +138,7 @@ const SpecificSearch = () => {
   };
   const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axios.delete("/VAR/" + id);
+      await axiosInstance.delete("/VAR/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
       toast.error("error when deleting car to publish", err.response.data);
