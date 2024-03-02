@@ -24,13 +24,17 @@ const HomePage = () => {
   let qparams = useQueryParams();
   let userID = "";
 
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
+
   if (localStorage.getItem("token")) {
     userID = jwt_decode(localStorage.getItem("token"))._id;
   }
 
   //first useEffect when page load
   useEffect(() => {
-    axios
+    axiosInstance
       .get("/cars")
       .then(({ data }) => {
         filterFunc(data);
@@ -92,7 +96,7 @@ const HomePage = () => {
 
   const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axios.delete("/cars/" + id);
+      await axiosInstance.delete("/cars/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
       console.log("error when deleting", err.response.data);

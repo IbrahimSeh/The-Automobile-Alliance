@@ -26,8 +26,12 @@ const RequestsPage = () => {
   const dispatch = useDispatch();
   let qparams = useQueryParams();
 
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
+
   useEffect(() => {
-    axios
+    axiosInstance
       .get("/VAR/From-Outside/false")
       .then(({ data }) => {
         filterFunc(data);
@@ -90,7 +94,7 @@ const RequestsPage = () => {
 
   const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axios.delete("/VAR/" + id);
+      await axiosInstance.delete("/VAR/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
       numberOfRequest();
     } catch (err) {
@@ -100,7 +104,7 @@ const RequestsPage = () => {
 
   const handleLikesFromInitialCarsArr = async (id) => {
     try {
-      await axios.patch("/VAR/" + id);
+      await axiosInstance.patch("/VAR/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
       numberOfRequest();
     } catch (err) {

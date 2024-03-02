@@ -32,13 +32,17 @@ const FavCarsPage = () => {
   const toDisplay = useSelector((bigPie) => bigPie.displaySlice.display.favCar);
   let userID = "";
 
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
+
   if (localStorage.getItem("token")) {
     userID = jwt_decode(localStorage.getItem("token"))._id;
   }
 
   //first useEffect when page load
   useEffect(() => {
-    axios
+    axiosInstance
       .get("/cars/get-my-fav-cars")
       .then(({ data }) => {
         filterFunc(data);
@@ -101,7 +105,7 @@ const FavCarsPage = () => {
 
   const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axios.delete("/cars/" + id); // /cars/:id
+      await axiosInstance.delete("/cars/" + id); // /cars/:id
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
       console.log("error when deleting", err.response.data);
