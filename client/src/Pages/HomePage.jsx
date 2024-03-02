@@ -34,7 +34,7 @@ const HomePage = () => {
 
   //first useEffect when page load
   useEffect(() => {
-    axios
+    axiosInstance
       .get("/cars")
       .then(({ data }) => {
         filterFunc(data);
@@ -96,7 +96,7 @@ const HomePage = () => {
 
   const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axios.delete("/cars/" + id);
+      await axiosInstance.delete("/cars/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
       console.log("error when deleting", err.response.data);
