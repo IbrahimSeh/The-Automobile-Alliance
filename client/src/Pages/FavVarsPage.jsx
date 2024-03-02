@@ -22,16 +22,16 @@ const FavVarsPage = () => {
   const dispatch = useDispatch();
   let userID = "";
 
-  const axiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-  });
+  // const axiosInstance = axios.create({
+  //   baseURL: process.env.REACT_APP_API_URL,
+  // });
 
   if (localStorage.getItem("token")) {
     userID = jwt_decode(localStorage.getItem("token"))._id;
   }
 
   useEffect(() => {
-    axiosInstance
+    axios
       .get("/VAR/get-my-fav-vars")
       .then(({ data }) => {
         filterFunc(data);
@@ -94,7 +94,7 @@ const FavVarsPage = () => {
 
   const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axiosInstance.delete("/VAR/" + id); // /cars/:id
+      await axios.delete("/VAR/" + id); // /cars/:id
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
       console.log("error when deleting", err.response.data);

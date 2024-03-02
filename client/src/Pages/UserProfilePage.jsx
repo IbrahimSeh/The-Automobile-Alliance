@@ -30,12 +30,12 @@ const UserProfilePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const axiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-  });
+  // const axiosInstance = axios.create({
+  //   baseURL: process.env.REACT_APP_API_URL,
+  // });
 
   useEffect(() => {
-    axiosInstance
+    axios
       .get("/users/" + userId)
       .then(({ data }) => {
         for (const key in JSON.parse(JSON.stringify(data))) {
@@ -80,7 +80,7 @@ const UserProfilePage = () => {
 
   const handleBtnSubmitClick = async (ev) => {
     try {
-      await axiosInstance.put("/users/" + userId, {
+      await axios.put("/users/" + userId, {
         name: {
           first: inputstate.firstName,
           middle: inputstate.middleName,

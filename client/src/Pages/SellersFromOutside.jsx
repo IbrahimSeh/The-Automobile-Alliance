@@ -30,12 +30,12 @@ const SellersFromOutside = () => {
     userID = jwt_decode(localStorage.getItem("token"))._id;
   }
 
-  const axiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-  });
+  // const axiosInstance = axios.create({
+  //   baseURL: process.env.REACT_APP_API_URL,
+  // });
 
   useEffect(() => {
-    axiosInstance
+    axios
       .get("/VAR/From-Outside/true")
       .then(({ data }) => {
         filterFunc(data);
@@ -102,7 +102,7 @@ const SellersFromOutside = () => {
 
   const handleDeleteFromInitialCarsArr = async (id) => {
     try {
-      await axiosInstance.delete("/VAR/" + id);
+      await axios.delete("/VAR/" + id);
       setCarsArr((newCarsArr) => newCarsArr.filter((item) => item._id != id));
     } catch (err) {
       toast.error("error when deleting car to publish", err.response.data);

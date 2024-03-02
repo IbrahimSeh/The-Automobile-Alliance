@@ -23,9 +23,9 @@ const LogInPage = () => {
     password: "",
   });
 
-const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-});
+  // const axiosInstance = axios.create({
+  //   baseURL: process.env.REACT_APP_API_URL,
+  // });
 
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
 
@@ -48,7 +48,7 @@ const axiosInstance = axios.create({
         return;
       }
 
-      const { data } = await axiosInstance.post("/users/login", inputState);
+      const { data } = await axios.post("/users/login", inputState);
       localStorage.setItem("token", data.token);
       loggedIn();
 
